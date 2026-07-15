@@ -161,3 +161,23 @@ export async function getHeroProducts(): Promise<HeroSlide[]> {
       image: r.images[0].path,
     }));
 }
+
+// Cover photo per category for the homepage "Exceptional Pieces" grid: the
+// newest published product WITH a photo in each category. Fully automatic —
+// the client curates this simply by managing products; empty categories fall
+// back to the styled placeholder asset.
+export async function getCategoryCovers(): Promise<Record<string, string>> {
+  const rows = await db.product.findMany({
+    where: { published: true },
+    orderBy: { createdAt: "desc" },
+    include: {
+      category: { select: { slug: true } },
+      images: { orderBy: { sortOrder: "asc" }, take: 1, select: { path: true } },
+    },
+  });
+  const covers: Record<string, string> = {};
+  for (const r of rows as { category: { slug: string }; images: { path: string }[] }[]) {
+    if (r.images[0] && !(r.category.slug in covers)) covers[r.category.slug] = r.images[0].path;
+  }
+  return covers;
+}

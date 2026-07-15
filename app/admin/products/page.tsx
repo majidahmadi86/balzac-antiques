@@ -89,7 +89,7 @@ export default async function AdminProductsPage({
             {products.map((p: ProductRow, i: number) => (
               <div
                 key={p.id}
-                className={`flex flex-wrap items-center gap-4 px-5 py-4 sm:flex-nowrap ${i > 0 ? "border-t border-[#E4DCCB]" : ""}`}
+                className={`flex items-start gap-4 px-4 py-4 sm:px-5 ${i > 0 ? "border-t border-[#E4DCCB]" : ""}`}
               >
                 <div className="relative h-14 w-14 shrink-0 overflow-hidden border border-[#E4DCCB] bg-[#F0EADB]">
                   {p.images[0] ? (
@@ -102,16 +102,15 @@ export default async function AdminProductsPage({
                 </div>
 
                 <div className="min-w-0 flex-1">
-                  <Link href={`/admin/products/${p.id}`} className="block truncate font-serif text-[16px] text-[#1F1B16] transition-colors hover:text-[#8A7A5C]">
+                  <Link href={`/admin/products/${p.id}`} className="block font-serif text-[16px] leading-snug text-[#1F1B16] transition-colors hover:text-[#8A7A5C]">
                     {p.titleEn}
                   </Link>
                   <p className="mt-0.5 text-[12px] text-[#9A8F7D]">
                     {p.category.labelEn} · {formatEur(p.priceEur)}
                     {!p.titleFr && <span className="ml-2 text-[#B99A5B]">FR missing</span>}
                   </p>
-                </div>
 
-                <div className="flex shrink-0 items-center gap-2.5">
+                  <div className="mt-2.5 flex flex-wrap items-center gap-2">
                   <form action={toggleFeatured}>
                     <input type="hidden" name="id" value={p.id} />
                     <button
@@ -146,6 +145,7 @@ export default async function AdminProductsPage({
                   >
                     Edit
                   </Link>
+                  </div>
                 </div>
               </div>
             ))}

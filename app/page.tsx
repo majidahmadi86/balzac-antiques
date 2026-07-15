@@ -4,13 +4,15 @@ import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 import Reveal from "@/components/Reveal";
 import { categories, auction } from "@/lib/data";
-import { getHeroProducts } from "@/lib/catalogue";
+import { getHeroProducts, getCategoryCovers } from "@/lib/catalogue";
 import HeroSlideshow from "@/components/HeroSlideshow";
 import { T } from "@/components/Prefs";
 
 export default async function HomePage() {
   // Admin-chosen hero pieces (max 5). Empty -> the original brand hero below.
   const heroSlides = await getHeroProducts();
+  // Category cards fill themselves with each category's newest product photo.
+  const covers = await getCategoryCovers();
   return (
     <main>
       <Header />
@@ -76,7 +78,7 @@ export default async function HomePage() {
                 >
                   <div className="relative h-full w-full">
                     <Image
-                      src={cat.image}
+                      src={covers[cat.slug] ?? cat.image}
                       alt={cat.label}
                       fill
                       sizes="(max-width: 640px) 50vw, 25vw"

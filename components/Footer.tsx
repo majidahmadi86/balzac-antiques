@@ -6,8 +6,9 @@ import TrustBadges from "./TrustBadges";
 import { categories } from "@/lib/data";
 
 const social = [
-  { label: "Instagram", href: "#" },
-  { label: "Facebook", href: "#" },
+  // Facebook intentionally absent until the client provides a real URL
+  // (no dead links on this site).
+  { label: "Instagram", href: "https://www.instagram.com/balzacantiques" },
 ];
 
 export default function Footer() {
@@ -30,6 +31,8 @@ export default function Footer() {
               <a
                 key={s.label}
                 href={s.href}
+                target="_blank"
+                rel="noopener"
                 className="text-[11px] tracking-[0.14em] uppercase text-gold hover:text-gold-dark"
               >
                 {s.label}

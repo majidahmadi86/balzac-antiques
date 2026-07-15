@@ -47,7 +47,7 @@ try {
   await prisma.productSpec.createMany({
     data: specs.map((s, i) => ({ ...s, productId: product.id, sortOrder: i })),
   });
-  console.log(`Griffon lithograph ready: ${product.slug}`);
+  console.log(`Griffon lithograph ready: ${product.slug} (id ${product.id}) — now add its photos in the admin panel.`);
 } finally {
   await prisma.$disconnect();
 }

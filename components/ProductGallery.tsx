@@ -128,9 +128,12 @@ export default function ProductGallery({ images, title }: { images: string[]; ti
           className="fixed inset-0 z-[70] flex flex-col bg-ink/95"
           onClick={close}
         >
-          <div className="flex items-center justify-between px-4 py-3 sm:px-6" onClick={(e) => e.stopPropagation()}>
-            <span className="text-[11px] tracking-[0.2em] text-cream/70">
-              {active + 1} / {images.length}
+          <div className="flex items-center justify-between gap-4 px-4 py-3 sm:px-6" onClick={(e) => e.stopPropagation()}>
+            <span className="min-w-0 truncate font-display text-[14px] italic text-cream/80">
+              {title}
+              <span className="ml-3 font-sans not-italic text-[11px] tracking-[0.2em] text-cream/50">
+                {active + 1} / {images.length}
+              </span>
             </span>
             <button
               type="button"
@@ -142,8 +145,11 @@ export default function ProductGallery({ images, title }: { images: string[]; ti
             </button>
           </div>
 
+          {/* Gallery mat: the photo sits inside a padded, hairline-framed stage
+              so zooming reads like leaning into a framed work, not a naked file. */}
+          <div className="flex flex-1 items-stretch px-4 pb-2 sm:px-10 sm:pb-4" onClick={close}>
           <div
-            className={`relative flex-1 overflow-hidden ${zoomed ? "cursor-grab" : "cursor-zoom-in"}`}
+            className={`relative flex-1 overflow-hidden border border-[#B99A5B]/35 bg-ink shadow-[inset_0_0_0_1px_rgba(247,243,234,0.06),0_0_60px_rgba(0,0,0,0.5)] ${zoomed ? "cursor-grab" : "cursor-zoom-in"}`}
             onClick={(e) => {
               e.stopPropagation();
               toggleZoom(e);
@@ -178,12 +184,13 @@ export default function ProductGallery({ images, title }: { images: string[]; ti
               src={images[active]}
               alt={`${title} — photo ${active + 1}`}
               draggable={false}
-              className="absolute inset-0 h-full w-full select-none object-contain transition-transform duration-300"
+              className="absolute inset-3 h-[calc(100%-24px)] w-[calc(100%-24px)] select-none object-contain transition-transform duration-300 sm:inset-5 sm:h-[calc(100%-40px)] sm:w-[calc(100%-40px)]"
               style={{
                 transform: zoomed ? `translate(${offset.x}px, ${offset.y}px) scale(2.5)` : "none",
                 transformOrigin: origin,
               }}
             />
+          </div>
           </div>
 
           {images.length > 1 ? (

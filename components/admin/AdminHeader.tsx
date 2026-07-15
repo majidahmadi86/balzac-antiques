@@ -4,7 +4,7 @@ import { logout } from "../../app/admin/login/actions";
 export default function AdminHeader({ email }: { email: string }) {
   return (
     <header className="border-b border-[#E4DCCB] bg-white/60">
-      <div className="mx-auto flex max-w-5xl items-center justify-between px-6 py-5">
+      <div className="mx-auto flex max-w-5xl items-center justify-between gap-3 px-4 py-4 sm:px-6 sm:py-5">
         <div className="flex items-center gap-5 sm:gap-10">
           <Link href="/admin" className="block">
             <p className="font-serif text-[19px] tracking-[0.26em] text-[#1F1B16] -mr-[0.26em]">BALZAC</p>
@@ -30,7 +30,7 @@ export default function AdminHeader({ email }: { email: string }) {
           <form action={logout}>
             <button
               type="submit"
-              className="border border-[#D8CFBB] bg-white px-4 py-2 text-[10px] tracking-[0.24em] uppercase text-[#1F1B16] transition-colors hover:border-[#B99A5B]"
+              className="whitespace-nowrap border border-[#D8CFBB] bg-white px-3 py-2 text-[9px] tracking-[0.18em] uppercase text-[#1F1B16] transition-colors hover:border-[#B99A5B] sm:px-4 sm:text-[10px] sm:tracking-[0.24em]"
             >
               Sign Out
             </button>
