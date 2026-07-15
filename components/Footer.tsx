@@ -58,9 +58,8 @@ export default function Footer() {
           </p>
           <ul className="mt-4 space-y-2.5">
             {[
-              ["Our Story", "/about"],
-              ["Upcoming Auctions", "/auctions"],
-              ["Sell With Us", "/sell"],
+              ["About Us", "/about"],
+              ["Acquisitions", "/sell"],
               ["Contact", "/contact"],
             ].map(([label, href]) => (
               <li key={label}>
