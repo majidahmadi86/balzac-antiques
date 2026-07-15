@@ -1,10 +1,10 @@
 import type { Metadata } from "next";
 import Link from "next/link";
-import Image from "next/image";
 import { notFound } from "next/navigation";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 import { getProductBySlug, getPublishedSlugs } from "@/lib/catalogue";
+import ProductGallery from "@/components/ProductGallery";
 import { T, Bi, Price } from "@/components/Prefs";
 
 // Slugs known at build time are prerendered; products created later in the
@@ -43,43 +43,7 @@ export default async function ProductPage({ params }: { params: { id: string } }
 
         <div className="mt-5 grid grid-cols-1 gap-10 sm:grid-cols-2">
           {/* --------------------------- Gallery --------------------------- */}
-          <div>
-            <div className="relative aspect-square overflow-hidden bg-parchment">
-              {product.images[0] ? (
-                <Image
-                  src={product.images[0]}
-                  alt={product.titleEn}
-                  fill
-                  priority
-                  sizes="(max-width: 640px) 100vw, 50vw"
-                  className="object-cover"
-                />
-              ) : (
-                <div className="flex h-full w-full items-center justify-center border border-hairline">
-                  <span className="text-[10px] tracking-[0.22em] text-ink/40">PHOTOGRAPHY PENDING</span>
-                </div>
-              )}
-            </div>
-            {product.images.length > 1 ? (
-              <div className="mt-3 grid grid-cols-3 gap-3">
-                {product.images.slice(1).map((src, i) => (
-                  <div
-                    key={src}
-                    className="relative aspect-square overflow-hidden bg-parchment shadow-sm transition-shadow hover:shadow-md"
-                  >
-                    <Image
-                      src={src}
-                      alt={`${product.titleEn} — view ${i + 2}`}
-                      fill
-                      loading="lazy"
-                      sizes="(max-width: 640px) 33vw, 16vw"
-                      className="object-cover"
-                    />
-                  </div>
-                ))}
-              </div>
-            ) : null}
-          </div>
+          <ProductGallery images={product.images} title={product.titleEn} />
 
           {/* ---------------------------- Info ----------------------------- */}
           <div>

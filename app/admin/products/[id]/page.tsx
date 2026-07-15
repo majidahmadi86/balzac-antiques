@@ -8,6 +8,7 @@ import ProductForm from "../ProductForm";
 import { updateProduct } from "../actions";
 import DeleteButton from "./DeleteButton";
 import PhotoManager from "./PhotoManager";
+import { uploadImages } from "./images/actions";
 
 export const metadata: Metadata = {
   title: "Edit Product · Balzac Antiques Admin",
@@ -16,7 +17,13 @@ export const metadata: Metadata = {
 
 export const dynamic = "force-dynamic";
 
-export default async function EditProductPage({ params }: { params: { id: string } }) {
+export default async function EditProductPage({
+  params,
+  searchParams,
+}: {
+  params: { id: string };
+  searchParams?: { ok?: string; err?: string };
+}) {
   const cookieStore = await cookies();
   const session = await verifySessionToken(cookieStore.get(ADMIN_COOKIE)?.value);
   const email = session?.email ?? "";
@@ -45,12 +52,14 @@ export default async function EditProductPage({ params }: { params: { id: string
 
         <div className="mt-8">
           <PhotoManager
-            productId={product.id}
             images={product.images.map((img: { id: number; path: string; alt: string | null }) => ({
               id: img.id,
               path: img.path,
               alt: img.alt,
             }))}
+            uploadAction={uploadImages.bind(null, product.id)}
+            saved={searchParams?.ok}
+            error={searchParams?.err}
           />
         </div>
 

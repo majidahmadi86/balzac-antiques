@@ -1,145 +1,157 @@
 "use client";
 
-import { useEffect, useRef, useState, useTransition } from "react";
+// Upload + arrange product photos, mobile-first. Picking photos uploads them
+// IMMEDIATELY (no separate Upload press, no Save needed — photos are not part
+// of the details form below). Each photo: ← → order, ★ make hero, ↻ rotate,
+// Replace in place, ✕ remove. Server does the heavy lifting (sharp).
+
+import { useRef } from "react";
 import Image from "next/image";
-import { useRouter } from "next/navigation";
-import { useFormState, useFormStatus } from "react-dom";
-import {
-  uploadProductImage,
-  deleteProductImage,
-  makeCoverPhoto,
-  type ImageActionState,
-} from "./images/actions";
+import { useFormStatus } from "react-dom";
+import { deleteImage, moveImage, rotateImage, replaceImage } from "./images/actions";
 
-export type PhotoItem = { id: number; path: string; alt: string | null };
+export type PhotoRow = { id: number; path: string; alt: string | null };
 
-function UploadButton({ disabled }: { disabled: boolean }) {
+const iconBtn =
+  "flex h-9 min-w-9 items-center justify-center border border-[#D8CFBB] bg-white px-2 text-[13px] leading-none text-[#1F1B16] transition-colors hover:border-[#B99A5B] disabled:opacity-30";
+
+function PickerButton() {
   const { pending } = useFormStatus();
+  const inputRef = useRef<HTMLInputElement>(null);
   return (
-    <button
-      type="submit"
-      disabled={disabled || pending}
-      className="bg-[#1F1B16] px-5 py-2.5 text-[10px] tracking-[0.24em] uppercase text-[#F7F3EA] transition-colors hover:bg-[#3A322A] disabled:opacity-50"
-    >
-      {pending ? "Uploading…" : "Upload Photo"}
-    </button>
+    <div>
+      <input
+        ref={inputRef}
+        type="file"
+        name="photos"
+        multiple
+        accept="image/jpeg,image/png,image/webp"
+        className="sr-only"
+        onChange={(e) => {
+          if (e.currentTarget.files?.length) e.currentTarget.form?.requestSubmit();
+        }}
+      />
+      <button
+        type="button"
+        disabled={pending}
+        onClick={() => inputRef.current?.click()}
+        className="w-full bg-[#1F1B16] px-5 py-3.5 text-[11px] tracking-[0.24em] uppercase text-[#F7F3EA] transition-colors hover:bg-[#3A322A] disabled:opacity-60 sm:w-auto"
+      >
+        {pending ? "Uploading & optimising…" : "+ Add Photos"}
+      </button>
+    </div>
+  );
+}
+
+function ReplacePicker({ imageId }: { imageId: number }) {
+  const inputRef = useRef<HTMLInputElement>(null);
+  return (
+    <form action={replaceImage} className="contents">
+      <input type="hidden" name="imageId" value={imageId} />
+      <input
+        ref={inputRef}
+        type="file"
+        name="photo"
+        accept="image/jpeg,image/png,image/webp"
+        className="sr-only"
+        onChange={(e) => {
+          if (e.currentTarget.files?.length) e.currentTarget.form?.requestSubmit();
+        }}
+      />
+      <button
+        type="button"
+        onClick={() => inputRef.current?.click()}
+        className="flex h-9 items-center justify-center border border-[#D8CFBB] bg-white px-2.5 text-[10px] tracking-[0.12em] uppercase text-[#1F1B16] transition-colors hover:border-[#B99A5B]"
+        title="Replace this photo"
+      >
+        Replace
+      </button>
+    </form>
   );
 }
 
 export default function PhotoManager({
-  productId,
   images,
+  uploadAction,
+  saved,
+  error,
 }: {
-  productId: string;
-  images: PhotoItem[];
+  images: PhotoRow[];
+  uploadAction: (formData: FormData) => Promise<void>;
+  saved?: string;
+  error?: string;
 }) {
-  const router = useRouter();
-  const inputRef = useRef<HTMLInputElement>(null);
-  const [selectedName, setSelectedName] = useState<string | null>(null);
-  const [, startTransition] = useTransition();
-
-  const uploadWithId = uploadProductImage.bind(null, productId);
-  const [state, formAction] = useFormState(uploadWithId, null as ImageActionState);
-
-  useEffect(() => {
-    if (state && "ok" in state && state.ok) {
-      setSelectedName(null);
-      if (inputRef.current) inputRef.current.value = "";
-      startTransition(() => router.refresh());
-    }
-  }, [state, router]);
-
-  const atCap = images.length >= 5;
-
   return (
-    <div className="border border-[#E4DCCB] bg-white/70 p-5">
-      <div className="flex items-baseline justify-between gap-4">
+    <div id="photos" className="border border-[#E4DCCB] bg-white/70 p-4 sm:p-5">
+      <div className="flex items-center justify-between">
         <p className="text-[10px] tracking-[0.22em] uppercase text-[#6B6154]">Photos</p>
-        <p className="text-[12px] tabular-nums text-[#9A8F7D]">
-          {images.length} / 5
-        </p>
+        <span className="text-[10px] tracking-[0.14em] text-[#9A8F7D]">{images.length} / 5</span>
       </div>
 
-      {images.length > 0 ? (
-        <ul className="mt-4 grid grid-cols-2 gap-3 sm:grid-cols-4">
-          {images.map((img, index) => (
-            <li key={img.id} className="group relative aspect-square overflow-hidden border border-[#E4DCCB] bg-[#F0EADB]">
-              <Image
-                src={img.path}
-                alt={img.alt ?? ""}
-                fill
-                sizes="160px"
-                className="object-cover"
-                unoptimized={img.path.startsWith("/uploads/")}
-              />
-              {index === 0 ? (
-                <span className="absolute left-1.5 top-1.5 bg-[#1F1B16]/85 px-1.5 py-0.5 text-[9px] tracking-[0.14em] uppercase text-[#F7F3EA]">
-                  Hero
-                </span>
-              ) : (
-                <form action={makeCoverPhoto} className="absolute left-1.5 top-1.5 opacity-0 transition-opacity group-hover:opacity-100 focus-within:opacity-100">
-                  <input type="hidden" name="productId" value={productId} />
+      {error && (
+        <p role="alert" className="mt-3 border border-[#C08A6A]/40 bg-[#FBF4EF] px-4 py-3 text-[13px] leading-relaxed text-[#8A5A3C]">
+          {error}
+        </p>
+      )}
+      {saved && !error && (
+        <p className="mt-3 border border-[#B99A5B]/40 bg-[#F4E9D4] px-4 py-3 text-[13px] text-[#6B5326]">{saved}</p>
+      )}
+
+      {images.length > 0 && (
+        <div className="mt-4 grid grid-cols-2 gap-4 sm:grid-cols-3 lg:grid-cols-5">
+          {images.map((img, i) => (
+            <div key={img.id}>
+              <div className="relative aspect-square w-full overflow-hidden border border-[#E4DCCB] bg-[#F0EADB]">
+                <Image src={img.path} alt={img.alt ?? `Photo ${i + 1}`} fill sizes="(max-width: 640px) 50vw, 20vw" className="object-cover" />
+                {i === 0 && (
+                  <span className="absolute left-0 top-0 bg-[#1F1B16]/85 px-2 py-1 text-[9px] tracking-[0.18em] uppercase text-[#F7F3EA]">
+                    Hero
+                  </span>
+                )}
+              </div>
+              <div className="mt-2 flex flex-wrap items-center gap-1.5">
+                <form action={moveImage} className="contents">
                   <input type="hidden" name="imageId" value={img.id} />
-                  <button
-                    type="submit"
-                    title="Make hero photo"
-                    aria-label="Make hero photo"
-                    className="bg-[#F7F3EA]/95 px-1.5 py-0.5 text-[12px] text-[#B99A5B] shadow-sm hover:text-[#1F1B16]"
-                  >
+                  <button type="submit" name="dir" value="left" disabled={i === 0} className={iconBtn} title="Move earlier" aria-label="Move earlier">
+                    &larr;
+                  </button>
+                  <button type="submit" name="dir" value="right" disabled={i === images.length - 1} className={iconBtn} title="Move later" aria-label="Move later">
+                    &rarr;
+                  </button>
+                  <button type="submit" name="dir" value="cover" disabled={i === 0} className={iconBtn} title="Make hero photo" aria-label="Make hero photo">
                     ★
                   </button>
                 </form>
-              )}
-              <form
-                action={deleteProductImage}
-                className="absolute bottom-1.5 right-1.5 opacity-0 transition-opacity group-hover:opacity-100 focus-within:opacity-100"
-                onSubmit={(e) => {
-                  if (!window.confirm("Remove this photo?")) e.preventDefault();
-                }}
-              >
-                <input type="hidden" name="productId" value={productId} />
-                <input type="hidden" name="imageId" value={img.id} />
-                <button
-                  type="submit"
-                  className="bg-[#F7F3EA]/95 px-2 py-1 text-[9px] tracking-[0.14em] uppercase text-[#8A5A3C] shadow-sm hover:bg-white"
-                >
-                  Delete
-                </button>
-              </form>
-            </li>
+                <form action={rotateImage} className="contents">
+                  <input type="hidden" name="imageId" value={img.id} />
+                  <button type="submit" className={iconBtn} title="Rotate 90°" aria-label="Rotate 90 degrees">
+                    ↻
+                  </button>
+                </form>
+                <ReplacePicker imageId={img.id} />
+                <form action={deleteImage} className="contents">
+                  <input type="hidden" name="imageId" value={img.id} />
+                  <button
+                    type="submit"
+                    className="flex h-9 min-w-9 items-center justify-center border border-[#C08A6A]/40 bg-white px-2 text-[13px] leading-none text-[#8A5A3C] transition-colors hover:border-[#8A5A3C]"
+                    title="Remove photo"
+                    aria-label="Remove photo"
+                  >
+                    ✕
+                  </button>
+                </form>
+              </div>
+            </div>
           ))}
-        </ul>
-      ) : (
-        <p className="mt-4 text-[13px] text-[#9A8F7D]">No photos yet — upload the first one below.</p>
+        </div>
       )}
 
-      <p className="mt-4 text-[12px] leading-relaxed text-[#6B6154]">
-        JPG, PNG or WebP, up to 15 MB each, 5 photos per product. Photos are optimised automatically. The FIRST photo is the hero photo: it appears in the collection, at the top of the product page, and in the homepage slideshow. Use ★ to make any photo the hero; the others follow as the gallery, in this order.
-      </p>
-
-      <form action={formAction} className="mt-4 flex flex-wrap items-center gap-3">
-        <input
-          ref={inputRef}
-          type="file"
-          name="file"
-          accept="image/jpeg,image/png,image/webp"
-          disabled={atCap}
-          onChange={(e) => setSelectedName(e.target.files?.[0]?.name ?? null)}
-          className="block w-full max-w-xs text-[12px] text-[#6B6154] file:mr-3 file:border file:border-[#D8CFBB] file:bg-white file:px-3 file:py-2 file:text-[10px] file:tracking-[0.18em] file:uppercase file:text-[#1F1B16]"
-        />
-        <UploadButton disabled={atCap || !selectedName} />
+      <form action={uploadAction} className="mt-5 border-t border-[#E4DCCB] pt-4">
+        <PickerButton />
+        <p className="mt-3 text-[12px] leading-relaxed text-[#9A8F7D]">
+          Photos upload and save INSTANTLY when chosen (the Save button below is only for the text details). JPG, PNG or WebP, up to 15 MB each, 5 per product, optimised automatically. The FIRST photo is the hero: it appears in the collection, at the top of the product page, and in the homepage slideshow. Use ★ to make any photo the hero.
+        </p>
       </form>
-
-      {state && "error" in state && state.error ? (
-        <p className="mt-3 text-[13px] text-[#8A5A3C]" role="alert">
-          {state.error}
-        </p>
-      ) : null}
-      {atCap ? (
-        <p className="mt-3 text-[13px] text-[#8A5A3C]">
-          This product already has 5 photos. Delete one before uploading another.
-        </p>
-      ) : null}
     </div>
   );
 }

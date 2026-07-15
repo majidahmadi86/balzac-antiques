@@ -237,7 +237,7 @@ export default function ProductForm({
         + Add Specification
       </button>
 
-      <div className="mt-12 flex items-center gap-6 border-t border-[#E4DCCB] pt-8">
+      <div className="sticky bottom-0 z-10 mt-12 -mx-4 flex items-center gap-6 border-t border-[#E4DCCB] bg-[#F7F3EA]/95 px-4 py-4 backdrop-blur sm:mx-0 sm:px-0">
         <SubmitButton isNew={isNew} />
         <Link href="/admin/products" className="text-[11px] tracking-[0.22em] uppercase text-[#6B6154] transition-colors hover:text-[#1F1B16]">
           Cancel
