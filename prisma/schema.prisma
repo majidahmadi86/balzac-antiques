@@ -1,0 +1,122 @@
+// Balzac Antiques — database schema (CloudPanel MySQL/MariaDB, localhost).
+// Phase 1: catalogue (categories, products, images, specs) + admin users.
+// Phase 2 (next): customers, addresses, orders — tables sketched at bottom
+// so the shape is agreed before checkout work starts.
+// Bilingual: every human-readable field has En/Fr columns per the contract
+// ("all product/category fields editable in both languages"). Fr nullable —
+// site falls back to En until the client fills it in.
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "mysql"
+  url      = env("DATABASE_URL")
+}
+
+model Category {
+  id        Int       @id @default(autoincrement())
+  slug      String    @unique
+  labelEn   String
+  labelFr   String?
+  image     String    @default("")
+  featured  Boolean   @default(false)
+  sortOrder Int       @default(0)
+  products  Product[]
+}
+
+model Product {
+  id            String         @id @default(cuid())
+  slug          String         @unique
+  categoryId    Int
+  category      Category       @relation(fields: [categoryId], references: [id])
+  eyebrow       String?
+  titleEn       String
+  titleFr       String?
+  descriptionEn String         @db.Text
+  descriptionFr String?        @db.Text
+  origin        String?
+  year          String?
+  condition     String?
+  dimensions    String? // in the client's written brief; admin field
+  priceEur      Decimal        @db.Decimal(10, 2)
+  featured      Boolean        @default(false)
+  published     Boolean        @default(true)
+  createdAt     DateTime       @default(now())
+  updatedAt     DateTime       @updatedAt
+  images        ProductImage[]
+  specs         ProductSpec[]
+
+  @@index([categoryId])
+  @@index([published, featured])
+}
+
+model ProductImage {
+  id        Int     @id @default(autoincrement())
+  productId String
+  product   Product @relation(fields: [productId], references: [id], onDelete: Cascade)
+  path      String // served path, e.g. /images/products/xyz.jpg
+  alt       String?
+  sortOrder Int     @default(0)
+
+  @@index([productId])
+}
+
+model ProductSpec {
+  id        Int     @id @default(autoincrement())
+  productId String
+  product   Product @relation(fields: [productId], references: [id], onDelete: Cascade)
+  labelEn   String
+  labelFr   String?
+  valueEn   String
+  valueFr   String?
+  sortOrder Int     @default(0)
+
+  @@index([productId])
+}
+
+model AdminUser {
+  id           Int      @id @default(autoincrement())
+  email        String   @unique
+  passwordHash String
+  name         String
+  createdAt    DateTime @default(now())
+}
+
+// ---------------------------------------------------------------------------
+// PHASE 2 — customer accounts & orders (checkout build). Commented out so
+// `db push` doesn't create empty tables yet; uncomment when that phase starts.
+//
+// model Customer {
+//   id           String    @id @default(cuid())
+//   email        String    @unique
+//   passwordHash String
+//   name         String
+//   createdAt    DateTime  @default(now())
+//   addresses    Address[]
+//   orders       Order[]
+// }
+//
+// model Address {
+//   id         Int      @id @default(autoincrement())
+//   customerId String
+//   customer   Customer @relation(fields: [customerId], references: [id], onDelete: Cascade)
+//   line1      String
+//   line2      String?
+//   city       String
+//   postcode   String
+//   country    String
+//   isDefault  Boolean  @default(false)
+// }
+//
+// model Order {
+//   id              String   @id @default(cuid())
+//   customerId      String
+//   customer        Customer @relation(fields: [customerId], references: [id])
+//   status          String   @default("pending") // pending|paid|shipped|delivered|cancelled
+//   totalEur        Decimal  @db.Decimal(10, 2)
+//   stripeSessionId String?  @unique
+//   createdAt       DateTime @default(now())
+// }
+// ---------------------------------------------------------------------------

@@ -179,13 +179,17 @@ export default function Header({ cartCount }: { cartCount?: number }) {
 
         {/* --------------------------- CENTER --------------------------- */}
         <Link href="/" className="group flex flex-col items-center justify-self-center leading-none">
-          <span className="font-display text-[25px] tracking-[0.3em] text-ink md:text-[31px]">
+          {/* Lockup width is set by BALZAC; the -mr cancels the trailing
+              letter-space so layout width == visual width. The subtitle row
+              is w-full, so — ANTIQUES — always spans exactly the wordmark,
+              hairlines absorbing the remainder at any size. */}
+          <span className="-mr-[0.3em] font-display text-[25px] tracking-[0.3em] text-ink md:text-[31px]">
             BALZAC
           </span>
-          <span className="mt-1.5 flex items-center gap-2 text-[10.5px] tracking-[0.4em] text-gold md:text-[11px]">
-            <span className="h-px w-3.5 bg-gold/60" />
-            <span className="translate-x-[0.2em]">ANTIQUES</span>
-            <span className="h-px w-3.5 bg-gold/60" />
+          <span className="mt-1.5 flex w-full items-center text-[10.5px] tracking-[0.45em] text-gold md:text-[11px]">
+            <span className="h-px flex-1 bg-gold/60" />
+            <span className="mx-2 translate-x-[0.225em]">ANTIQUES</span>
+            <span className="h-px flex-1 bg-gold/60" />
           </span>
         </Link>
 
