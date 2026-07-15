@@ -4,6 +4,7 @@ import Link from "next/link";
 import { useEffect, useRef, useState } from "react";
 import { usePathname } from "next/navigation";
 import { categories } from "@/lib/data";
+import { usePrefs, CURRENCIES, type Currency } from "@/components/Prefs";
 
 // DESIGN PASS
 // Desktop dropdown: boutique "panel" — gold top rule, generous padding,
@@ -13,10 +14,13 @@ import { categories } from "@/lib/data";
 // Mobile drawer: full-height, serif display links with staggered reveal,
 // hairline rules, brand tagline + contact at the foot.
 
-const pagesLeft = [{ href: "/sell", label: "Acquisitions" }];
+// Split 2+2 around the wordmark for compositional symmetry — with the
+// account icon gone, a 4+0 arrangement left the right side visually empty
+// even though the logo was mathematically centered.
+const pagesLeft = [{ href: "/sell", key: "nav.acquisitions" }];
 const pagesRight = [
-  { href: "/about", label: "About" },
-  { href: "/contact", label: "Contact" },
+  { href: "/about", key: "nav.about" },
+  { href: "/contact", key: "nav.contact" },
 ];
 const allPages = [...pagesLeft, ...pagesRight];
 
@@ -24,8 +28,10 @@ export default function Header({ cartCount }: { cartCount?: number }) {
   const [menuOpen, setMenuOpen] = useState(false);
   const [collectionOpen, setCollectionOpen] = useState(false);
   const [drawerCollectionOpen, setDrawerCollectionOpen] = useState(false);
+  const [curOpen, setCurOpen] = useState(false);
   const closeTimer = useRef<ReturnType<typeof setTimeout> | null>(null);
   const pathname = usePathname();
+  const { t, locale, setLocale, currency, setCurrency } = usePrefs();
 
   const openPanel = () => {
     if (closeTimer.current) clearTimeout(closeTimer.current);
@@ -94,7 +100,7 @@ export default function Header({ cartCount }: { cartCount?: number }) {
                   collectionOpen ? "text-gold-dark" : "text-ink hover:text-gold-dark"
                 }`}
               >
-                Collection
+                {t("nav.collection")}
                 <svg
                   width="9"
                   height="9"
@@ -125,13 +131,13 @@ export default function Header({ cartCount }: { cartCount?: number }) {
                   <div className="px-9 pb-8 pt-7">
                     <div className="flex items-baseline justify-between border-b border-hairline pb-4">
                       <span className="text-[10.5px] tracking-[0.28em] uppercase text-gold">
-                        The Collection
+                        {t("nav.theCollection")}
                       </span>
                       <Link
                         href="/collection"
                         className="text-[11px] tracking-[0.16em] uppercase text-ink/70 transition-colors hover:text-gold-dark"
                       >
-                        View All &rarr;
+                        {t("nav.viewAll")} &rarr;
                       </Link>
                     </div>
                     <div className="mt-5 grid grid-cols-2 gap-x-10">
@@ -164,7 +170,7 @@ export default function Header({ cartCount }: { cartCount?: number }) {
                 href={p.href}
                 className="group relative whitespace-nowrap py-2 text-[11.5px] tracking-[0.22em] uppercase text-ink transition-colors hover:text-gold-dark"
               >
-                {p.label}
+                {t(p.key)}
                 <span className="absolute -bottom-px left-0 h-px w-0 bg-gold transition-all duration-300 group-hover:w-full" />
               </Link>
             ))}
@@ -193,11 +199,73 @@ export default function Header({ cartCount }: { cartCount?: number }) {
                 href={p.href}
                 className="group relative whitespace-nowrap py-2 text-[11.5px] tracking-[0.22em] uppercase text-ink transition-colors hover:text-gold-dark"
               >
-                {p.label}
+                {t(p.key)}
                 <span className="absolute -bottom-px left-0 h-px w-0 bg-gold transition-all duration-300 group-hover:w-full" />
               </Link>
             ))}
           </nav>
+
+          {/* Language — EN | FR segmented text control */}
+          <div className="hidden items-center gap-2 md:flex" role="group" aria-label={t("nav.language")}>
+            {(["en", "fr"] as const).map((l, i) => (
+              <span key={l} className="flex items-center gap-2">
+                {i > 0 ? <span className="h-3 w-px bg-hairline" aria-hidden /> : null}
+                <button
+                  type="button"
+                  onClick={() => setLocale(l)}
+                  aria-pressed={locale === l}
+                  className={`relative py-1 text-[11px] tracking-[0.22em] uppercase transition-colors ${
+                    locale === l ? "text-ink" : "text-ink/45 hover:text-gold-dark"
+                  }`}
+                >
+                  {l.toUpperCase()}
+                  <span className={`absolute -bottom-px left-0 h-px bg-gold transition-all duration-300 ${locale === l ? "w-full" : "w-0"}`} />
+                </button>
+              </span>
+            ))}
+          </div>
+
+          {/* Currency — compact dropdown */}
+          <div
+            className="relative hidden md:block"
+            onMouseEnter={() => setCurOpen(true)}
+            onMouseLeave={() => setCurOpen(false)}
+          >
+            <button
+              type="button"
+              aria-expanded={curOpen}
+              aria-haspopup="true"
+              aria-label={t("nav.currency")}
+              onClick={() => setCurOpen((v) => !v)}
+              className="flex items-center gap-1.5 py-1 text-[11px] tracking-[0.22em] uppercase text-ink transition-colors hover:text-gold-dark"
+            >
+              {currency}
+              <svg width="8" height="8" viewBox="0 0 12 12" fill="none" className={`text-gold transition-transform duration-300 ${curOpen ? "rotate-180" : ""}`} aria-hidden>
+                <path d="M2.5 4.5L6 8l3.5-3.5" stroke="currentColor" strokeWidth="1.3" strokeLinecap="round" strokeLinejoin="round" />
+              </svg>
+            </button>
+            <div
+              className={`absolute right-0 top-full w-24 transition-all duration-300 ease-out ${
+                curOpen ? "pointer-events-auto translate-y-0 opacity-100" : "pointer-events-none -translate-y-1 opacity-0"
+              }`}
+            >
+              <div className="mt-3 border border-hairline bg-cream py-1 shadow-[0_14px_35px_-16px_rgba(43,36,32,0.35)]">
+                {CURRENCIES.map((c) => (
+                  <button
+                    key={c}
+                    type="button"
+                    onClick={() => { setCurrency(c as Currency); setCurOpen(false); }}
+                    className={`block w-full px-4 py-2 text-left text-[11px] tracking-[0.2em] ${
+                      currency === c ? "text-gold-dark" : "text-ink/70 hover:bg-parchment hover:text-ink"
+                    }`}
+                  >
+                    {c}
+                  </button>
+                ))}
+              </div>
+            </div>
+          </div>
+
           {cartCount ? (
             <Link href="/cart" aria-label="View cart" className="relative p-1 text-ink">
               <svg width="22" height="22" viewBox="0 0 24 24" fill="none">
@@ -235,7 +303,7 @@ export default function Header({ cartCount }: { cartCount?: number }) {
             }`}
             style={{ transitionDelay: menuOpen ? "80ms" : "0ms" }}
           >
-            Menu
+            {t("nav.menu")}
           </p>
 
           {/* Collection accordion */}
@@ -251,7 +319,7 @@ export default function Header({ cartCount }: { cartCount?: number }) {
               onClick={() => setDrawerCollectionOpen((v) => !v)}
               className="flex w-full items-center justify-between border-b border-hairline py-4"
             >
-              <span className="font-display text-[22px] text-ink">Collection</span>
+              <span className="font-display text-[22px] text-ink">{t("nav.collection")}</span>
               <svg
                 width="12"
                 height="12"
@@ -271,7 +339,7 @@ export default function Header({ cartCount }: { cartCount?: number }) {
             >
               <div className="border-b border-hairline py-2 pl-4">
                 <Link href="/collection" className="block py-2.5 text-[12px] tracking-[0.2em] uppercase text-gold">
-                  All Pieces &rarr;
+                  {t("nav.allPieces")} &rarr;
                 </Link>
                 {categories.map((c) => (
                   <Link key={c.slug} href={`/collection/${c.slug}`} className="block py-2.5 text-[15px] text-ink/80">
@@ -291,7 +359,7 @@ export default function Header({ cartCount }: { cartCount?: number }) {
               style={{ transitionDelay: menuOpen ? `${200 + i * 60}ms` : "0ms" }}
             >
               <Link href={p.href} className="block border-b border-hairline py-4 font-display text-[22px] text-ink">
-                {p.label}
+                {t(p.key)}
               </Link>
             </div>
           ))}
@@ -303,8 +371,38 @@ export default function Header({ cartCount }: { cartCount?: number }) {
             }`}
             style={{ transitionDelay: menuOpen ? "420ms" : "0ms" }}
           >
+            <div className="mb-7 flex flex-wrap items-center gap-x-8 gap-y-4">
+              <div className="flex items-center gap-3">
+                <span className="text-[10px] tracking-[0.24em] uppercase text-ink/40">{t("nav.language")}</span>
+                {(["en", "fr"] as const).map((l) => (
+                  <button
+                    key={l}
+                    type="button"
+                    onClick={() => setLocale(l)}
+                    aria-pressed={locale === l}
+                    className={`text-[12px] tracking-[0.2em] uppercase ${locale === l ? "border-b border-gold text-ink" : "text-ink/45"}`}
+                  >
+                    {l.toUpperCase()}
+                  </button>
+                ))}
+              </div>
+              <div className="flex items-center gap-3">
+                <span className="text-[10px] tracking-[0.24em] uppercase text-ink/40">{t("nav.currency")}</span>
+                {CURRENCIES.map((c) => (
+                  <button
+                    key={c}
+                    type="button"
+                    onClick={() => setCurrency(c as Currency)}
+                    aria-pressed={currency === c}
+                    className={`text-[12px] tracking-[0.2em] ${currency === c ? "border-b border-gold text-ink" : "text-ink/45"}`}
+                  >
+                    {c}
+                  </button>
+                ))}
+              </div>
+            </div>
             <p className="font-display text-[14px] italic text-ink/60">
-              Rare Objects. Timeless Stories.
+              {t("drawer.tagline")}
             </p>
             <a
               href="mailto:info@balzacantiques.ch"

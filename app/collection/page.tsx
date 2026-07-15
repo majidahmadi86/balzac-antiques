@@ -5,6 +5,7 @@ import Footer from "@/components/Footer";
 import PageHeader from "@/components/PageHeader";
 import ProductCard from "@/components/ProductCard";
 import { products, categories } from "@/lib/data";
+import { T } from "@/components/Prefs";
 
 export const metadata: Metadata = {
   title: "The Collection — Balzac Antiques",
@@ -18,9 +19,9 @@ export default function CollectionPage() {
       <Header />
 
       <PageHeader
-        eyebrow="The Collection"
-        title="All Pieces"
-        lead="Every item is chosen for its authenticity, quality, rarity, and lasting appeal."
+        eyebrow={<T k="coll.eyebrow" />}
+        title={<T k="coll.title" />}
+        lead={<T k="coll.lead" />}
       />
 
       {/* Category filter rail — plain links, so each category stays a real,
@@ -29,7 +30,7 @@ export default function CollectionPage() {
         <ul className="flex flex-wrap justify-center gap-2">
           <li>
             <span className="block border border-gold bg-gold/10 px-4 py-2 text-[11px] tracking-[0.14em] uppercase text-gold-dark">
-              All
+              <T k="coll.all" />
             </span>
           </li>
           {categories.map((c) => (

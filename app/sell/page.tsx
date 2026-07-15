@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 import PageHeader from "@/components/PageHeader";
+import { T } from "@/components/Prefs";
 
 export const metadata: Metadata = {
   title: "Acquisitions — Balzac Antiques",
@@ -9,15 +10,7 @@ export const metadata: Metadata = {
     "Balzac Antiques is actively seeking rare books, works of art, vintage watches, vinyl records, iconic design, decorative arts, and quality collectibles.",
 };
 
-const seeking = [
-  "Rare books",
-  "Works of art",
-  "Vintage watches",
-  "Vinyl records",
-  "Iconic design",
-  "Decorative arts",
-  "Quality collectibles",
-];
+const seeking = ["sell.i1","sell.i2","sell.i3","sell.i4","sell.i5","sell.i6","sell.i7"];
 
 // Pre-filled mailto so the enquiry lands in the client's inbox with a
 // consistent subject line, and the sender can attach photographs directly
@@ -50,9 +43,9 @@ export default function SellPage() {
       <Header />
 
       <PageHeader
-        eyebrow="Sell With Us"
-        title="Acquisitions"
-        lead="Balzac Antiques is actively seeking rare books, works of art, vintage watches, vinyl records, iconic design, decorative arts, and quality collectibles."
+        eyebrow={<T k="sell.eyebrow" />}
+        title={<T k="sell.title" />}
+        lead={<T k="sell.lead" />}
       />
 
       <section className="mx-auto max-w-content px-6 pb-14 sm:px-10">
@@ -62,30 +55,29 @@ export default function SellPage() {
               key={item}
               className="border border-hairline px-4 py-2 text-[12px] tracking-[0.1em] uppercase text-ink/80"
             >
-              {item}
+              <T k={item} />
             </li>
           ))}
         </ul>
 
         <div className="mx-auto mt-12 max-w-[58ch] space-y-5 text-center text-[15px] leading-[1.85] text-ink/80">
           <p>
-            If you wish to offer an item or an entire collection, please send us
-            photographs and a brief description.
+            <T k="sell.p1" />
           </p>
           <p className="text-ink">
-            All enquiries are handled in complete confidence.
+            <T k="sell.p2" />
           </p>
         </div>
 
         <div className="mt-10 flex justify-center">
           <a href={MAILTO} className="btn-outline">
-            Submit an Item
+            <T k="sell.cta" />
             <span aria-hidden>&rarr;</span>
           </a>
         </div>
 
         <p className="mt-6 text-center text-[13px] text-ink/60">
-          Or write to us directly at{" "}
+          <T k="sell.orWrite" />{" "}
           <a
             href="mailto:info@balzacantiques.ch"
             className="text-gold hover:text-gold-dark"

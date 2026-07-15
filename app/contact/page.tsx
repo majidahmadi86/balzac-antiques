@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 import PageHeader from "@/components/PageHeader";
+import { T } from "@/components/Prefs";
 
 export const metadata: Metadata = {
   title: "Contact — Balzac Antiques",
@@ -13,7 +14,7 @@ export const metadata: Metadata = {
 // panel lands, these become editable fields rather than hardcoded values.
 const channels = [
   {
-    label: "Email",
+    key: "contact.email",
     value: "info@balzacantiques.ch",
     href: "mailto:info@balzacantiques.ch",
     icon: (
@@ -24,7 +25,7 @@ const channels = [
     ),
   },
   {
-    label: "Switzerland",
+    key: "contact.ch",
     value: "+41 76 829 56 28",
     href: "tel:+41768295628",
     icon: (
@@ -39,7 +40,7 @@ const channels = [
     ),
   },
   {
-    label: "Asia",
+    key: "contact.asia",
     value: "+66 94 893 7373",
     href: "tel:+66948937373",
     icon: (
@@ -61,22 +62,22 @@ export default function ContactPage() {
       <Header />
 
       <PageHeader
-        eyebrow="Contact"
-        title="Contact Us"
-        lead="We would be delighted to assist you with any enquiries regarding our collection, sourcing requests, or private acquisitions."
+        eyebrow={<T k="contact.eyebrow" />}
+        title={<T k="contact.title" />}
+        lead={<T k="contact.lead" />}
       />
 
       <section className="mx-auto max-w-content px-6 pb-16 sm:px-10">
         <div className="mx-auto grid max-w-3xl gap-4 sm:grid-cols-3">
           {channels.map((c) => (
             <a
-              key={c.label}
+              key={c.key}
               href={c.href}
               className="group flex flex-col items-center gap-3 border border-hairline bg-parchment/50 px-5 py-8 text-center transition-colors hover:border-gold"
             >
               <span className="text-gold">{c.icon}</span>
               <span className="text-[11px] tracking-[0.18em] uppercase text-gold">
-                {c.label}
+                <T k={c.key} />
               </span>
               <span className="text-[15px] text-ink transition-colors group-hover:text-gold-dark">
                 {c.value}
@@ -86,7 +87,7 @@ export default function ContactPage() {
         </div>
 
         <p className="mt-12 text-center text-[15px] italic text-ink/70">
-          We look forward to hearing from you.
+          <T k="contact.forward" />
         </p>
       </section>
 

@@ -8,8 +8,8 @@ import {
   products,
   productById,
   categoryBySlug,
-  formatPrice,
 } from "@/lib/data";
+import { T, Price } from "@/components/Prefs";
 
 export function generateStaticParams() {
   return products.map((p) => ({ id: p.id }));
@@ -40,7 +40,7 @@ export default function ProductPage({ params }: { params: { id: string } }) {
           className="inline-flex items-center gap-2 text-[12px] tracking-[0.12em] text-gold hover:text-gold-dark"
         >
           <span aria-hidden>&larr;</span>
-          Back to {category ? category.label : "Collection"}
+          <T k="prod.backTo" /> {category ? category.label : "Collection"}
         </Link>
 
         <div className="mt-5 grid grid-cols-1 gap-10 sm:grid-cols-2">
@@ -111,10 +111,10 @@ export default function ProductPage({ params }: { params: { id: string } }) {
 
             <div className="mt-6 bg-parchment p-5">
               <p className="font-display text-[26px] text-ink">
-                {formatPrice(product.priceEur)}
+                <Price eur={product.priceEur} />
               </p>
               <p className="mt-1 text-[12px] text-ink/70">
-                Worldwide shipping available
+                <T k="prod.shipping" />
               </p>
 
               {/* NOTE: button set is still pending the client's decision
@@ -125,7 +125,7 @@ export default function ProductPage({ params }: { params: { id: string } }) {
                 href="/contact"
                 className="mt-4 flex w-full items-center justify-center gap-2 bg-gold py-3.5 text-[13px] tracking-widest2 uppercase text-cream transition-colors hover:bg-gold-dark"
               >
-                Enquire About This Piece
+                <T k="prod.enquire" />
                 <span aria-hidden>&rarr;</span>
               </Link>
             </div>

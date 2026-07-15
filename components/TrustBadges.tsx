@@ -1,6 +1,10 @@
-const badges = [
+"use client";
+
+import { usePrefs } from "@/components/Prefs";
+
+const badges: { keys: [string, string]; icon: JSX.Element }[] = [
   {
-    label: ["WORLDWIDE", "SHIPPING"],
+    keys: ["badge.ship1", "badge.ship2"],
     icon: (
       <svg width="22" height="22" viewBox="0 0 24 24" fill="none">
         <circle cx="12" cy="12" r="9" stroke="currentColor" strokeWidth="1.3" />
@@ -13,7 +17,7 @@ const badges = [
     ),
   },
   {
-    label: ["AUTHENTICITY", "GUARANTEED"],
+    keys: ["badge.auth1", "badge.auth2"],
     icon: (
       <svg width="22" height="22" viewBox="0 0 24 24" fill="none">
         <path
@@ -27,7 +31,7 @@ const badges = [
     ),
   },
   {
-    label: ["EXPERT ADVICE", "PERSONAL SERVICE"],
+    keys: ["badge.advice1", "badge.advice2"],
     icon: (
       <svg width="22" height="22" viewBox="0 0 24 24" fill="none">
         <path
@@ -43,15 +47,16 @@ const badges = [
 ];
 
 export default function TrustBadges() {
+  const { t } = usePrefs();
   return (
     <div className="grid grid-cols-3 divide-x divide-hairline border-t border-hairline bg-cream py-6 text-center">
       {badges.map((b) => (
-        <div key={b.label.join(" ")} className="flex flex-col items-center gap-2 px-1">
+        <div key={b.keys.join(" ")} className="flex flex-col items-center gap-2 px-1">
           <span className="text-gold">{b.icon}</span>
           <span className="text-[10px] leading-tight tracking-[0.1em] text-ink">
-            {b.label.map((line) => (
-              <span key={line} className="block">
-                {line}
+            {b.keys.map((k) => (
+              <span key={k} className="block uppercase">
+                {t(k)}
               </span>
             ))}
           </span>

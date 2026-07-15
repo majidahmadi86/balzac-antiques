@@ -4,6 +4,7 @@ import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 import Reveal from "@/components/Reveal";
 import { categories, auction } from "@/lib/data";
+import { T } from "@/components/Prefs";
 
 export default function HomePage() {
   return (
@@ -27,14 +28,14 @@ export default function HomePage() {
 
         <div className="relative z-10 px-6 py-16 sm:px-10">
           <h1 className="max-w-md font-display text-[38px] leading-[1.08] text-ink sm:text-[52px]">
-            Discover Remarkable Objects
+            <T k="hero.title" />
           </h1>
           <div className="my-5 h-px w-14 bg-gold" />
           <p className="max-w-xs text-[13px] tracking-[0.14em] text-gold">
-            BOOKS, ART, WATCHES, MUSIC &amp; MORE
+            <T k="hero.subtitle" />
           </p>
           <Link href="/collection" className="btn-outline mt-8">
-            Browse All
+            <T k="hero.cta" />
             <span aria-hidden>&rarr;</span>
           </Link>
         </div>
@@ -48,9 +49,9 @@ export default function HomePage() {
       {/* ---------------------------------------------------------------- */}
       <section className="mx-auto max-w-content px-5 py-14 text-center sm:px-8">
         <Reveal>
-          <p className="eyebrow">Featured</p>
+          <p className="eyebrow"><T k="feat.eyebrow" /></p>
           <h2 className="mt-2 font-display text-[30px] text-ink sm:text-[36px]">
-            Exceptional Pieces
+            <T k="feat.title" />
           </h2>
         </Reveal>
 
@@ -81,7 +82,7 @@ export default function HomePage() {
                   href={`/collection/${cat.slug}`}
                   className="link-view-all mt-1 inline-block"
                 >
-                  View All &rarr;
+                  <T k="nav.viewAll" /> &rarr;
                 </Link>
               </Reveal>
             ))}
@@ -115,7 +116,7 @@ export default function HomePage() {
             {auction.date.toUpperCase()}
           </p>
           <Link href={auction.href} className="btn-outline mt-4 w-fit">
-            View Lots
+            <T k="auction.viewLots" />
             <span aria-hidden>&rarr;</span>
           </Link>
         </div>
@@ -128,14 +129,11 @@ export default function HomePage() {
       <Reveal>
         <section className="mx-auto max-w-content px-6 py-16 text-center sm:px-10">
           <p className="font-display text-[22px] italic leading-relaxed text-ink sm:text-[26px]">
-            &ldquo;Every object in our collection carries a history worth
-            continuing.&rdquo;
+            <T k="story.quote" />
           </p>
           <div className="mx-auto my-5 h-px w-10 bg-gold" />
           <p className="mx-auto max-w-[52ch] text-[14px] leading-relaxed text-ink/70">
-            Balzac Antiques sources, authenticates, and presents rare books,
-            fine watches, and remarkable objects for collectors who value
-            craftsmanship and provenance as much as the piece itself.
+            <T k="story.body" />
           </p>
         </section>
       </Reveal>

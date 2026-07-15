@@ -1,4 +1,7 @@
+"use client";
+
 import Link from "next/link";
+import { usePrefs } from "@/components/Prefs";
 import TrustBadges from "./TrustBadges";
 import { categories } from "@/lib/data";
 
@@ -8,6 +11,7 @@ const social = [
 ];
 
 export default function Footer() {
+  const { t } = usePrefs();
   return (
     <footer className="border-t border-hairline bg-cream">
       <TrustBadges />
@@ -58,9 +62,9 @@ export default function Footer() {
           </p>
           <ul className="mt-4 space-y-2.5">
             {[
-              ["About Us", "/about"],
-              ["Acquisitions", "/sell"],
-              ["Contact", "/contact"],
+              [t("footer.aboutUs"), "/about"],
+              [t("nav.acquisitions"), "/sell"],
+              [t("nav.contact"), "/contact"],
             ].map(([label, href]) => (
               <li key={label}>
                 <Link href={href} className="text-[13px] text-ink/80 hover:text-ink">
@@ -76,12 +80,12 @@ export default function Footer() {
             Stay Informed
           </p>
           <p className="mt-4 text-[13px] leading-relaxed text-ink/70">
-            New acquisitions and upcoming auctions, occasionally.
+            {t("footer.newsBlurb")}
           </p>
           <form className="mt-4 flex border-b border-ink/30 pb-2">
             <input
               type="email"
-              placeholder="Email address"
+              placeholder={t("footer.email")}
               className="w-full bg-transparent text-[13px] text-ink placeholder:text-ink/40 focus:outline-none"
             />
             <button
@@ -89,14 +93,14 @@ export default function Footer() {
               aria-label="Subscribe"
               className="shrink-0 text-[12px] tracking-[0.14em] uppercase text-gold hover:text-gold-dark"
             >
-              Join &rarr;
+              {t("footer.join")} &rarr;
             </button>
           </form>
         </div>
       </div>
 
       <div className="border-t border-hairline px-5 py-5 text-center text-[11px] tracking-[0.06em] text-ink/50 sm:px-8">
-        &copy; {new Date().getFullYear()} Balzac Antiques. All rights reserved.
+        &copy; {new Date().getFullYear()} Balzac Antiques. {t("footer.rights")}
       </div>
     </footer>
   );

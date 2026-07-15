@@ -3,9 +3,9 @@ export default function PageHeader({
   title,
   lead,
 }: {
-  eyebrow: string;
-  title: string;
-  lead?: string;
+  eyebrow: React.ReactNode;
+  title: React.ReactNode;
+  lead?: React.ReactNode;
 }) {
   return (
     <section className="mx-auto max-w-content px-6 pb-4 pt-14 text-center sm:px-10 sm:pt-20">

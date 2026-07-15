@@ -1,0 +1,188 @@
+// ---------------------------------------------------------------------------
+// UI translations — EN authored, FR drafted by the studio and PENDING CLIENT
+// REVIEW before this can be called final (client sells to French speakers).
+// Product/category DATA stays EN until the admin panel provides per-language
+// fields (contract scope). Keys are flat "section.name".
+// ---------------------------------------------------------------------------
+
+export type Locale = "en" | "fr";
+
+export const dict: Record<Locale, Record<string, string>> = {
+  en: {
+    "nav.collection": "Collection",
+    "nav.theCollection": "The Collection",
+    "nav.viewAll": "View All",
+    "nav.allPieces": "All Pieces",
+    "nav.acquisitions": "Acquisitions",
+    "nav.about": "About",
+    "nav.contact": "Contact",
+    "nav.menu": "Menu",
+    "nav.language": "Language",
+    "nav.currency": "Currency",
+    "hero.title": "Discover Remarkable Objects",
+    "hero.subtitle": "Books, Art, Watches, Music & More",
+    "hero.cta": "Browse All",
+    "feat.eyebrow": "Featured",
+    "feat.title": "Exceptional Pieces",
+    "auction.viewLots": "View Lots",
+    "story.quote":
+      "\u201CEvery object in our collection carries a history worth continuing.\u201D",
+    "story.body":
+      "Balzac Antiques sources, authenticates, and presents rare books, fine watches, and remarkable objects for collectors who value craftsmanship and provenance as much as the piece itself.",
+    "badge.ship1": "Worldwide",
+    "badge.ship2": "Shipping",
+    "badge.auth1": "Authenticity",
+    "badge.auth2": "Guaranteed",
+    "badge.advice1": "Expert Advice",
+    "badge.advice2": "Personal Service",
+    "footer.blurb":
+      "Curated rare books, fine watches, and remarkable objects, sourced and authenticated in Bangkok for collectors worldwide.",
+    "footer.collections": "Collections",
+    "footer.balzac": "Balzac",
+    "footer.aboutUs": "About Us",
+    "footer.stayInformed": "Stay Informed",
+    "footer.newsBlurb": "New acquisitions and upcoming auctions, occasionally.",
+    "footer.email": "Email address",
+    "footer.join": "Join",
+    "footer.rights": "All rights reserved.",
+    "about.eyebrow": "About Us",
+    "about.title": "Rare Objects. Timeless Stories.",
+    "about.lead": "Balzac Antiques is a curated destination for rare and timeless objects.",
+    "about.p1":
+      "Our collection includes rare books, vintage vinyl records, fine watches, artworks, iconic design pieces, decorative objects, and carefully selected collectibles. Every item is chosen for its authenticity, quality, rarity, and lasting appeal.",
+    "about.p2":
+      "We believe that great objects carry history, craftsmanship, and character. Whether you are an experienced collector or simply looking for something unique, we are committed to offering carefully sourced pieces that deserve to be appreciated for generations to come.",
+    "about.p3":
+      "Sourcing across Europe and Asia, Balzac Antiques is built on a passion for quality, authenticity, and thoughtful curation.",
+    "about.tagline": "Balzac Antiques \u2014 Rare Objects. Timeless Stories.",
+    "about.browse": "Browse the Collection",
+    "about.contact": "Contact Us",
+    "contact.eyebrow": "Contact",
+    "contact.title": "Contact Us",
+    "contact.lead":
+      "We would be delighted to assist you with any enquiries regarding our collection, sourcing requests, or private acquisitions.",
+    "contact.email": "Email",
+    "contact.ch": "Switzerland",
+    "contact.asia": "Asia",
+    "contact.forward": "We look forward to hearing from you.",
+    "sell.eyebrow": "Sell With Us",
+    "sell.title": "Acquisitions",
+    "sell.lead":
+      "Balzac Antiques is actively seeking rare books, works of art, vintage watches, vinyl records, iconic design, decorative arts, and quality collectibles.",
+    "sell.i1": "Rare books",
+    "sell.i2": "Works of art",
+    "sell.i3": "Vintage watches",
+    "sell.i4": "Vinyl records",
+    "sell.i5": "Iconic design",
+    "sell.i6": "Decorative arts",
+    "sell.i7": "Quality collectibles",
+    "sell.p1":
+      "If you wish to offer an item or an entire collection, please send us photographs and a brief description.",
+    "sell.p2": "All enquiries are handled in complete confidence.",
+    "sell.cta": "Submit an Item",
+    "sell.orWrite": "Or write to us directly at",
+    "coll.eyebrow": "The Collection",
+    "coll.title": "All Pieces",
+    "coll.lead":
+      "Every item is chosen for its authenticity, quality, rarity, and lasting appeal.",
+    "coll.all": "All",
+    "coll.emptyTitle": "No pieces currently listed in {c}.",
+    "coll.emptyBody":
+      "New acquisitions are added regularly. If you are looking for something particular, we are happy to source it for you.",
+    "coll.enquiry": "Make an Enquiry",
+    "coll.viewAllPieces": "View All Pieces",
+    "prod.backTo": "Back to",
+    "prod.enquire": "Enquire About This Piece",
+    "prod.shipping": "Worldwide shipping available",
+    "drawer.tagline": "Rare Objects. Timeless Stories.",
+  },
+  fr: {
+    "nav.collection": "Collection",
+    "nav.theCollection": "La Collection",
+    "nav.viewAll": "Tout voir",
+    "nav.allPieces": "Toutes les pi\u00e8ces",
+    "nav.acquisitions": "Acquisitions",
+    "nav.about": "\u00C0 propos",
+    "nav.contact": "Contact",
+    "nav.menu": "Menu",
+    "nav.language": "Langue",
+    "nav.currency": "Devise",
+    "hero.title": "D\u00e9couvrez des objets remarquables",
+    "hero.subtitle": "Livres, Art, Montres, Musique & Plus",
+    "hero.cta": "Voir la collection",
+    "feat.eyebrow": "S\u00e9lection",
+    "feat.title": "Pi\u00e8ces d'exception",
+    "auction.viewLots": "Voir les lots",
+    "story.quote":
+      "\u00AB Chaque objet de notre collection porte une histoire qui m\u00e9rite d'\u00eatre poursuivie. \u00BB",
+    "story.body":
+      "Balzac Antiques d\u00e9niche, authentifie et pr\u00e9sente livres rares, belles montres et objets remarquables, pour les collectionneurs attach\u00e9s au savoir-faire et \u00e0 la provenance autant qu'\u00e0 la pi\u00e8ce elle-m\u00eame.",
+    "badge.ship1": "Livraison",
+    "badge.ship2": "internationale",
+    "badge.auth1": "Authenticit\u00e9",
+    "badge.auth2": "garantie",
+    "badge.advice1": "Conseil expert",
+    "badge.advice2": "Service personnalis\u00e9",
+    "footer.blurb":
+      "Livres rares, belles montres et objets remarquables, s\u00e9lectionn\u00e9s et authentifi\u00e9s \u00e0 Bangkok pour les collectionneurs du monde entier.",
+    "footer.collections": "Collections",
+    "footer.balzac": "Balzac",
+    "footer.aboutUs": "\u00C0 propos",
+    "footer.stayInformed": "Restez inform\u00e9",
+    "footer.newsBlurb": "Nouvelles acquisitions et ventes \u00e0 venir, occasionnellement.",
+    "footer.email": "Adresse e-mail",
+    "footer.join": "S'inscrire",
+    "footer.rights": "Tous droits r\u00e9serv\u00e9s.",
+    "about.eyebrow": "\u00C0 propos",
+    "about.title": "Objets rares. Histoires intemporelles.",
+    "about.lead":
+      "Balzac Antiques est une destination soign\u00e9e pour objets rares et intemporels.",
+    "about.p1":
+      "Notre collection comprend livres rares, vinyles vintage, belles montres, \u0153uvres d'art, pi\u00e8ces de design iconiques, objets d\u00e9coratifs et pi\u00e8ces de collection soigneusement choisies. Chaque objet est retenu pour son authenticit\u00e9, sa qualit\u00e9, sa raret\u00e9 et son attrait durable.",
+    "about.p2":
+      "Nous croyons que les beaux objets portent une histoire, un savoir-faire et un caract\u00e8re. Que vous soyez collectionneur averti ou simplement en qu\u00eate d'une pi\u00e8ce unique, nous nous attachons \u00e0 proposer des objets soigneusement sourc\u00e9s, \u00e0 appr\u00e9cier pour les g\u00e9n\u00e9rations \u00e0 venir.",
+    "about.p3":
+      "S'approvisionnant en Europe et en Asie, Balzac Antiques repose sur une passion pour la qualit\u00e9, l'authenticit\u00e9 et une curation r\u00e9fl\u00e9chie.",
+    "about.tagline": "Balzac Antiques \u2014 Objets rares. Histoires intemporelles.",
+    "about.browse": "Parcourir la collection",
+    "about.contact": "Nous contacter",
+    "contact.eyebrow": "Contact",
+    "contact.title": "Nous contacter",
+    "contact.lead":
+      "Nous serions ravis de r\u00e9pondre \u00e0 vos questions concernant notre collection, vos recherches ou des acquisitions priv\u00e9es.",
+    "contact.email": "E-mail",
+    "contact.ch": "Suisse",
+    "contact.asia": "Asie",
+    "contact.forward": "Au plaisir de vous lire.",
+    "sell.eyebrow": "Vendez avec nous",
+    "sell.title": "Acquisitions",
+    "sell.lead":
+      "Balzac Antiques recherche activement livres rares, \u0153uvres d'art, montres vintage, vinyles, design iconique, arts d\u00e9coratifs et pi\u00e8ces de collection de qualit\u00e9.",
+    "sell.i1": "Livres rares",
+    "sell.i2": "\u0152uvres d'art",
+    "sell.i3": "Montres vintage",
+    "sell.i4": "Vinyles",
+    "sell.i5": "Design iconique",
+    "sell.i6": "Arts d\u00e9coratifs",
+    "sell.i7": "Pi\u00e8ces de collection",
+    "sell.p1":
+      "Si vous souhaitez proposer un objet ou une collection enti\u00e8re, envoyez-nous des photographies et une br\u00e8ve description.",
+    "sell.p2": "Toutes les demandes sont trait\u00e9es en toute confidentialit\u00e9.",
+    "sell.cta": "Proposer un objet",
+    "sell.orWrite": "Ou \u00e9crivez-nous directement \u00e0",
+    "coll.eyebrow": "La Collection",
+    "coll.title": "Toutes les pi\u00e8ces",
+    "coll.lead":
+      "Chaque pi\u00e8ce est choisie pour son authenticit\u00e9, sa qualit\u00e9, sa raret\u00e9 et son attrait durable.",
+    "coll.all": "Tout",
+    "coll.emptyTitle": "Aucune pi\u00e8ce actuellement dans {c}.",
+    "coll.emptyBody":
+      "De nouvelles acquisitions arrivent r\u00e9guli\u00e8rement. Si vous cherchez une pi\u00e8ce particuli\u00e8re, nous nous ferons un plaisir de la trouver pour vous.",
+    "coll.enquiry": "Faire une demande",
+    "coll.viewAllPieces": "Voir toutes les pi\u00e8ces",
+    "prod.backTo": "Retour \u00e0",
+    "prod.enquire": "Se renseigner sur cette pi\u00e8ce",
+    "prod.shipping": "Livraison internationale disponible",
+    "drawer.tagline": "Objets rares. Histoires intemporelles.",
+  },
+};

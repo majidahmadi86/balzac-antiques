@@ -6,6 +6,7 @@ import Footer from "@/components/Footer";
 import PageHeader from "@/components/PageHeader";
 import ProductCard from "@/components/ProductCard";
 import { categories, categoryBySlug, productsByCategory } from "@/lib/data";
+import { T } from "@/components/Prefs";
 
 export function generateStaticParams() {
   return categories.map((c) => ({ slug: c.slug }));
@@ -34,7 +35,7 @@ export default function CategoryPage({ params }: { params: { slug: string } }) {
     <main>
       <Header />
 
-      <PageHeader eyebrow="The Collection" title={category.label} />
+      <PageHeader eyebrow={<T k="coll.eyebrow" />} title={category.label} />
 
       <nav className="mx-auto max-w-content px-6 pb-10 sm:px-10">
         <ul className="flex flex-wrap justify-center gap-2">
@@ -43,7 +44,7 @@ export default function CategoryPage({ params }: { params: { slug: string } }) {
               href="/collection"
               className="block border border-hairline px-4 py-2 text-[11px] tracking-[0.14em] uppercase text-ink/70 transition-colors hover:border-gold hover:text-gold-dark"
             >
-              All
+              <T k="coll.all" />
             </Link>
           </li>
           {categories.map((c) => {
@@ -80,20 +81,19 @@ export default function CategoryPage({ params }: { params: { slug: string } }) {
           // blank page would read as broken.
           <div className="mx-auto max-w-[46ch] border border-hairline bg-parchment/40 px-6 py-14 text-center">
             <p className="font-display text-[20px] italic text-ink">
-              No pieces currently listed in {category.label}.
+              <T k="coll.emptyTitle" c={category.label} />
             </p>
             <div className="mx-auto my-5 h-px w-10 bg-gold" />
             <p className="text-[14px] leading-relaxed text-ink/70">
-              New acquisitions are added regularly. If you are looking for
-              something particular, we are happy to source it for you.
+              <T k="coll.emptyBody" />
             </p>
             <div className="mt-6 flex flex-wrap justify-center gap-4">
               <Link href="/contact" className="btn-outline">
-                Make an Enquiry
+                <T k="coll.enquiry" />
                 <span aria-hidden>&rarr;</span>
               </Link>
               <Link href="/collection" className="link-view-all self-center">
-                View All Pieces &rarr;
+                <T k="coll.viewAllPieces" /> &rarr;
               </Link>
             </div>
           </div>

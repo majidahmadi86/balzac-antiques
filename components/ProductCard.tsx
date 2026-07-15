@@ -1,6 +1,7 @@
 import Link from "next/link";
 import Image from "next/image";
-import { formatPrice, categoryBySlug, type Product } from "@/lib/data";
+import { categoryBySlug, type Product } from "@/lib/data";
+import { Price } from "@/components/Prefs";
 
 export default function ProductCard({ product }: { product: Product }) {
   const category = categoryBySlug(product.category);
@@ -32,7 +33,7 @@ export default function ProductCard({ product }: { product: Product }) {
         {[category?.label, product.year].filter(Boolean).join(" · ")}
       </p>
 
-      <p className="mt-2 text-[14px] text-ink">{formatPrice(product.priceEur)}</p>
+      <p className="mt-2 text-[14px] text-ink"><Price eur={product.priceEur} /></p>
     </Link>
   );
 }
