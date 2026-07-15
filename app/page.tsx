@@ -4,13 +4,21 @@ import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 import Reveal from "@/components/Reveal";
 import { categories, auction } from "@/lib/data";
+import { getHeroProducts } from "@/lib/catalogue";
+import HeroSlideshow from "@/components/HeroSlideshow";
 import { T } from "@/components/Prefs";
 
-export default function HomePage() {
+export default async function HomePage() {
+  // Admin-chosen hero pieces (max 5). Empty -> the original brand hero below.
+  const heroSlides = await getHeroProducts();
   return (
     <main>
       <Header />
 
+      {heroSlides.length > 0 ? (
+        <HeroSlideshow slides={heroSlides} />
+      ) : (
+        <>
       {/* ---------------------------------------------------------------- */}
       {/* HERO — first screen, no scroll. No text baked into the image:    */}
       {/* that was the bug causing the mobile overlap Mike flagged.        */}
@@ -40,6 +48,8 @@ export default function HomePage() {
           </Link>
         </div>
       </section>
+        </>
+      )}
 
       {/* ---------------------------------------------------------------- */}
       {/* FEATURED CATEGORIES — directly after the hero, per Mike's note.  */}

@@ -143,7 +143,7 @@ export default function ProductForm({
         </label>
         <label className="flex cursor-pointer items-center gap-2.5">
           <input type="checkbox" name="featured" defaultChecked={initial.featured} className="h-4 w-4 accent-[#1F1B16]" />
-          <span className="text-[12px] tracking-[0.08em] text-[#1F1B16]">Featured <span className="text-[#9A8F7D]">· highlighted on the homepage</span></span>
+          <span className="text-[12px] tracking-[0.08em] text-[#1F1B16]">Hero <span className="text-[#9A8F7D]">· in the homepage slideshow (max 5)</span></span>
         </label>
       </div>
 

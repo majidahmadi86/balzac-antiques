@@ -130,3 +130,34 @@ export async function getPublishedSlugs(): Promise<string[]> {
   });
   return rows.map((r: { slug: string }) => r.slug);
 }
+
+export type HeroSlide = {
+  slug: string;
+  eyebrow: string | null;
+  titleEn: string;
+  titleFr: string | null;
+  image: string;
+};
+
+// Up to 5 published products marked "Hero" in the admin panel, for the
+// homepage slideshow. A hero needs a photo — products without one are
+// skipped rather than rendering an empty frame.
+export async function getHeroProducts(): Promise<HeroSlide[]> {
+  const rows = await db.product.findMany({
+    where: { published: true, featured: true },
+    orderBy: { createdAt: "desc" },
+    include: {
+      images: { orderBy: { sortOrder: "asc" }, take: 1, select: { path: true } },
+    },
+  });
+  return rows
+    .filter((r: { images: { path: string }[] }) => r.images.length > 0)
+    .slice(0, 5)
+    .map((r: { slug: string; eyebrow: string | null; titleEn: string; titleFr: string | null; images: { path: string }[] }) => ({
+      slug: r.slug,
+      eyebrow: r.eyebrow,
+      titleEn: r.titleEn,
+      titleFr: r.titleFr,
+      image: r.images[0].path,
+    }));
+}

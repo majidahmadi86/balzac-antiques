@@ -35,7 +35,7 @@ function formatEur(value: unknown): string {
 export default async function AdminProductsPage({
   searchParams,
 }: {
-  searchParams?: { saved?: string; deleted?: string };
+  searchParams?: { saved?: string; deleted?: string; heroLimit?: string };
 }) {
   const cookieStore = await cookies();
   const session = await verifySessionToken(cookieStore.get(ADMIN_COOKIE)?.value);
@@ -71,6 +71,9 @@ export default async function AdminProductsPage({
 
         {searchParams?.saved === "1" && (
           <p className="mt-6 border border-[#B99A5B]/40 bg-[#F4E9D4] px-4 py-3 text-[13px] text-[#6B5326]">Product saved.</p>
+        )}
+        {searchParams?.heroLimit === "1" && (
+          <p className="mt-6 border border-[#C08A6A]/40 bg-[#FBF4EF] px-4 py-3 text-[13px] text-[#8A5A3C]">Up to 5 pieces can be heroes on the homepage. Un-star another piece first.</p>
         )}
         {searchParams?.deleted === "1" && (
           <p className="mt-6 border border-[#B99A5B]/40 bg-[#F4E9D4] px-4 py-3 text-[13px] text-[#6B5326]">Product deleted.</p>
@@ -113,14 +116,14 @@ export default async function AdminProductsPage({
                     <input type="hidden" name="id" value={p.id} />
                     <button
                       type="submit"
-                      title={p.featured ? "Featured on the homepage · click to remove" : "Not featured · click to feature"}
+                      title={p.featured ? "Hero on the homepage slideshow · click to remove" : "Not a hero · click to add to the homepage slideshow (max 5)"}
                       className={`border px-3 py-1.5 text-[9px] tracking-[0.2em] uppercase transition-colors ${
                         p.featured
                           ? "border-[#B99A5B] bg-[#F4E9D4] text-[#6B5326]"
                           : "border-[#D8CFBB] bg-white text-[#9A8F7D] hover:border-[#B99A5B]"
                       }`}
                     >
-                      ★ Featured
+                      ★ Hero
                     </button>
                   </form>
                   <form action={togglePublished}>

@@ -8,6 +8,16 @@ import { ADMIN_COOKIE, verifySessionToken } from "../../../lib/session";
 
 export type ProductFormState = { error: string } | null;
 
+const MAX_HERO_PRODUCTS = 5;
+
+async function heroSlotsFull(excludeId?: string): Promise<boolean> {
+  const count = await db.product.count({
+    where: excludeId ? { featured: true, NOT: { id: excludeId } } : { featured: true },
+  });
+  return count >= MAX_HERO_PRODUCTS;
+}
+
+
 // Middleware already guards /admin/*; this is defense in depth for the action POSTs.
 async function requireAdmin(): Promise<void> {
   const cookieStore = await cookies();
@@ -139,6 +149,10 @@ export async function createProduct(_prev: ProductFormState, formData: FormData)
   const category = await db.category.findUnique({ where: { id: parsed.data.categoryId }, select: { id: true } });
   if (!category) return { error: "That category no longer exists. Please refresh and try again." };
 
+  if (parsed.data.featured && (await heroSlotsFull())) {
+    return { error: `Up to ${MAX_HERO_PRODUCTS} pieces can be heroes on the homepage. Un-star another piece first, or save this one without Hero.` };
+  }
+
   const slug = await uniqueSlug(slugify(parsed.slugInput || parsed.data.titleEn));
 
   await db.product.create({
@@ -166,6 +180,10 @@ export async function updateProduct(id: string, _prev: ProductFormState, formDat
 
   const category = await db.category.findUnique({ where: { id: parsed.data.categoryId }, select: { id: true } });
   if (!category) return { error: "That category no longer exists. Please refresh and try again." };
+
+  if (parsed.data.featured && (await heroSlotsFull(id))) {
+    return { error: `Up to ${MAX_HERO_PRODUCTS} pieces can be heroes on the homepage. Un-star another piece first, or save this one without Hero.` };
+  }
 
   const slug = await uniqueSlug(slugify(parsed.slugInput || parsed.data.titleEn), id);
 
@@ -210,6 +228,9 @@ export async function toggleFeatured(formData: FormData): Promise<void> {
   const id = str(formData, "id");
   const product = id ? await db.product.findUnique({ where: { id }, select: { featured: true } }) : null;
   if (product) {
+    if (!product.featured && (await heroSlotsFull())) {
+      redirect("/admin/products?heroLimit=1");
+    }
     await db.product.update({ where: { id }, data: { featured: !product.featured } });
   }
   revalidatePath("/", "layout"); // public site reads this catalogue now
