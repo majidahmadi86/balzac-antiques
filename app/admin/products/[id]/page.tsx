@@ -1,5 +1,4 @@
 import type { Metadata } from "next";
-import Image from "next/image";
 import { notFound } from "next/navigation";
 import { cookies } from "next/headers";
 import { db } from "../../../../lib/db";
@@ -8,6 +7,7 @@ import AdminHeader from "../../../../components/admin/AdminHeader";
 import ProductForm from "../ProductForm";
 import { updateProduct } from "../actions";
 import DeleteButton from "./DeleteButton";
+import PhotoManager from "./PhotoManager";
 
 export const metadata: Metadata = {
   title: "Edit Product · Balzac Antiques Admin",
@@ -43,19 +43,16 @@ export default async function EditProductPage({ params }: { params: { id: string
         <p className="text-[10px] tracking-[0.24em] uppercase text-[#9A8F7D]">Edit Product</p>
         <h1 className="mt-1 font-serif text-[26px] text-[#1F1B16]">{product.titleEn}</h1>
 
-        {product.images.length > 0 && (
-          <div className="mt-8 border border-[#E4DCCB] bg-white/70 p-5">
-            <p className="text-[10px] tracking-[0.22em] uppercase text-[#6B6154]">Photos</p>
-            <div className="mt-3 flex flex-wrap gap-3">
-              {product.images.map((img: { id: number; path: string; alt: string | null }) => (
-                <div key={img.id} className="relative h-20 w-20 overflow-hidden border border-[#E4DCCB] bg-[#F0EADB]">
-                  <Image src={img.path} alt={img.alt ?? product.titleEn} fill sizes="80px" className="object-cover" />
-                </div>
-              ))}
-            </div>
-            <p className="mt-3 text-[12px] text-[#9A8F7D]">Photo upload and reordering arrive in the next update.</p>
-          </div>
-        )}
+        <div className="mt-8">
+          <PhotoManager
+            productId={product.id}
+            images={product.images.map((img: { id: number; path: string; alt: string | null }) => ({
+              id: img.id,
+              path: img.path,
+              alt: img.alt,
+            }))}
+          />
+        </div>
 
         <div className="mt-10">
           <ProductForm

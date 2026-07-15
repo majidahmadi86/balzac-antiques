@@ -1,6 +1,12 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
   reactStrictMode: true,
+  experimental: {
+    // Photo uploads (admin Step C) — 15 MB images + multipart overhead
+    serverActions: {
+      bodySizeLimit: "16mb",
+    },
+  },
   images: {
     // Our placeholder assets are local SVGs bundled in the repo (not
     // user-uploaded), so this is safe. Real client photography will be
