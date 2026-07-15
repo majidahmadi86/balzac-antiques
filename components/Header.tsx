@@ -179,13 +179,13 @@ export default function Header({ cartCount }: { cartCount?: number }) {
 
         {/* --------------------------- CENTER --------------------------- */}
         <Link href="/" className="group flex flex-col items-center justify-self-center leading-none">
-          <span className="font-display text-[25px] tracking-[0.3em] text-ink transition-colors md:text-[31px]">
+          <span className="font-display text-[25px] tracking-[0.3em] text-ink md:text-[31px]">
             BALZAC
           </span>
-          <span className="mt-2 flex items-center gap-2.5 text-[9px] tracking-[0.52em] text-gold md:text-[9.5px]">
-            <span className="h-px w-5 bg-gold/70 transition-all duration-500 group-hover:w-7 md:w-7" />
-            <span className="translate-x-[0.26em]">ANTIQUES</span>
-            <span className="h-px w-5 bg-gold/70 transition-all duration-500 group-hover:w-7 md:w-7" />
+          <span className="mt-1.5 flex items-center gap-2 text-[10.5px] tracking-[0.4em] text-gold md:text-[11px]">
+            <span className="h-px w-3.5 bg-gold/60" />
+            <span className="translate-x-[0.2em]">ANTIQUES</span>
+            <span className="h-px w-3.5 bg-gold/60" />
           </span>
         </Link>
 
