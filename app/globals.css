@@ -1,0 +1,30 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  background-color: #F7F3EA;
+  color: #2B2420;
+}
+
+/* Thin outlined button used throughout (BROWSE ALL, VIEW LOTS) */
+.btn-outline {
+  @apply inline-flex items-center gap-2 border border-gold px-7 py-3
+         text-[13px] tracking-widest2 uppercase text-ink
+         transition-colors hover:bg-gold hover:text-cream;
+}
+
+/* Small "VIEW ALL →" text link under category cards */
+.link-view-all {
+  @apply text-[12px] tracking-[0.18em] uppercase text-gold
+         transition-colors hover:text-gold-dark;
+}
+
+/* Section eyebrow label, e.g. "FEATURED", "UPCOMING AUCTION" */
+.eyebrow {
+  @apply text-[12px] tracking-widest2 uppercase text-gold;
+}
