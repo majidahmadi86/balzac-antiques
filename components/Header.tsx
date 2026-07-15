@@ -13,11 +13,12 @@ import { categories } from "@/lib/data";
 // Mobile drawer: full-height, serif display links with staggered reveal,
 // hairline rules, brand tagline + contact at the foot.
 
-const pages = [
-  { href: "/sell", label: "Acquisitions" },
+const pagesLeft = [{ href: "/sell", label: "Acquisitions" }];
+const pagesRight = [
   { href: "/about", label: "About" },
   { href: "/contact", label: "Contact" },
 ];
+const allPages = [...pagesLeft, ...pagesRight];
 
 export default function Header({ cartCount }: { cartCount?: number }) {
   const [menuOpen, setMenuOpen] = useState(false);
@@ -157,7 +158,7 @@ export default function Header({ cartCount }: { cartCount?: number }) {
               </div>
             </div>
 
-            {pages.map((p) => (
+            {pagesLeft.map((p) => (
               <Link
                 key={p.href}
                 href={p.href}
@@ -184,7 +185,19 @@ export default function Header({ cartCount }: { cartCount?: number }) {
 
         {/* ---------------------------- RIGHT --------------------------- */}
         {/* Reserved for the EN/FR language toggle (contract scope, next pass). */}
-        <div className="flex items-center justify-end gap-5">
+        <div className="flex items-center justify-end gap-8">
+          <nav className="hidden items-center gap-8 md:flex">
+            {pagesRight.map((p) => (
+              <Link
+                key={p.href}
+                href={p.href}
+                className="group relative whitespace-nowrap py-2 text-[11.5px] tracking-[0.22em] uppercase text-ink transition-colors hover:text-gold-dark"
+              >
+                {p.label}
+                <span className="absolute -bottom-px left-0 h-px w-0 bg-gold transition-all duration-300 group-hover:w-full" />
+              </Link>
+            ))}
+          </nav>
           {cartCount ? (
             <Link href="/cart" aria-label="View cart" className="relative p-1 text-ink">
               <svg width="22" height="22" viewBox="0 0 24 24" fill="none">
@@ -269,7 +282,7 @@ export default function Header({ cartCount }: { cartCount?: number }) {
             </div>
           </div>
 
-          {pages.map((p, i) => (
+          {allPages.map((p, i) => (
             <div
               key={p.href}
               className={`transition-all duration-500 ${
