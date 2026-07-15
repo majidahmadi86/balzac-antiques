@@ -83,6 +83,14 @@ export function T({ k, c }: { k: string; c?: string }) {
   return <>{c ? s.replace("{c}", c) : s}</>;
 }
 
+// Bilingual DATA field (product titles, descriptions, specs from the admin
+// panel). Shows the French value when the visitor chose FR and the client has
+// filled it in; falls back to English otherwise — per the schema contract.
+export function Bi({ en, fr }: { en: string; fr?: string | null }) {
+  const { locale } = usePrefs();
+  return <>{locale === "fr" && fr ? fr : en}</>;
+}
+
 // Price display in the visitor's chosen currency. EUR shows exact (with cents
 // when priced that way); USD/CHF are indicative conversions rounded to whole
 // units — cents on a converted estimate would imply false precision.

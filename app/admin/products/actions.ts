@@ -149,6 +149,7 @@ export async function createProduct(_prev: ProductFormState, formData: FormData)
     },
   });
 
+  revalidatePath("/", "layout"); // public site reads this catalogue now
   revalidatePath("/admin/products");
   redirect("/admin/products?saved=1");
 }
@@ -175,6 +176,7 @@ export async function updateProduct(id: string, _prev: ProductFormState, formDat
     db.productSpec.createMany({ data: parsed.specs.map((s) => ({ ...s, productId: id })) }),
   ]);
 
+  revalidatePath("/", "layout"); // public site reads this catalogue now
   revalidatePath("/admin/products");
   redirect("/admin/products?saved=1");
 }
@@ -186,6 +188,7 @@ export async function deleteProduct(formData: FormData): Promise<void> {
     // ProductImage + ProductSpec rows cascade via the schema's onDelete: Cascade
     await db.product.delete({ where: { id } }).catch(() => {});
   }
+  revalidatePath("/", "layout"); // public site reads this catalogue now
   revalidatePath("/admin/products");
   redirect("/admin/products?deleted=1");
 }
@@ -197,6 +200,7 @@ export async function togglePublished(formData: FormData): Promise<void> {
   if (product) {
     await db.product.update({ where: { id }, data: { published: !product.published } });
   }
+  revalidatePath("/", "layout"); // public site reads this catalogue now
   revalidatePath("/admin/products");
   redirect("/admin/products");
 }
@@ -208,6 +212,7 @@ export async function toggleFeatured(formData: FormData): Promise<void> {
   if (product) {
     await db.product.update({ where: { id }, data: { featured: !product.featured } });
   }
+  revalidatePath("/", "layout"); // public site reads this catalogue now
   revalidatePath("/admin/products");
   redirect("/admin/products");
 }

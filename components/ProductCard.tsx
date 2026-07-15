@@ -1,22 +1,29 @@
 import Link from "next/link";
 import Image from "next/image";
-import { categoryBySlug, type Product } from "@/lib/data";
-import { Price } from "@/components/Prefs";
+import { type CatalogueCard } from "@/lib/catalogue";
+import { Bi, Price } from "@/components/Prefs";
 
-export default function ProductCard({ product }: { product: Product }) {
-  const category = categoryBySlug(product.category);
-
+export default function ProductCard({ product }: { product: CatalogueCard }) {
   return (
-    <Link href={`/product/${product.id}`} className="group block">
+    <Link href={`/product/${product.slug}`} className="group block">
       <div className="relative aspect-[4/5] overflow-hidden bg-parchment shadow-sm transition-shadow duration-300 group-hover:shadow-lg">
-        <Image
-          src={product.images[0]}
-          alt={product.title}
-          fill
-          sizes="(max-width: 640px) 50vw, (max-width: 1024px) 33vw, 25vw"
-          loading="lazy"
-          className="object-cover transition-transform duration-500 ease-out group-hover:scale-105"
-        />
+        {product.image ? (
+          <Image
+            src={product.image}
+            alt={product.titleEn}
+            fill
+            sizes="(max-width: 640px) 50vw, (max-width: 1024px) 33vw, 25vw"
+            loading="lazy"
+            className="object-cover transition-transform duration-500 ease-out group-hover:scale-105"
+          />
+        ) : (
+          // A product can briefly exist without photos (created in the admin
+          // panel before its upload) — render the placard style, never a
+          // broken image.
+          <div className="flex h-full w-full items-center justify-center border border-hairline">
+            <span className="text-[9px] tracking-[0.22em] text-ink/40">PHOTOGRAPHY PENDING</span>
+          </div>
+        )}
       </div>
 
       {product.eyebrow ? (
@@ -26,11 +33,12 @@ export default function ProductCard({ product }: { product: Product }) {
       ) : null}
 
       <h3 className="mt-1 font-display text-[16px] leading-snug text-ink">
-        {product.title}
+        <Bi en={product.titleEn} fr={product.titleFr} />
       </h3>
 
       <p className="mt-1 text-[12px] text-ink/55">
-        {[category?.label, product.year].filter(Boolean).join(" · ")}
+        <Bi en={product.categoryLabelEn} fr={product.categoryLabelFr} />
+        {product.year ? <> · {product.year}</> : null}
       </p>
 
       <p className="mt-2 text-[14px] text-ink"><Price eur={product.priceEur} /></p>

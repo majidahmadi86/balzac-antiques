@@ -4,7 +4,8 @@ import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 import PageHeader from "@/components/PageHeader";
 import ProductCard from "@/components/ProductCard";
-import { products, categories } from "@/lib/data";
+import { categories } from "@/lib/data";
+import { getPublishedProducts } from "@/lib/catalogue";
 import { T } from "@/components/Prefs";
 
 export const metadata: Metadata = {
@@ -13,7 +14,8 @@ export const metadata: Metadata = {
     "Rare books, fine watches, artworks, vinyl records, iconic design and remarkable objects, curated by Balzac Antiques.",
 };
 
-export default function CollectionPage() {
+export default async function CollectionPage() {
+  const products = await getPublishedProducts();
   return (
     <main>
       <Header />
@@ -49,7 +51,7 @@ export default function CollectionPage() {
       <section className="mx-auto max-w-content px-5 pb-16 sm:px-8">
         <div className="grid grid-cols-2 gap-x-4 gap-y-10 sm:gap-x-6 lg:grid-cols-4">
           {products.map((p) => (
-            <ProductCard key={p.id} product={p} />
+            <ProductCard key={p.slug} product={p} />
           ))}
         </div>
       </section>

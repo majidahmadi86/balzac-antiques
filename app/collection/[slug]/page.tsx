@@ -5,7 +5,8 @@ import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 import PageHeader from "@/components/PageHeader";
 import ProductCard from "@/components/ProductCard";
-import { categories, categoryBySlug, productsByCategory } from "@/lib/data";
+import { categories, categoryBySlug } from "@/lib/data";
+import { getProductsByCategorySlug } from "@/lib/catalogue";
 import { T } from "@/components/Prefs";
 
 export function generateStaticParams() {
@@ -25,11 +26,11 @@ export function generateMetadata({
   };
 }
 
-export default function CategoryPage({ params }: { params: { slug: string } }) {
+export default async function CategoryPage({ params }: { params: { slug: string } }) {
   const category = categoryBySlug(params.slug);
   if (!category) return notFound();
 
-  const items = productsByCategory(category.slug);
+  const items = await getProductsByCategorySlug(category.slug);
 
   return (
     <main>
@@ -73,7 +74,7 @@ export default function CategoryPage({ params }: { params: { slug: string } }) {
         {items.length > 0 ? (
           <div className="grid grid-cols-2 gap-x-4 gap-y-10 sm:gap-x-6 lg:grid-cols-4">
             {items.map((p) => (
-              <ProductCard key={p.id} product={p} />
+              <ProductCard key={p.slug} product={p} />
             ))}
           </div>
         ) : (
