@@ -1,0 +1,32 @@
+COMPOSER PROMPT — paste this into Cursor Composer
+
+---
+
+Unzip `balzac-antiques.zip` into the project root, replacing any existing
+files at the same paths (this is a fresh Next.js 14 App Router project —
+if there's no existing project yet, this zip IS the project root).
+
+Then:
+
+1. Run `npm install` in the project root.
+2. Run `npm run build` to confirm it compiles with zero errors. This
+   requires outbound internet access to fonts.googleapis.com and
+   fonts.gstatic.com (Google Fonts fetched at build time) — if the build
+   environment blocks that, flag it back rather than stripping the fonts.
+3. Run `npm run dev` and check both routes locally:
+   - `/` (homepage)
+   - `/product/patek-philippe-1463` (product detail)
+4. Do NOT touch `tailwind.config.ts` color/font values — those are
+   locked to the client's approved reference screenshots. Any visual
+   change to palette or type goes through Mike first.
+5. All images under `public/images/` are placeholder SVGs labeled
+   "PLACEHOLDER — REPLACE WITH CLIENT PHOTO". Do not treat these as
+   final assets or optimize/compress them — they get swapped for real
+   client photography before launch.
+6. Push to the host once build is confirmed clean. If the target host
+   (e.g. Hostinger shared hosting) doesn't support Node.js server
+   deployment, stop and flag it back — this is a server-rendered Next.js
+   app, not a static site, and needs a Node-capable host or a static
+   export strategy decided in advance.
+
+Do not merge/deploy without a green `npm run build` first.

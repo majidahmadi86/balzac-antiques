@@ -40,6 +40,7 @@ export default function AboutPage() {
         </p>
       </section>
 
+      {/* Closing tagline — client's own wording, kept verbatim */}
       <section className="bg-parchment px-6 py-14 text-center sm:px-10">
         <p className="font-display text-[22px] italic leading-relaxed text-ink sm:text-[26px]">
           Balzac Antiques — Rare Objects. Timeless Stories.

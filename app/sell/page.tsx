@@ -19,6 +19,11 @@ const seeking = [
   "Quality collectibles",
 ];
 
+// Pre-filled mailto so the enquiry lands in the client's inbox with a
+// consistent subject line, and the sender can attach photographs directly
+// from their own mail client (no upload limits, no image storage needed).
+// If a native upload form is wanted later, it needs an email/storage
+// service picked first — see the note in README.
 const MAILTO =
   "mailto:info@balzacantiques.ch" +
   "?subject=" +
@@ -53,7 +58,10 @@ export default function SellPage() {
       <section className="mx-auto max-w-content px-6 pb-14 sm:px-10">
         <ul className="mx-auto flex max-w-2xl flex-wrap justify-center gap-2.5">
           {seeking.map((item) => (
-            <li key={item} className="border border-hairline px-4 py-2 text-[12px] tracking-[0.1em] uppercase text-ink/80">
+            <li
+              key={item}
+              className="border border-hairline px-4 py-2 text-[12px] tracking-[0.1em] uppercase text-ink/80"
+            >
               {item}
             </li>
           ))}
@@ -78,7 +86,10 @@ export default function SellPage() {
 
         <p className="mt-6 text-center text-[13px] text-ink/60">
           Or write to us directly at{" "}
-          <a href="mailto:info@balzacantiques.ch" className="text-gold hover:text-gold-dark">
+          <a
+            href="mailto:info@balzacantiques.ch"
+            className="text-gold hover:text-gold-dark"
+          >
             info@balzacantiques.ch
           </a>
         </p>
