@@ -11,12 +11,14 @@ import Link from "next/link";
 import Image from "next/image";
 import { type HeroSlide } from "@/lib/catalogue";
 import { T, Bi } from "@/components/Prefs";
+import { useCart } from "@/components/Cart";
 
 const SLIDE_MS = 6000;
 
 export default function HeroSlideshow({ slides }: { slides: HeroSlide[] }) {
   const [active, setActive] = useState(0);
   const [paused, setPaused] = useState(false);
+  const { add } = useCart();
 
   useEffect(() => {
     if (slides.length < 2 || paused) return;
@@ -66,10 +68,33 @@ export default function HeroSlideshow({ slides }: { slides: HeroSlide[] }) {
               <Bi en={s.titleEn} fr={s.titleFr} />
             </h1>
             <div className="my-5 h-px w-14 bg-gold" />
-            <Link href={`/product/${s.slug}`} className="btn-outline mt-3">
-              <T k="hero.viewPiece" />
-              <span aria-hidden>&rarr;</span>
-            </Link>
+            <div className="mt-3 flex flex-wrap items-center gap-3">
+              {s.status === "available" ? (
+                <button
+                  type="button"
+                  onClick={() =>
+                    add({
+                      slug: s.slug,
+                      titleEn: s.titleEn,
+                      titleFr: s.titleFr,
+                      priceEur: s.priceEur,
+                      image: s.image,
+                      categorySlug: s.categorySlug,
+                      categoryLabelEn: s.categoryLabelEn,
+                      categoryLabelFr: s.categoryLabelFr,
+                    })
+                  }
+                  className="inline-flex items-center gap-2 bg-gold px-7 py-3 text-[13px] tracking-widest2 uppercase text-cream transition-colors hover:bg-gold-dark"
+                >
+                  <T k="cart.add" />
+                  <span aria-hidden>&rarr;</span>
+                </button>
+              ) : null}
+              <Link href={`/product/${s.slug}`} className="btn-outline">
+                <T k="hero.viewPiece" />
+                <span aria-hidden>&rarr;</span>
+              </Link>
+            </div>
           </div>
         ))}
       </div>

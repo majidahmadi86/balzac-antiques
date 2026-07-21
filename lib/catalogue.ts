@@ -140,6 +140,11 @@ export type HeroSlide = {
   titleEn: string;
   titleFr: string | null;
   image: string;
+  priceEur: number;
+  status: string;
+  categorySlug: string;
+  categoryLabelEn: string;
+  categoryLabelFr: string | null;
 };
 
 // Up to 5 published products marked "Hero" in the admin panel, for the
@@ -150,19 +155,36 @@ export async function getHeroProducts(): Promise<HeroSlide[]> {
     where: { published: true, featured: true, status: { not: "sold" } },
     orderBy: { createdAt: "desc" },
     include: {
+      category: { select: { slug: true, labelEn: true, labelFr: true } },
       images: { orderBy: { sortOrder: "asc" }, take: 1, select: { path: true } },
     },
   });
   return rows
     .filter((r: { images: { path: string }[] }) => r.images.length > 0)
     .slice(0, 5)
-    .map((r: { slug: string; eyebrow: string | null; titleEn: string; titleFr: string | null; images: { path: string }[] }) => ({
-      slug: r.slug,
-      eyebrow: r.eyebrow,
-      titleEn: r.titleEn,
-      titleFr: r.titleFr,
-      image: r.images[0].path,
-    }));
+    .map(
+      (r: {
+        slug: string;
+        eyebrow: string | null;
+        titleEn: string;
+        titleFr: string | null;
+        priceEur: unknown;
+        status: string;
+        category: { slug: string; labelEn: string; labelFr: string | null };
+        images: { path: string }[];
+      }) => ({
+        slug: r.slug,
+        eyebrow: r.eyebrow,
+        titleEn: r.titleEn,
+        titleFr: r.titleFr,
+        image: r.images[0].path,
+        priceEur: Number(String(r.priceEur)),
+        status: r.status,
+        categorySlug: r.category.slug,
+        categoryLabelEn: r.category.labelEn,
+        categoryLabelFr: r.category.labelFr,
+      })
+    );
 }
 
 // Cover photo per category for the homepage "Exceptional Pieces" grid: the
