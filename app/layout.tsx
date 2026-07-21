@@ -2,6 +2,7 @@ import type { Metadata, Viewport } from "next";
 import localFont from "next/font/local";
 import "./globals.css";
 import { PrefsProvider } from "@/components/Prefs";
+import { CartProvider } from "@/components/Cart";
 
 // Fonts are SELF-HOSTED (woff2 files committed in app/fonts/). Previously
 // loaded from Google Fonts at build time — when that fetch failed on the
@@ -70,7 +71,9 @@ export default function RootLayout({
   return (
     <html lang="en" className={`${baskerville.variable} ${jost.variable}`}>
       <body className="font-body bg-cream text-ink antialiased">
-        <PrefsProvider>{children}</PrefsProvider>
+        <PrefsProvider>
+          <CartProvider>{children}</CartProvider>
+        </PrefsProvider>
       </body>
     </html>
   );

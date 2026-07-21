@@ -6,6 +6,7 @@ import Footer from "@/components/Footer";
 import { getProductBySlug, getPublishedSlugs } from "@/lib/catalogue";
 import ProductGallery from "@/components/ProductGallery";
 import { T, Bi, Price } from "@/components/Prefs";
+import AddToCartButton from "@/components/AddToCartButton";
 
 // Slugs known at build time are prerendered; products created later in the
 // admin panel render on first request (dynamicParams default) and are then
@@ -100,9 +101,8 @@ export default async function ProductPage({ params }: { params: { id: string } }
                 <T k="prod.shipping" />
               </p>
 
-              {/* Available pieces keep the Enquire link until Add to Cart
-                  lands in the cart commit. Sold and reserved pieces show their
-                  status here instead of a purchase action. */}
+              {/* Available pieces get Add to Cart. Sold and reserved pieces
+                  show their status here instead of a purchase action. */}
               {product.status === "sold" ? (
                 <div className="mt-4 border border-hairline bg-cream px-4 py-3.5 text-center">
                   <p className="text-[12px] uppercase tracking-[0.22em] text-ink"><T k="prod.sold" /></p>
@@ -114,13 +114,18 @@ export default async function ProductPage({ params }: { params: { id: string } }
                   <p className="mt-1 text-[13px] text-ink/65"><T k="prod.reservedNote" /></p>
                 </div>
               ) : (
-                <Link
-                  href="/contact"
-                  className="mt-4 flex w-full items-center justify-center gap-2 bg-gold py-3.5 text-[13px] tracking-widest2 uppercase text-cream transition-colors hover:bg-gold-dark"
-                >
-                  <T k="prod.enquire" />
-                  <span aria-hidden>&rarr;</span>
-                </Link>
+                <AddToCartButton
+                  item={{
+                    slug: product.slug,
+                    titleEn: product.titleEn,
+                    titleFr: product.titleFr,
+                    priceEur: product.priceEur,
+                    image: product.image,
+                    categorySlug: product.categorySlug,
+                    categoryLabelEn: product.categoryLabelEn,
+                    categoryLabelFr: product.categoryLabelFr,
+                  }}
+                />
               )}
             </div>
           </div>
