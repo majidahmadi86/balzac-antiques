@@ -270,6 +270,17 @@ export default function Header({ cartCount }: { cartCount?: number }) {
             </div>
           </div>
 
+          <Link
+            href="/account"
+            aria-label={t("nav.account")}
+            className="p-1 text-ink transition-colors hover:text-gold-dark"
+          >
+            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" aria-hidden>
+              <circle cx="12" cy="8" r="3.2" stroke="currentColor" strokeWidth="1.2" />
+              <path d="M5.5 19a6.5 6.5 0 0 1 13 0" stroke="currentColor" strokeWidth="1.2" strokeLinecap="round" />
+            </svg>
+          </Link>
+
           {cartCount ? (
             <Link href="/cart" aria-label="View cart" className="relative p-1 text-ink">
               <svg width="22" height="22" viewBox="0 0 24 24" fill="none">

@@ -1,10 +1,9 @@
-// Balzac Antiques — database schema (CloudPanel MySQL/MariaDB, localhost).
+// Balzac Antiques · database schema (CloudPanel MySQL/MariaDB, localhost).
 // Phase 1: catalogue (categories, products, images, specs) + admin users.
-// Phase 2 (next): customers, addresses, orders — tables sketched at bottom
-// so the shape is agreed before checkout work starts.
+// Phase 2: customers, addresses, orders (accounts + cart + checkout).
 // Bilingual: every human-readable field has En/Fr columns per the contract
-// ("all product/category fields editable in both languages"). Fr nullable —
-// site falls back to En until the client fills it in.
+// ("all product/category fields editable in both languages"). Fr nullable,
+// the site falls back to En until the client fills it in.
 
 generator client {
   provider = "prisma-client-js"
@@ -43,13 +42,20 @@ model Product {
   priceEur      Decimal        @db.Decimal(10, 2)
   featured      Boolean        @default(false)
   published     Boolean        @default(true)
+  // Availability for quantity-one stock. "available" pieces can be added to a
+  // cart and bought; "reserved" is held by an in-progress checkout; "sold" is
+  // settled. soldAt records when it left the floor (in person or online).
+  status        String         @default("available") // available|reserved|sold
+  soldAt        DateTime?
   createdAt     DateTime       @default(now())
   updatedAt     DateTime       @updatedAt
   images        ProductImage[]
   specs         ProductSpec[]
+  orderItems    OrderItem[]
 
   @@index([categoryId])
   @@index([published, featured])
+  @@index([status])
 }
 
 model ProductImage {
@@ -85,38 +91,60 @@ model AdminUser {
 }
 
 // ---------------------------------------------------------------------------
-// PHASE 2 — customer accounts & orders (checkout build). Commented out so
-// `db push` doesn't create empty tables yet; uncomment when that phase starts.
-//
-// model Customer {
-//   id           String    @id @default(cuid())
-//   email        String    @unique
-//   passwordHash String
-//   name         String
-//   createdAt    DateTime  @default(now())
-//   addresses    Address[]
-//   orders       Order[]
-// }
-//
-// model Address {
-//   id         Int      @id @default(autoincrement())
-//   customerId String
-//   customer   Customer @relation(fields: [customerId], references: [id], onDelete: Cascade)
-//   line1      String
-//   line2      String?
-//   city       String
-//   postcode   String
-//   country    String
-//   isDefault  Boolean  @default(false)
-// }
-//
-// model Order {
-//   id              String   @id @default(cuid())
-//   customerId      String
-//   customer        Customer @relation(fields: [customerId], references: [id])
-//   status          String   @default("pending") // pending|paid|shipped|delivered|cancelled
-//   totalEur        Decimal  @db.Decimal(10, 2)
-//   stripeSessionId String?  @unique
-//   createdAt       DateTime @default(now())
-// }
+// PHASE 2 · customer accounts, addresses & orders (accounts / cart / checkout).
+// Tables are created now in a single migration so the checkout phase needs no
+// further schema change. Order and OrderItem rows are written when the Stripe
+// checkout phase lands; the accounts + cart phase populates Customer/Address.
 // ---------------------------------------------------------------------------
+
+model Customer {
+  id           String    @id @default(cuid())
+  email        String    @unique
+  passwordHash String
+  name         String
+  createdAt    DateTime  @default(now())
+  addresses    Address[]
+  orders       Order[]
+}
+
+model Address {
+  id         Int      @id @default(autoincrement())
+  customerId String
+  customer   Customer @relation(fields: [customerId], references: [id], onDelete: Cascade)
+  line1      String
+  line2      String?
+  city       String
+  postcode   String
+  country    String
+  isDefault  Boolean  @default(false)
+
+  @@index([customerId])
+}
+
+model Order {
+  id              String      @id @default(cuid())
+  customerId      String
+  customer        Customer    @relation(fields: [customerId], references: [id])
+  status          String      @default("pending") // pending|paid|shipped|delivered|cancelled
+  totalEur        Decimal     @db.Decimal(10, 2)
+  stripeSessionId String?     @unique
+  createdAt       DateTime    @default(now())
+  items           OrderItem[]
+
+  @@index([customerId])
+}
+
+model OrderItem {
+  id        Int      @id @default(autoincrement())
+  orderId   String
+  order     Order    @relation(fields: [orderId], references: [id], onDelete: Cascade)
+  // Product link is optional and nulls out if the piece is later deleted, so
+  // order history survives. Title and price are snapshotted at purchase time.
+  productId String?
+  product   Product? @relation(fields: [productId], references: [id], onDelete: SetNull)
+  titleEn   String
+  priceEur  Decimal  @db.Decimal(10, 2)
+
+  @@index([orderId])
+  @@index([productId])
+}
