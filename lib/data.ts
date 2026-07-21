@@ -189,6 +189,9 @@ export const formatPrice = (eur: number) =>
 // ---------------------------- Homepage banner -----------------------------
 
 export const auction = {
+  // Hidden for now: Zac has no live auction. Flip to true and refresh the
+  // title, city, date and href to show a real event banner on the homepage.
+  visible: false,
   eyebrow: "Upcoming Auction",
   title: "The Geneva Watch Auction: IX",
   city: "Geneva",

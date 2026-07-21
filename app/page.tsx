@@ -102,37 +102,40 @@ export default async function HomePage() {
       </section>
 
       {/* ---------------------------------------------------------------- */}
-      {/* AUCTION BANNER — data-driven from the `auction` object in       */}
-      {/* lib/data.ts, same swap-in-a-DB-later shape as categories.       */}
+      {/* AUCTION BANNER · hidden for now via the `visible` flag on the    */}
+      {/* `auction` object in lib/data.ts. Flip it to true (and refresh    */}
+      {/* the title, city, date, href) to bring a real event banner back.  */}
       {/* ---------------------------------------------------------------- */}
-      <section className="grid grid-cols-1 bg-parchment sm:grid-cols-2">
-        <div className="relative aspect-[4/3] sm:aspect-[4/3.4]">
-          <Image
-            src={auction.image}
-            alt={auction.title}
-            fill
-            sizes="(max-width: 640px) 100vw, 50vw"
-            loading="lazy"
-            className="object-cover"
-          />
-        </div>
-        <div className="flex flex-col justify-center gap-3 px-6 py-10 sm:px-10">
-          <p className="eyebrow">{auction.eyebrow}</p>
-          <h3 className="font-display text-[26px] leading-tight text-ink sm:text-[30px]">
-            {auction.title}
-          </h3>
-          <div className="my-1 h-px w-10 bg-gold" />
-          <p className="text-[13px] tracking-[0.1em] text-ink">
-            {auction.city.toUpperCase()}
-            <br />
-            {auction.date.toUpperCase()}
-          </p>
-          <Link href={auction.href} className="btn-outline mt-4 w-fit">
-            <T k="auction.viewLots" />
-            <span aria-hidden>&rarr;</span>
-          </Link>
-        </div>
-      </section>
+      {auction.visible ? (
+        <section className="grid grid-cols-1 bg-parchment sm:grid-cols-2">
+          <div className="relative aspect-[4/3] sm:aspect-[4/3.4]">
+            <Image
+              src={auction.image}
+              alt={auction.title}
+              fill
+              sizes="(max-width: 640px) 100vw, 50vw"
+              loading="lazy"
+              className="object-cover"
+            />
+          </div>
+          <div className="flex flex-col justify-center gap-3 px-6 py-10 sm:px-10">
+            <p className="eyebrow">{auction.eyebrow}</p>
+            <h3 className="font-display text-[26px] leading-tight text-ink sm:text-[30px]">
+              {auction.title}
+            </h3>
+            <div className="my-1 h-px w-10 bg-gold" />
+            <p className="text-[13px] tracking-[0.1em] text-ink">
+              {auction.city.toUpperCase()}
+              <br />
+              {auction.date.toUpperCase()}
+            </p>
+            <Link href={auction.href} className="btn-outline mt-4 w-fit">
+              <T k="auction.viewLots" />
+              <span aria-hidden>&rarr;</span>
+            </Link>
+          </div>
+        </section>
+      ) : null}
 
       {/* ---------------------------------------------------------------- */}
       {/* BRAND STORY — moved below the fold, after Featured/Auction, so  */}
