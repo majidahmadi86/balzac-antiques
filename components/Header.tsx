@@ -33,7 +33,7 @@ export default function Header() {
   const closeTimer = useRef<ReturnType<typeof setTimeout> | null>(null);
   const pathname = usePathname();
   const { t, locale, setLocale, currency, setCurrency } = usePrefs();
-  const { count } = useCart();
+  const { count, openDrawer } = useCart();
 
   const openPanel = () => {
     if (closeTimer.current) clearTimeout(closeTimer.current);
@@ -283,17 +283,22 @@ export default function Header() {
             </svg>
           </Link>
 
-          {count > 0 ? (
-            <Link href="/cart" aria-label={t("nav.cart")} className="relative p-1 text-ink transition-colors hover:text-gold-dark">
-              <svg width="22" height="22" viewBox="0 0 24 24" fill="none" aria-hidden>
-                <path d="M6 8h12l-1 12H7L6 8Z" stroke="currentColor" strokeWidth="1.2" strokeLinejoin="round" />
-                <path d="M9 8V6a3 3 0 0 1 6 0v2" stroke="currentColor" strokeWidth="1.2" />
-              </svg>
+          <button
+            type="button"
+            onClick={openDrawer}
+            aria-label={t("nav.cart")}
+            className="relative p-1 text-ink transition-colors hover:text-gold-dark"
+          >
+            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" aria-hidden>
+              <path d="M6 8h12l-1 12H7L6 8Z" stroke="currentColor" strokeWidth="1.2" strokeLinejoin="round" />
+              <path d="M9 8V6a3 3 0 0 1 6 0v2" stroke="currentColor" strokeWidth="1.2" />
+            </svg>
+            {count > 0 ? (
               <span className="absolute -right-2 -top-2 flex h-4 w-4 items-center justify-center rounded-full bg-gold text-[10px] text-cream">
                 {count}
               </span>
-            </Link>
-          ) : null}
+            ) : null}
+          </button>
         </div>
       </div>
 

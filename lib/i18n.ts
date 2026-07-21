@@ -167,6 +167,7 @@ export const dict: Record<Locale, Record<string, string>> = {
     "cart.shippingNote": "Shipping calculated at checkout.",
     "cart.checkout": "Proceed to Checkout",
     "cart.continue": "Continue shopping",
+    "cart.close": "Close",
   },
   fr: {
     "nav.collection": "Collection",
@@ -328,5 +329,6 @@ export const dict: Record<Locale, Record<string, string>> = {
     "cart.shippingNote": "Frais de livraison calculés au paiement.",
     "cart.checkout": "Passer au paiement",
     "cart.continue": "Continuer mes achats",
+    "cart.close": "Fermer",
   },
 };

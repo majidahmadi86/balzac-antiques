@@ -25,6 +25,9 @@ type CartValue = {
   add: (item: CartItem) => void;
   remove: (slug: string) => void;
   clear: () => void;
+  drawerOpen: boolean;
+  openDrawer: () => void;
+  closeDrawer: () => void;
 };
 
 const Ctx = createContext<CartValue>({
@@ -35,6 +38,9 @@ const Ctx = createContext<CartValue>({
   add: () => {},
   remove: () => {},
   clear: () => {},
+  drawerOpen: false,
+  openDrawer: () => {},
+  closeDrawer: () => {},
 });
 
 const KEY = "balzac-cart";
@@ -42,6 +48,7 @@ const KEY = "balzac-cart";
 export function CartProvider({ children }: { children: React.ReactNode }) {
   const [items, setItems] = useState<CartItem[]>([]);
   const [ready, setReady] = useState(false);
+  const [drawerOpen, setDrawerOpen] = useState(false);
 
   // Load once on mount.
   useEffect(() => {
@@ -72,7 +79,10 @@ export function CartProvider({ children }: { children: React.ReactNode }) {
 
   const add = useCallback((item: CartItem) => {
     setItems((prev) => (prev.some((x) => x.slug === item.slug) ? prev : [...prev, item]));
+    setDrawerOpen(true); // slide the cart open the instant something is added
   }, []);
+  const openDrawer = useCallback(() => setDrawerOpen(true), []);
+  const closeDrawer = useCallback(() => setDrawerOpen(false), []);
   const remove = useCallback((slug: string) => {
     setItems((prev) => prev.filter((x) => x.slug !== slug));
   }, []);
@@ -80,7 +90,7 @@ export function CartProvider({ children }: { children: React.ReactNode }) {
   const has = useCallback((slug: string) => items.some((x) => x.slug === slug), [items]);
 
   return (
-    <Ctx.Provider value={{ items, count: items.length, ready, has, add, remove, clear }}>
+    <Ctx.Provider value={{ items, count: items.length, ready, has, add, remove, clear, drawerOpen, openDrawer, closeDrawer }}>
       {children}
     </Ctx.Provider>
   );
