@@ -22,6 +22,9 @@ export default async function AccountPage() {
     ? await db.customer.findUnique({ where: { id: session.sub }, select: { name: true } })
     : null;
   const name = customer?.name ?? "";
+  const addressCount = session
+    ? await db.address.count({ where: { customerId: session.sub } })
+    : 0;
 
   return (
     <div>
@@ -51,8 +54,14 @@ export default async function AccountPage() {
         <section className="border border-hairline bg-parchment p-7">
           <h2 className="font-display text-[18px] text-ink"><T k="account.addressesTitle" /></h2>
           <div className="mt-3 h-px w-8 bg-gold" />
-          <p className="mt-4 text-[14px] text-ink/80"><T k="account.addressesEmpty" /></p>
-          <p className="mt-1 text-[13px] text-ink/55"><T k="account.addressesNote" /></p>
+          {addressCount > 0 ? (
+            <p className="mt-4 text-[14px] text-ink/80"><T k="addr.onFile" /></p>
+          ) : (
+            <p className="mt-4 text-[14px] text-ink/80"><T k="account.addressesEmpty" /></p>
+          )}
+          <Link href="/account/addresses" className="mt-5 inline-flex items-center gap-2 text-[12px] uppercase tracking-[0.16em] text-gold-dark hover:text-gold">
+            <T k={addressCount > 0 ? "addr.manage" : "addr.add"} /> <span aria-hidden>&rarr;</span>
+          </Link>
         </section>
       </div>
     </div>
