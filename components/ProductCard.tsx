@@ -1,7 +1,7 @@
 import Link from "next/link";
 import Image from "next/image";
 import { type CatalogueCard } from "@/lib/catalogue";
-import { Bi, Price } from "@/components/Prefs";
+import { Bi, Price, T } from "@/components/Prefs";
 
 export default function ProductCard({ product }: { product: CatalogueCard }) {
   return (
@@ -24,6 +24,15 @@ export default function ProductCard({ product }: { product: CatalogueCard }) {
             <span className="text-[9px] tracking-[0.22em] text-ink/40">PHOTOGRAPHY PENDING</span>
           </div>
         )}
+
+        {product.status !== "available" ? (
+          <>
+            <span className="absolute inset-0 bg-cream/45" aria-hidden />
+            <span className="absolute left-0 top-3 bg-ink px-3 py-1 text-[9px] uppercase tracking-[0.22em] text-cream">
+              <T k={product.status === "sold" ? "prod.sold" : "prod.reserved"} />
+            </span>
+          </>
+        ) : null}
       </div>
 
       {product.eyebrow ? (

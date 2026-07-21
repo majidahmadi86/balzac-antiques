@@ -25,6 +25,7 @@ export type CatalogueCard = {
   titleFr: string | null;
   year: string | null;
   priceEur: number;
+  status: string; // available | reserved | sold
   image: string | null; // cover photo path, null when no photos yet
   categorySlug: string;
   categoryLabelEn: string;
@@ -53,6 +54,7 @@ type ProductWithRels = {
   condition: string | null;
   dimensions: string | null;
   priceEur: unknown;
+  status: string;
   published: boolean;
   category: { slug: string; labelEn: string; labelFr: string | null };
   images: { path: string }[];
@@ -67,6 +69,7 @@ function toCard(p: ProductWithRels): CatalogueCard {
     titleFr: p.titleFr,
     year: p.year,
     priceEur: Number(String(p.priceEur)),
+    status: p.status,
     image: p.images[0]?.path ?? null,
     categorySlug: p.category.slug,
     categoryLabelEn: p.category.labelEn,
@@ -144,7 +147,7 @@ export type HeroSlide = {
 // skipped rather than rendering an empty frame.
 export async function getHeroProducts(): Promise<HeroSlide[]> {
   const rows = await db.product.findMany({
-    where: { published: true, featured: true },
+    where: { published: true, featured: true, status: { not: "sold" } },
     orderBy: { createdAt: "desc" },
     include: {
       images: { orderBy: { sortOrder: "asc" }, take: 1, select: { path: true } },

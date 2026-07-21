@@ -5,7 +5,7 @@ import { cookies } from "next/headers";
 import { db } from "../../../lib/db";
 import { ADMIN_COOKIE, verifySessionToken } from "../../../lib/session";
 import AdminHeader from "../../../components/admin/AdminHeader";
-import { togglePublished, toggleFeatured } from "./actions";
+import { togglePublished, toggleFeatured, toggleSold } from "./actions";
 
 export const metadata: Metadata = {
   title: "Products · Balzac Antiques Admin",
@@ -21,6 +21,7 @@ type ProductRow = {
   priceEur: unknown;
   featured: boolean;
   published: boolean;
+  status: string;
   category: { labelEn: string };
   images: { path: string; alt: string | null }[];
 };
@@ -139,6 +140,20 @@ export default async function AdminProductsPage({
                       {p.published ? "Published" : "Hidden"}
                     </button>
                   </form>
+                  <form action={toggleSold}>
+                    <input type="hidden" name="id" value={p.id} />
+                    <button
+                      type="submit"
+                      title={p.status === "sold" ? "Marked sold · click to mark available" : "Available · click to mark sold"}
+                      className={`border px-3 py-1.5 text-[9px] tracking-[0.2em] uppercase transition-colors ${
+                        p.status === "sold"
+                          ? "border-[#C0736A]/50 bg-[#FBEDEA] text-[#8A3C3C]"
+                          : "border-[#D8CFBB] bg-white text-[#9A8F7D] hover:border-[#B99A5B]"
+                      }`}
+                    >
+                      {p.status === "sold" ? "Sold" : "Available"}
+                    </button>
+                  </form>
                   <Link
                     href={`/admin/products/${p.id}`}
                     className="border border-[#D8CFBB] bg-white px-3 py-1.5 text-[9px] tracking-[0.2em] uppercase text-[#1F1B16] transition-colors hover:border-[#B99A5B]"
@@ -153,7 +168,7 @@ export default async function AdminProductsPage({
         )}
 
         <p className="mt-8 text-[12px] leading-relaxed text-[#9A8F7D]">
-          Note: the public site switches to this catalogue in an upcoming update. Until then, changes here are saved but not yet shown to visitors.
+          Changes here are live on the site immediately. Mark a piece Sold to show a Sold label on it and stop it from being purchased; the homepage slideshow skips sold pieces automatically.
         </p>
       </div>
     </main>

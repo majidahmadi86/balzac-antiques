@@ -100,17 +100,28 @@ export default async function ProductPage({ params }: { params: { id: string } }
                 <T k="prod.shipping" />
               </p>
 
-              {/* NOTE: button set is still pending the client's decision
-                  (Add to Cart/Buy Now vs. Buy Now/Ask a Question/Sell with Us).
-                  Enquiry link is real and works today; checkout wiring lands
-                  with Stripe once the button decision is confirmed. */}
-              <Link
-                href="/contact"
-                className="mt-4 flex w-full items-center justify-center gap-2 bg-gold py-3.5 text-[13px] tracking-widest2 uppercase text-cream transition-colors hover:bg-gold-dark"
-              >
-                <T k="prod.enquire" />
-                <span aria-hidden>&rarr;</span>
-              </Link>
+              {/* Available pieces keep the Enquire link until Add to Cart
+                  lands in the cart commit. Sold and reserved pieces show their
+                  status here instead of a purchase action. */}
+              {product.status === "sold" ? (
+                <div className="mt-4 border border-hairline bg-cream px-4 py-3.5 text-center">
+                  <p className="text-[12px] uppercase tracking-[0.22em] text-ink"><T k="prod.sold" /></p>
+                  <p className="mt-1 text-[13px] text-ink/65"><T k="prod.soldNote" /></p>
+                </div>
+              ) : product.status === "reserved" ? (
+                <div className="mt-4 border border-hairline bg-cream px-4 py-3.5 text-center">
+                  <p className="text-[12px] uppercase tracking-[0.22em] text-ink"><T k="prod.reserved" /></p>
+                  <p className="mt-1 text-[13px] text-ink/65"><T k="prod.reservedNote" /></p>
+                </div>
+              ) : (
+                <Link
+                  href="/contact"
+                  className="mt-4 flex w-full items-center justify-center gap-2 bg-gold py-3.5 text-[13px] tracking-widest2 uppercase text-cream transition-colors hover:bg-gold-dark"
+                >
+                  <T k="prod.enquire" />
+                  <span aria-hidden>&rarr;</span>
+                </Link>
+              )}
             </div>
           </div>
         </div>

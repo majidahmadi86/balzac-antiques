@@ -237,3 +237,19 @@ export async function toggleFeatured(formData: FormData): Promise<void> {
   revalidatePath("/admin/products");
   redirect("/admin/products");
 }
+
+export async function toggleSold(formData: FormData): Promise<void> {
+  await requireAdmin();
+  const id = str(formData, "id");
+  const product = id ? await db.product.findUnique({ where: { id }, select: { status: true } }) : null;
+  if (product) {
+    const markSold = product.status !== "sold"; // toggles available <-> sold
+    await db.product.update({
+      where: { id },
+      data: markSold ? { status: "sold", soldAt: new Date() } : { status: "available", soldAt: null },
+    });
+  }
+  revalidatePath("/", "layout"); // public site reads this catalogue now
+  revalidatePath("/admin/products");
+  redirect("/admin/products");
+}
