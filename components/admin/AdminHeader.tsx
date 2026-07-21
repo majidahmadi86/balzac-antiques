@@ -23,6 +23,12 @@ export default function AdminHeader({ email }: { email: string }) {
             >
               Products
             </Link>
+            <Link
+              href="/admin/account"
+              className="text-[10px] tracking-[0.24em] uppercase text-[#6B6154] transition-colors hover:text-[#1F1B16]"
+            >
+              Account
+            </Link>
           </nav>
         </div>
         <div className="flex items-center gap-5">
