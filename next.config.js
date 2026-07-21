@@ -8,6 +8,10 @@ const nextConfig = {
     },
   },
   images: {
+    // Serve AVIF first (smallest), then WebP, then the original. AVIF typically
+    // roughly halves the hero photo versus JPEG or WebP, which is the main
+    // lever on mobile LCP since the hero image download dominates it.
+    formats: ["image/avif", "image/webp"],
     // Our placeholder assets are local SVGs bundled in the repo (not
     // user-uploaded), so this is safe. Real client photography will be
     // JPG/PNG and won't need this — safe to remove once placeholders
