@@ -102,8 +102,16 @@ export default function Footer() {
         </div>
       </div>
 
-      <div className="border-t border-hairline px-5 py-5 text-center text-[11px] tracking-[0.06em] text-ink/50 sm:px-8">
-        &copy; {new Date().getFullYear()} Balzac Antiques. {t("footer.rights")}
+      <div className="border-t border-hairline px-5 py-5 text-center sm:px-8">
+        <nav className="flex flex-wrap items-center justify-center gap-x-5 gap-y-2 text-[11px] uppercase tracking-[0.14em]">
+          <Link href="/terms" className="text-ink/55 transition-colors hover:text-gold-dark">{t("legal.terms")}</Link>
+          <Link href="/privacy" className="text-ink/55 transition-colors hover:text-gold-dark">{t("legal.privacy")}</Link>
+          <Link href="/shipping" className="text-ink/55 transition-colors hover:text-gold-dark">{t("legal.shipping")}</Link>
+          <Link href="/returns" className="text-ink/55 transition-colors hover:text-gold-dark">{t("legal.returns")}</Link>
+        </nav>
+        <p className="mt-3 text-[11px] tracking-[0.06em] text-ink/50">
+          &copy; {new Date().getFullYear()} Balzac Antiques. {t("footer.rights")}
+        </p>
       </div>
     </footer>
   );
