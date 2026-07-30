@@ -43,7 +43,34 @@ export default async function AdminOrdersPage() {
             No orders yet. When a customer places an order it will appear here.
           </p>
         ) : (
-          <div className="mt-8 overflow-x-auto border border-[#E4DCCB] bg-white/70">
+          <>
+          <ul className="mt-8 grid gap-3 md:hidden">
+            {orders.map((o: {
+              id: string; createdAt: Date; totalEur: unknown; status: string;
+              customer: { name: string; email: string }; items: { id: number }[];
+            }) => (
+              <li key={o.id} className="border border-[#E4DCCB] bg-white/70 p-4">
+                <div className="flex items-center justify-between gap-3">
+                  <span className="text-[13px] tracking-[0.06em] text-[#1F1B16]">{o.id.slice(-8).toUpperCase()}</span>
+                  <StatusBadge status={o.status} />
+                </div>
+                <p className="mt-2 text-[13px] text-[#1F1B16]">{o.customer.name}</p>
+                <p className="break-all text-[11px] text-[#9A8F7D]">{o.customer.email}</p>
+                <div className="mt-3 flex items-center justify-between gap-3 text-[12px] text-[#6B6154]">
+                  <span>
+                    {o.createdAt.toISOString().slice(0, 10)} · {o.items.length} {o.items.length === 1 ? "piece" : "pieces"} · {Number(String(o.totalEur)).toLocaleString("en-CH")} EUR
+                  </span>
+                  <Link
+                    href={`/admin/orders/${o.id}`}
+                    className="shrink-0 border border-[#D8CFBB] bg-white px-3 py-1.5 text-[9px] uppercase tracking-[0.2em] text-[#1F1B16] transition-colors hover:border-[#B99A5B]"
+                  >
+                    Open
+                  </Link>
+                </div>
+              </li>
+            ))}
+          </ul>
+          <div className="mt-8 hidden overflow-x-auto border border-[#E4DCCB] bg-white/70 md:block">
             <table className="w-full text-left text-[13px]">
               <thead>
                 <tr className="border-b border-[#E4DCCB] text-[10px] uppercase tracking-[0.18em] text-[#9A8F7D]">
@@ -84,6 +111,7 @@ export default async function AdminOrdersPage() {
               </tbody>
             </table>
           </div>
+          </>
         )}
       </div>
     </main>
