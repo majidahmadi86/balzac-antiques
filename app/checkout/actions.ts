@@ -5,7 +5,12 @@ import { cookies } from "next/headers";
 import bcrypt from "bcryptjs";
 import { randomBytes } from "crypto";
 import { db } from "@/lib/db";
-import { CUSTOMER_COOKIE, verifyCustomerSessionToken } from "@/lib/customer-session";
+import {
+  CUSTOMER_COOKIE,
+  CUSTOMER_SESSION_TTL_SECONDS,
+  createCustomerSessionToken,
+  verifyCustomerSessionToken,
+} from "@/lib/customer-session";
 import { COUNTRIES } from "@/lib/countries";
 
 const COUNTRY_SET = new Set(COUNTRIES.map((c) => c.name));
@@ -181,6 +186,24 @@ export async function placeOrder(formData: FormData): Promise<void> {
 
   if (errCode !== "") {
     redirect(`/checkout?err=${errCode}${errPiece ? `&piece=${encodeURIComponent(errPiece)}` : ""}`);
+  }
+  // Guest buyers are signed in to the account the order just created, so
+  // their order history is immediately visible under My Account.
+  if (!session) {
+    const placed = await db.order.findUnique({
+      where: { id: orderId },
+      select: { customer: { select: { id: true, email: true } } },
+    });
+    if (placed) {
+      const token = await createCustomerSessionToken({ id: placed.customer.id, email: placed.customer.email });
+      cookieStore.set(CUSTOMER_COOKIE, token, {
+        httpOnly: true,
+        sameSite: "lax",
+        secure: process.env.NODE_ENV === "production",
+        path: "/",
+        maxAge: CUSTOMER_SESSION_TTL_SECONDS,
+      });
+    }
   }
   redirect(`/checkout/confirmation/${orderId}`);
 }
