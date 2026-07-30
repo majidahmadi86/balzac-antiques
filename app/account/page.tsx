@@ -25,6 +25,9 @@ export default async function AccountPage() {
   const addressCount = session
     ? await db.address.count({ where: { customerId: session.sub } })
     : 0;
+  const orderCount = session
+    ? await db.order.count({ where: { customerId: session.sub } })
+    : 0;
 
   return (
     <div>
@@ -44,11 +47,22 @@ export default async function AccountPage() {
         <section className="border border-hairline bg-parchment p-7">
           <h2 className="font-display text-[18px] text-ink"><T k="account.ordersTitle" /></h2>
           <div className="mt-3 h-px w-8 bg-gold" />
-          <p className="mt-4 text-[14px] text-ink/80"><T k="account.ordersEmpty" /></p>
-          <p className="mt-1 text-[13px] text-ink/55"><T k="account.ordersNote" /></p>
-          <Link href="/collection" className="mt-5 inline-flex items-center gap-2 text-[12px] uppercase tracking-[0.16em] text-gold-dark hover:text-gold">
-            <T k="account.browse" /> <span aria-hidden>&rarr;</span>
-          </Link>
+          {orderCount > 0 ? (
+            <>
+              <p className="mt-4 text-[14px] text-ink/80"><T k="account.ordersSome" /></p>
+              <Link href="/account/orders" className="mt-5 inline-flex items-center gap-2 text-[12px] uppercase tracking-[0.16em] text-gold-dark hover:text-gold">
+                <T k="account.viewOrders" /> <span aria-hidden>&rarr;</span>
+              </Link>
+            </>
+          ) : (
+            <>
+              <p className="mt-4 text-[14px] text-ink/80"><T k="account.ordersEmpty" /></p>
+              <p className="mt-1 text-[13px] text-ink/55"><T k="account.ordersNote" /></p>
+              <Link href="/collection" className="mt-5 inline-flex items-center gap-2 text-[12px] uppercase tracking-[0.16em] text-gold-dark hover:text-gold">
+                <T k="account.browse" /> <span aria-hidden>&rarr;</span>
+              </Link>
+            </>
+          )}
         </section>
 
         <section className="border border-hairline bg-parchment p-7">
