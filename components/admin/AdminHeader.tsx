@@ -13,7 +13,7 @@ const NAV = [
 // email, Sign Out) exactly as before.
 export default function AdminHeader({ email }: { email: string }) {
   return (
-    <header className="border-b border-[#E4DCCB] bg-white/60">
+    <header className="sticky top-0 z-40 border-b border-[#E4DCCB] bg-[#F7F3EA]/95 backdrop-blur-sm">
       <div className="mx-auto flex max-w-5xl flex-wrap items-center px-4 py-4 sm:px-6 sm:py-5">
         <Link href="/admin" className="block">
           <p className="font-serif text-[19px] tracking-[0.26em] text-[#1F1B16] -mr-[0.26em]">BALZAC</p>
