@@ -127,6 +127,15 @@ model Order {
   customer        Customer    @relation(fields: [customerId], references: [id])
   status          String      @default("pending") // pending|paid|shipped|delivered|cancelled
   totalEur        Decimal     @db.Decimal(10, 2)
+  // Shipping snapshot, frozen at purchase time so the order record stays
+  // correct even if the customer later edits or deletes their saved address.
+  shipName        String
+  shipPhone       String?
+  shipLine1       String
+  shipLine2       String?
+  shipCity        String
+  shipPostcode    String
+  shipCountry     String
   stripeSessionId String?     @unique
   createdAt       DateTime    @default(now())
   items           OrderItem[]
