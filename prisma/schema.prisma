@@ -92,6 +92,8 @@ model Message {
   email     String
   phone     String?
   body      String?  @db.Text
+  // Comma-separated served paths for photos attached to an acquisition offer.
+  photos    String?  @db.Text
   handled   Boolean  @default(false)
   createdAt DateTime @default(now())
 

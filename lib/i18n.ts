@@ -99,7 +99,9 @@ export const dict: Record<Locale, Record<string, string>> = {
     "sell.detailsHint": "Item or collection, approximate period, condition, provenance if known, and any asking price.",
     "sell.send": "Send Details",
     "sell.sent": "Thank you. Your submission has been received and the gallery will be in touch by email.",
-    "sell.photosNote": "Once we reply you can send photographs by email, which helps us assess the piece.",
+    "sell.photos": "Photographs (optional)",
+    "sell.photosHint": "Up to 3 images, JPG or PNG. Clear daylight photographs help us assess a piece.",
+    "sell.confidenceNote": "All enquiries are handled in complete confidence.",
     "coll.eyebrow": "The Collection",
     "coll.title": "All Pieces",
     "coll.lead":
@@ -308,7 +310,9 @@ export const dict: Record<Locale, Record<string, string>> = {
     "sell.detailsHint": "Objet ou collection, période approximative, état, provenance si connue, et prix souhaité le cas échéant.",
     "sell.send": "Envoyer les détails",
     "sell.sent": "Merci. Votre envoi a bien été reçu et la galerie vous contactera par e-mail.",
-    "sell.photosNote": "Dès notre réponse, vous pourrez nous envoyer des photographies par e-mail, ce qui nous aide à évaluer la pièce.",
+    "sell.photos": "Photographies (facultatif)",
+    "sell.photosHint": "Jusqu'à 3 images, JPG ou PNG. Des photographies nettes à la lumière du jour nous aident à évaluer une pièce.",
+    "sell.confidenceNote": "Toutes les demandes sont traitées en toute confidentialité.",
     "coll.eyebrow": "La Collection",
     "coll.title": "Toutes les pi\u00e8ces",
     "coll.lead":

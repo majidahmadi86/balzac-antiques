@@ -19,6 +19,7 @@ type Row = {
   email: string;
   phone: string | null;
   body: string | null;
+  photos: string | null;
   handled: boolean;
   createdAt: Date;
 };
@@ -89,6 +90,17 @@ export default async function AdminMessagesPage() {
                   </a>
                   {m.phone ? <span className="text-[#9A8F7D]"> · {m.phone}</span> : null}
                 </p>
+
+                {m.photos ? (
+                  <div className="mt-3 flex flex-wrap gap-2">
+                    {m.photos.split(",").map((src) => (
+                      <a key={src} href={src} target="_blank" rel="noreferrer" className="block">
+                        {/* eslint-disable-next-line @next/next/no-img-element */}
+                        <img src={src} alt="" className="h-24 w-24 border border-[#E4DCCB] object-cover" />
+                      </a>
+                    ))}
+                  </div>
+                ) : null}
 
                 {m.body ? (
                   <p className="mt-3 whitespace-pre-wrap border-t border-[#EFE9DA] pt-3 text-[14px] leading-relaxed text-[#1F1B16]">

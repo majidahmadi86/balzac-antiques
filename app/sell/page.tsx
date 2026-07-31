@@ -89,12 +89,23 @@ export default async function SellPage({
                 <textarea name="body" required rows={7} maxLength={5000} placeholder="" className="w-full border border-hairline bg-cream px-4 py-2.5 text-[15px] text-ink outline-none transition-colors focus:border-gold resize-y" />
                 <span className="mt-1.5 block text-[11px] leading-relaxed text-ink/50"><T k="sell.detailsHint" /></span>
               </label>
+              <label className="block">
+                <span className="mb-1.5 block text-[10px] uppercase tracking-[0.22em] text-ink/60"><T k="sell.photos" /></span>
+                <input
+                  type="file"
+                  name="photos"
+                  multiple
+                  accept="image/jpeg,image/png,image/webp"
+                  className="w-full border border-hairline bg-cream px-4 py-2.5 text-[13px] text-ink/80 outline-none file:mr-4 file:border-0 file:bg-ink file:px-4 file:py-2 file:text-[10px] file:uppercase file:tracking-[0.18em] file:text-cream"
+                />
+                <span className="mt-1.5 block text-[11px] leading-relaxed text-ink/50"><T k="sell.photosHint" /></span>
+              </label>
               <button type="submit" className="mt-2 bg-gold px-6 py-3.5 text-[12px] uppercase tracking-[0.2em] text-cream transition-colors hover:bg-gold-dark">
                 <T k="sell.send" />
               </button>
             </form>
             <p className="mt-5 text-center text-[13px] leading-relaxed text-ink/60">
-              <T k="sell.photosNote" />
+              <T k="sell.confidenceNote" />
             </p>
           </div>
         )}
