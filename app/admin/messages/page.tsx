@@ -109,15 +109,22 @@ export default async function AdminMessagesPage() {
                 ) : null}
 
                 <div className="mt-4 flex flex-wrap items-center gap-3">
+                  {/* Gmail web compose rather than mailto: a mailto link does
+                      nothing on a desktop with no mail app registered, which is
+                      the normal case for someone who reads mail in a browser.
+                      The address at the top of the card is still a mailto for
+                      anyone using a desktop mail client. */}
                   <a
-                    href={`mailto:${m.email}?subject=${encodeURIComponent(
+                    href={`https://mail.google.com/mail/?view=cm&fs=1&to=${encodeURIComponent(m.email)}&su=${encodeURIComponent(
                       m.kind === "sell"
                         ? "Re: the piece you offered to Balzac Antiques"
                         : "Re: your enquiry to Balzac Antiques"
                     )}&body=${encodeURIComponent(`Dear ${m.name ?? ""},\n\n`)}`}
+                    target="_blank"
+                    rel="noreferrer"
                     className="bg-[#1F1B16] px-4 py-2 text-[9px] uppercase tracking-[0.2em] text-[#F7F3EA] transition-colors hover:bg-[#3A322A]"
                   >
-                    Reply by email
+                    Reply in Gmail
                   </a>
                   <form action={setMessageHandled}>
                     <input type="hidden" name="id" value={m.id} />
