@@ -9,7 +9,7 @@ import { getPublishedProducts } from "@/lib/catalogue";
 import { T } from "@/components/Prefs";
 
 export const metadata: Metadata = {
-  title: "The Collection — Balzac Antiques",
+  title: "The Collection · Balzac Antiques",
   description:
     "Rare books, fine watches, artworks, vinyl records, iconic design and remarkable objects, curated by Balzac Antiques.",
 };

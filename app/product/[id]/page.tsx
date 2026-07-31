@@ -18,9 +18,9 @@ export async function generateStaticParams() {
 
 export async function generateMetadata({ params }: { params: { id: string } }): Promise<Metadata> {
   const product = await getProductBySlug(params.id);
-  if (!product) return { title: "Not found — Balzac Antiques" };
+  if (!product) return { title: "Not found · Balzac Antiques" };
   return {
-    title: `${product.titleEn} — Balzac Antiques`,
+    title: `${product.titleEn} · Balzac Antiques`,
     description: product.descriptionEn.slice(0, 155),
   };
 }

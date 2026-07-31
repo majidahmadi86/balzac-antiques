@@ -6,7 +6,7 @@ import PageHeader from "@/components/PageHeader";
 import { T } from "@/components/Prefs";
 
 export const metadata: Metadata = {
-  title: "About — Balzac Antiques",
+  title: "About · Balzac Antiques",
   description:
     "Balzac Antiques is a curated destination for rare and timeless objects, sourced across Europe and Asia.",
 };

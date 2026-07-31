@@ -33,7 +33,7 @@ const jost = localFont({
 
 export const metadata: Metadata = {
   metadataBase: new URL("https://balzacantiques.ch"),
-  title: "Balzac Antiques — Rare Objects. Timeless Stories.",
+  title: "Balzac Antiques · Rare Objects. Timeless Stories.",
   description:
     "A curated destination for rare and timeless objects: rare books, vintage vinyl, fine watches, artworks, iconic design and carefully selected collectibles, sourced across Europe and Asia.",
   icons: {
@@ -47,7 +47,7 @@ export const metadata: Metadata = {
   openGraph: {
     type: "website",
     siteName: "Balzac Antiques",
-    title: "Balzac Antiques — Rare Objects. Timeless Stories.",
+    title: "Balzac Antiques · Rare Objects. Timeless Stories.",
     description:
       "Rare books, fine watches, artworks, vinyl and remarkable objects, curated for collectors worldwide.",
     url: "https://balzacantiques.ch",
@@ -55,7 +55,7 @@ export const metadata: Metadata = {
   },
   twitter: {
     card: "summary_large_image",
-    title: "Balzac Antiques — Rare Objects. Timeless Stories.",
+    title: "Balzac Antiques · Rare Objects. Timeless Stories.",
     images: ["/og.png"],
   },
 };

@@ -6,7 +6,7 @@ import { T } from "@/components/Prefs";
 import { submitSell } from "@/lib/message-actions";
 
 export const metadata: Metadata = {
-  title: "Acquisitions — Balzac Antiques",
+  title: "Acquisitions · Balzac Antiques",
   description:
     "Balzac Antiques is actively seeking rare books, works of art, vintage watches, vinyl records, iconic design, decorative arts, and quality collectibles.",
 };

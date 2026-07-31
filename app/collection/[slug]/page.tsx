@@ -19,9 +19,9 @@ export function generateMetadata({
   params: { slug: string };
 }): Metadata {
   const category = categoryBySlug(params.slug);
-  if (!category) return { title: "Not found — Balzac Antiques" };
+  if (!category) return { title: "Not found · Balzac Antiques" };
   return {
-    title: `${category.label} — Balzac Antiques`,
+    title: `${category.label} · Balzac Antiques`,
     description: `${category.label} curated by Balzac Antiques. Rare objects, chosen for authenticity, quality and lasting appeal.`,
   };
 }

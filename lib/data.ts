@@ -105,7 +105,7 @@ export const products: Product[] = [
       { label: "Water Resistance", value: "50 m" },
       { label: "Box / Papers", value: "Yes / Yes" },
     ],
-    condition: "Excellent, near mint — full set",
+    condition: "Excellent, near mint, full set",
     priceEur: 2190,
     images: [
       "/images/products/paul-picot-1.jpg",

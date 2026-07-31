@@ -6,7 +6,7 @@ import { T } from "@/components/Prefs";
 import { submitContact } from "@/lib/message-actions";
 
 export const metadata: Metadata = {
-  title: "Contact — Balzac Antiques",
+  title: "Contact · Balzac Antiques",
   description:
     "Enquiries regarding our collection, sourcing requests, or private acquisitions.",
 };

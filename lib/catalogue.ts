@@ -200,8 +200,16 @@ export async function getCategoryCovers(): Promise<Record<string, string>> {
       images: { orderBy: { sortOrder: "asc" }, take: 1, select: { path: true } },
     },
   });
+  const typed = rows as { status: string; category: { slug: string }; images: { path: string }[] }[];
   const covers: Record<string, string> = {};
-  for (const r of rows as { category: { slug: string }; images: { path: string }[] }[]) {
+  // Prefer a piece that is still for sale, so the storefront always leads with
+  // something a visitor can buy. Fall back to any published piece otherwise.
+  for (const r of typed) {
+    if (r.status === "available" && r.images[0] && !(r.category.slug in covers)) {
+      covers[r.category.slug] = r.images[0].path;
+    }
+  }
+  for (const r of typed) {
     if (r.images[0] && !(r.category.slug in covers)) covers[r.category.slug] = r.images[0].path;
   }
   return covers;
