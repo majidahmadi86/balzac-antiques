@@ -21,6 +21,7 @@ export default async function AdminDashboardPage() {
   const sections = [
     { title: "Products", note: "Add, edit and publish pieces in English and French.", status: "Live", href: "/admin/products" },
     { title: "Orders", note: "See and manage customer orders: mark paid, shipped, delivered.", status: "Live", href: "/admin/orders" },
+    { title: "Messages", note: "Enquiries, pieces offered to you, and newsletter signups.", status: "Live", href: "/admin/messages" },
     { title: "Account", note: "Change your admin password.", status: "Live", href: "/admin/account" },
     { title: "Images", note: "Upload photos from your phone. They are optimised automatically.", status: "Coming next", href: null },
     { title: "Site Content", note: "Featured pieces and the auction banner.", status: "Planned", href: null },

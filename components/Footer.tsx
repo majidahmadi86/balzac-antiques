@@ -1,6 +1,7 @@
 "use client";
 
 import Link from "next/link";
+import NewsletterForm from "@/components/NewsletterForm";
 import { usePrefs } from "@/components/Prefs";
 import TrustBadges from "./TrustBadges";
 import { categories } from "@/lib/data";
@@ -85,20 +86,7 @@ export default function Footer() {
           <p className="mt-4 text-[13px] leading-relaxed text-ink/70">
             {t("footer.newsBlurb")}
           </p>
-          <form className="mt-4 flex border-b border-ink/30 pb-2">
-            <input
-              type="email"
-              placeholder={t("footer.email")}
-              className="w-full bg-transparent text-[13px] text-ink placeholder:text-ink/40 focus:outline-none"
-            />
-            <button
-              type="submit"
-              aria-label="Subscribe"
-              className="shrink-0 text-[12px] tracking-[0.14em] uppercase text-gold hover:text-gold-dark"
-            >
-              {t("footer.join")} &rarr;
-            </button>
-          </form>
+          <NewsletterForm />
         </div>
       </div>
 

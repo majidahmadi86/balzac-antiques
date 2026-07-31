@@ -3,6 +3,7 @@ import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 import PageHeader from "@/components/PageHeader";
 import { T } from "@/components/Prefs";
+import { submitSell } from "@/lib/message-actions";
 
 export const metadata: Metadata = {
   title: "Acquisitions — Balzac Antiques",
@@ -12,32 +13,13 @@ export const metadata: Metadata = {
 
 const seeking = ["sell.i1","sell.i2","sell.i3","sell.i4","sell.i5","sell.i6","sell.i7"];
 
-// Pre-filled mailto so the enquiry lands in the client's inbox with a
-// consistent subject line, and the sender can attach photographs directly
-// from their own mail client (no upload limits, no image storage needed).
-// If a native upload form is wanted later, it needs an email/storage
-// service picked first — see the note in README.
-const MAILTO =
-  "mailto:info@balzacantiques.ch" +
-  "?subject=" +
-  encodeURIComponent("Item offered for acquisition") +
-  "&body=" +
-  encodeURIComponent(
-    [
-      "Please describe the item (or collection) you would like to offer, and attach photographs to this email.",
-      "",
-      "Item / collection:",
-      "Approximate age or period:",
-      "Condition:",
-      "Provenance or history (if known):",
-      "Asking price (if any):",
-      "",
-      "Your name:",
-      "Best contact number:",
-    ].join("\n")
-  );
+export default async function SellPage({
+  searchParams,
+}: {
+  searchParams: Promise<{ sent?: string; err?: string }>;
+}) {
+  const sp = await searchParams;
 
-export default function SellPage() {
   return (
     <main>
       <Header />
@@ -69,12 +51,53 @@ export default function SellPage() {
           </p>
         </div>
 
-        <div className="mt-10 flex justify-center">
-          <a href={MAILTO} className="btn-outline">
-            <T k="sell.cta" />
-            <span aria-hidden>&rarr;</span>
-          </a>
-        </div>
+        {sp?.sent === "1" ? (
+          <p role="status" className="mx-auto mt-10 max-w-xl border border-gold/40 bg-[#F4E9D4] px-5 py-4 text-center text-[14px] leading-relaxed text-[#6B5326]">
+            <T k="sell.sent" />
+          </p>
+        ) : (
+          <div className="mx-auto mt-12 max-w-xl border-t border-hairline pt-10">
+            <h2 className="text-center font-display text-[22px] text-ink">
+              <T k="sell.formTitle" />
+            </h2>
+            <div className="mx-auto mt-3 h-px w-8 bg-gold" />
+
+            {sp?.err === "1" ? (
+              <p role="alert" className="mt-6 border border-gold/40 bg-[#F4E9D4] px-4 py-3 text-[13px] text-[#6B5326]">
+                <T k="contact.err" />
+              </p>
+            ) : null}
+
+            <form action={submitSell} className="mt-6 grid gap-4">
+              <input type="text" name="company" tabIndex={-1} autoComplete="off" aria-hidden className="hidden" />
+              <div className="grid gap-4 sm:grid-cols-2">
+                <label className="block">
+                  <span className="mb-1.5 block text-[10px] uppercase tracking-[0.22em] text-ink/60"><T k="contact.name" /></span>
+                  <input name="name" required maxLength={120} autoComplete="name" className="w-full border border-hairline bg-cream px-4 py-2.5 text-[15px] text-ink outline-none transition-colors focus:border-gold" />
+                </label>
+                <label className="block">
+                  <span className="mb-1.5 block text-[10px] uppercase tracking-[0.22em] text-ink/60"><T k="auth.email" /></span>
+                  <input type="email" name="email" required maxLength={254} autoComplete="email" className="w-full border border-hairline bg-cream px-4 py-2.5 text-[15px] text-ink outline-none transition-colors focus:border-gold" />
+                </label>
+              </div>
+              <label className="block sm:max-w-[calc(50%-0.5rem)]">
+                <span className="mb-1.5 block text-[10px] uppercase tracking-[0.22em] text-ink/60"><T k="checkout.phone" /></span>
+                <input name="phone" maxLength={40} autoComplete="tel" className="w-full border border-hairline bg-cream px-4 py-2.5 text-[15px] text-ink outline-none transition-colors focus:border-gold" />
+              </label>
+              <label className="block">
+                <span className="mb-1.5 block text-[10px] uppercase tracking-[0.22em] text-ink/60"><T k="sell.details" /></span>
+                <textarea name="body" required rows={7} maxLength={5000} placeholder="" className="w-full border border-hairline bg-cream px-4 py-2.5 text-[15px] text-ink outline-none transition-colors focus:border-gold resize-y" />
+                <span className="mt-1.5 block text-[11px] leading-relaxed text-ink/50"><T k="sell.detailsHint" /></span>
+              </label>
+              <button type="submit" className="mt-2 bg-gold px-6 py-3.5 text-[12px] uppercase tracking-[0.2em] text-cream transition-colors hover:bg-gold-dark">
+                <T k="sell.send" />
+              </button>
+            </form>
+            <p className="mt-5 text-center text-[13px] leading-relaxed text-ink/60">
+              <T k="sell.photosNote" />
+            </p>
+          </div>
+        )}
 
         <p className="mt-6 text-center text-[13px] text-ink/60">
           <T k="sell.orWrite" />{" "}

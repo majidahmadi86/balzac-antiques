@@ -82,6 +82,23 @@ model ProductSpec {
   @@index([productId])
 }
 
+// Contact form, acquisition offers and newsletter signups. Stored in the
+// database and worked from the admin Messages panel, so a lead is never lost
+// even before an email service is connected. kind: contact | sell | newsletter
+model Message {
+  id        String   @id @default(cuid())
+  kind      String
+  name      String?
+  email     String
+  phone     String?
+  body      String?  @db.Text
+  handled   Boolean  @default(false)
+  createdAt DateTime @default(now())
+
+  @@index([kind])
+  @@index([handled, createdAt])
+}
+
 model AdminUser {
   id           Int      @id @default(autoincrement())
   email        String   @unique
