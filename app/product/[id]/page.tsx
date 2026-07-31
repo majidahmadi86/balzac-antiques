@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import Link from "next/link";
+import LocaleLink from "@/components/LocaleLink";
 import { notFound } from "next/navigation";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
@@ -34,13 +34,13 @@ export default async function ProductPage({ params }: { params: { id: string } }
       <Header />
 
       <div className="mx-auto max-w-content px-5 py-5 sm:px-8">
-        <Link
+        <LocaleLink
           href={`/collection/${product.categorySlug}`}
           className="inline-flex items-center gap-2 text-[12px] tracking-[0.12em] text-gold hover:text-gold-dark"
         >
           <span aria-hidden>&larr;</span>
           <T k="prod.backTo" /> <Bi en={product.categoryLabelEn} fr={product.categoryLabelFr} />
-        </Link>
+        </LocaleLink>
 
         <div className="mt-5 grid grid-cols-1 gap-10 sm:grid-cols-2">
           {/* --------------------------- Gallery --------------------------- */}

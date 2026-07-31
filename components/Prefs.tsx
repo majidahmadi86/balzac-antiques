@@ -93,10 +93,20 @@ export const usePrefs = () => useContext(Ctx);
 
 // Inline translated string — usable inside server components.
 // Optional c replaces "{c}" (e.g. category names in empty states).
-export function T({ k, c }: { k: string; c?: string }) {
+export function T({ k, c, ck }: { k: string; c?: string; ck?: string }) {
   const { t } = usePrefs();
   const s = t(k);
-  return <>{c ? s.replace("{c}", c) : s}</>;
+  // ck interpolates a translated CATEGORY name, so sentences like
+  // "No pieces currently listed in {c}" read correctly in both languages.
+  const value = ck ? t(`cat.${ck}`) : c;
+  return <>{value ? s.replace("{c}", value) : s}</>;
+}
+
+// Translated category name. Category labels live in code as English only, so
+// this resolves them through the dictionary at render time.
+export function Cat({ slug }: { slug: string }) {
+  const { t } = usePrefs();
+  return <>{t(`cat.${slug}`)}</>;
 }
 
 // Bilingual DATA field (product titles, descriptions, specs from the admin

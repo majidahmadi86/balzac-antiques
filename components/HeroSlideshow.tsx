@@ -7,7 +7,7 @@
 // this at all when hero products exist.
 
 import { useEffect, useState } from "react";
-import Link from "next/link";
+import LocaleLink from "@/components/LocaleLink";
 import Image from "next/image";
 import { type HeroSlide } from "@/lib/catalogue";
 import { T, Bi } from "@/components/Prefs";
@@ -90,10 +90,10 @@ export default function HeroSlideshow({ slides }: { slides: HeroSlide[] }) {
                   <span aria-hidden>&rarr;</span>
                 </button>
               ) : null}
-              <Link href={`/product/${s.slug}`} className="btn-outline">
+              <LocaleLink href={`/product/${s.slug}`} className="btn-outline">
                 <T k="hero.viewPiece" />
                 <span aria-hidden>&rarr;</span>
-              </Link>
+              </LocaleLink>
             </div>
           </div>
         ))}

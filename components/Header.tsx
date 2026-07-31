@@ -1,10 +1,10 @@
 "use client";
 
-import Link from "next/link";
+import LocaleLink from "@/components/LocaleLink";
 import { useEffect, useRef, useState } from "react";
 import { usePathname, useRouter } from "next/navigation";
 import { categories } from "@/lib/data";
-import { usePrefs, CURRENCIES, type Currency } from "@/components/Prefs";
+import { usePrefs, CURRENCIES, Cat, type Currency } from "@/components/Prefs";
 import { useCart } from "@/components/Cart";
 import { toEn, toFr } from "@/lib/locale-routes";
 import type { Locale } from "@/lib/i18n";
@@ -152,22 +152,22 @@ export default function Header() {
                       <span className="text-[10.5px] tracking-[0.28em] uppercase text-gold">
                         {t("nav.theCollection")}
                       </span>
-                      <Link
+                      <LocaleLink
                         href="/collection"
                         className="text-[11px] tracking-[0.16em] uppercase text-ink/70 transition-colors hover:text-gold-dark"
                       >
                         {t("nav.viewAll")} &rarr;
-                      </Link>
+                      </LocaleLink>
                     </div>
                     <div className="mt-5 grid grid-cols-2 gap-x-10">
                       {categories.map((c) => (
-                        <Link
+                        <LocaleLink
                           key={c.slug}
                           href={`/collection/${c.slug}`}
                           className="group/item flex items-center justify-between border-b border-hairline/60 py-3"
                         >
                           <span className="font-display text-[16px] text-ink/85 transition-colors group-hover/item:text-ink">
-                            {c.label}
+                            <Cat slug={c.slug} />
                           </span>
                           <span
                             className="text-gold opacity-0 transition-all duration-300 group-hover/item:translate-x-0.5 group-hover/item:opacity-100"
@@ -175,7 +175,7 @@ export default function Header() {
                           >
                             &rarr;
                           </span>
-                        </Link>
+                        </LocaleLink>
                       ))}
                     </div>
                   </div>
@@ -184,20 +184,20 @@ export default function Header() {
             </div>
 
             {pagesLeft.map((p) => (
-              <Link
+              <LocaleLink
                 key={p.href}
                 href={p.href}
                 className="group relative whitespace-nowrap py-2 text-[11.5px] tracking-[0.22em] uppercase text-ink transition-colors hover:text-gold-dark"
               >
                 {t(p.key)}
                 <span className="absolute -bottom-px left-0 h-px w-0 bg-gold transition-all duration-300 group-hover:w-full" />
-              </Link>
+              </LocaleLink>
             ))}
           </nav>
         </div>
 
         {/* --------------------------- CENTER --------------------------- */}
-        <Link href="/" className="group flex flex-col items-center justify-self-center leading-none">
+        <LocaleLink href="/" className="group flex flex-col items-center justify-self-center leading-none">
           {/* Lockup width is set by BALZAC; the -mr cancels the trailing
               letter-space so layout width == visual width. The subtitle row
               is w-full, so — ANTIQUES — always spans exactly the wordmark,
@@ -210,21 +210,21 @@ export default function Header() {
             <span className="mx-2 translate-x-[0.225em]">ANTIQUES</span>
             <span className="h-px flex-1 bg-gold/60" />
           </span>
-        </Link>
+        </LocaleLink>
 
         {/* ---------------------------- RIGHT --------------------------- */}
         {/* Reserved for the EN/FR language toggle (contract scope, next pass). */}
         <div className="flex items-center justify-end gap-8">
           <nav className="hidden items-center gap-8 md:flex">
             {pagesRight.map((p) => (
-              <Link
+              <LocaleLink
                 key={p.href}
                 href={p.href}
                 className="group relative whitespace-nowrap py-2 text-[11.5px] tracking-[0.22em] uppercase text-ink transition-colors hover:text-gold-dark"
               >
                 {t(p.key)}
                 <span className="absolute -bottom-px left-0 h-px w-0 bg-gold transition-all duration-300 group-hover:w-full" />
-              </Link>
+              </LocaleLink>
             ))}
           </nav>
 
@@ -289,7 +289,7 @@ export default function Header() {
             </div>
           </div>
 
-          <Link
+          <LocaleLink
             href="/account"
             aria-label={t("nav.account")}
             className="p-1 text-ink transition-colors hover:text-gold-dark"
@@ -298,7 +298,7 @@ export default function Header() {
               <circle cx="12" cy="8" r="3.2" stroke="currentColor" strokeWidth="1.2" />
               <path d="M5.5 19a6.5 6.5 0 0 1 13 0" stroke="currentColor" strokeWidth="1.2" strokeLinecap="round" />
             </svg>
-          </Link>
+          </LocaleLink>
 
           <button
             type="button"
@@ -377,13 +377,13 @@ export default function Header() {
               }`}
             >
               <div className="border-b border-hairline py-2 pl-4">
-                <Link href="/collection" className="block py-2.5 text-[12px] tracking-[0.2em] uppercase text-gold">
+                <LocaleLink href="/collection" className="block py-2.5 text-[12px] tracking-[0.2em] uppercase text-gold">
                   {t("nav.allPieces")} &rarr;
-                </Link>
+                </LocaleLink>
                 {categories.map((c) => (
-                  <Link key={c.slug} href={`/collection/${c.slug}`} className="block py-2.5 text-[15px] text-ink/80">
-                    {c.label}
-                  </Link>
+                  <LocaleLink key={c.slug} href={`/collection/${c.slug}`} className="block py-2.5 text-[15px] text-ink/80">
+                    <Cat slug={c.slug} />
+                  </LocaleLink>
                 ))}
               </div>
             </div>
@@ -397,9 +397,9 @@ export default function Header() {
               }`}
               style={{ transitionDelay: menuOpen ? `${200 + i * 60}ms` : "0ms" }}
             >
-              <Link href={p.href} className="block border-b border-hairline py-4 font-display text-[22px] text-ink">
+              <LocaleLink href={p.href} className="block border-b border-hairline py-4 font-display text-[22px] text-ink">
                 {t(p.key)}
-              </Link>
+              </LocaleLink>
             </div>
           ))}
 

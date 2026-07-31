@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import Link from "next/link";
+import LocaleLink from "@/components/LocaleLink";
 import Image from "next/image";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
@@ -50,10 +50,10 @@ export default async function HomePage() {
           <p className="max-w-xs text-[13px] tracking-[0.14em] text-gold">
             <T k="hero.subtitle" />
           </p>
-          <Link href="/collection" className="btn-outline mt-8">
+          <LocaleLink href="/collection" className="btn-outline mt-8">
             <T k="hero.cta" />
             <span aria-hidden>&rarr;</span>
-          </Link>
+          </LocaleLink>
         </div>
       </section>
         </>
@@ -78,7 +78,7 @@ export default async function HomePage() {
             .filter((c) => c.featured)
             .map((cat, i) => (
               <Reveal key={cat.slug} delay={i * 80}>
-                <Link
+                <LocaleLink
                   href={`/collection/${cat.slug}`}
                   className="group block aspect-[3/4] overflow-hidden bg-parchment shadow-sm transition-shadow duration-300 hover:shadow-lg"
                 >
@@ -92,16 +92,16 @@ export default async function HomePage() {
                       className="object-cover transition-transform duration-500 ease-out group-hover:scale-105"
                     />
                   </div>
-                </Link>
+                </LocaleLink>
                 <p className="mt-3 text-[14px] uppercase tracking-[0.06em] text-ink">
                   {cat.label}
                 </p>
-                <Link
+                <LocaleLink
                   href={`/collection/${cat.slug}`}
                   className="link-view-all mt-1 inline-block"
                 >
                   <T k="nav.viewAll" /> &rarr;
-                </Link>
+                </LocaleLink>
               </Reveal>
             ))}
         </div>
@@ -135,10 +135,10 @@ export default async function HomePage() {
               <br />
               {auction.date.toUpperCase()}
             </p>
-            <Link href={auction.href} className="btn-outline mt-4 w-fit">
+            <LocaleLink href={auction.href} className="btn-outline mt-4 w-fit">
               <T k="auction.viewLots" />
               <span aria-hidden>&rarr;</span>
-            </Link>
+            </LocaleLink>
           </div>
         </section>
       ) : null}

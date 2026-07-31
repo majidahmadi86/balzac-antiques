@@ -1,4 +1,4 @@
-import Link from "next/link";
+import LocaleLink from "@/components/LocaleLink";
 import Image from "next/image";
 import { type CatalogueCard } from "@/lib/catalogue";
 import { Bi, Price, T } from "@/components/Prefs";
@@ -7,7 +7,7 @@ import AddToCartButton from "@/components/AddToCartButton";
 export default function ProductCard({ product }: { product: CatalogueCard }) {
   return (
     <div className="flex flex-col">
-      <Link href={`/product/${product.slug}`} className="group block">
+      <LocaleLink href={`/product/${product.slug}`} className="group block">
         <div className="relative aspect-[4/5] overflow-hidden bg-parchment shadow-sm transition-shadow duration-300 group-hover:shadow-lg">
           {product.image ? (
             <Image
@@ -48,7 +48,7 @@ export default function ProductCard({ product }: { product: CatalogueCard }) {
         </p>
 
         <p className="mt-2 text-[14px] text-ink"><Price eur={product.priceEur} /></p>
-      </Link>
+      </LocaleLink>
 
       {product.status === "available" ? (
         <div className="mt-3">

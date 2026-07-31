@@ -1,13 +1,13 @@
 import type { Metadata } from "next";
 import { alts } from "@/lib/locale-routes";
-import Link from "next/link";
+import LocaleLink from "@/components/LocaleLink";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 import PageHeader from "@/components/PageHeader";
 import ProductCard from "@/components/ProductCard";
 import { categories } from "@/lib/data";
 import { getPublishedProducts } from "@/lib/catalogue";
-import { T } from "@/components/Prefs";
+import { T, Cat } from "@/components/Prefs";
 
 export const metadata: Metadata = {
   title: "The Collection · Balzac Antiques",
@@ -39,12 +39,12 @@ export default async function CollectionPage() {
           </li>
           {categories.map((c) => (
             <li key={c.slug}>
-              <Link
+              <LocaleLink
                 href={`/collection/${c.slug}`}
                 className="block border border-hairline px-4 py-2 text-[11px] tracking-[0.14em] uppercase text-ink/70 transition-colors hover:border-gold hover:text-gold-dark"
               >
-                {c.label}
-              </Link>
+                <Cat slug={c.slug} />
+              </LocaleLink>
             </li>
           ))}
         </ul>

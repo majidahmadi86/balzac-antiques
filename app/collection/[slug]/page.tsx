@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import Link from "next/link";
+import LocaleLink from "@/components/LocaleLink";
 import { notFound } from "next/navigation";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
@@ -7,7 +7,7 @@ import PageHeader from "@/components/PageHeader";
 import ProductCard from "@/components/ProductCard";
 import { categories, categoryBySlug } from "@/lib/data";
 import { getProductsByCategorySlug } from "@/lib/catalogue";
-import { T } from "@/components/Prefs";
+import { T, Cat } from "@/components/Prefs";
 
 export function generateStaticParams() {
   return categories.map((c) => ({ slug: c.slug }));
@@ -36,17 +36,17 @@ export default async function CategoryPage({ params }: { params: { slug: string 
     <main>
       <Header />
 
-      <PageHeader eyebrow={<T k="coll.eyebrow" />} title={category.label} />
+      <PageHeader eyebrow={<T k="coll.eyebrow" />} title={<Cat slug={category.slug} />} />
 
       <nav className="mx-auto max-w-content px-6 pb-10 sm:px-10">
         <ul className="flex flex-wrap justify-center gap-2">
           <li>
-            <Link
+            <LocaleLink
               href="/collection"
               className="block border border-hairline px-4 py-2 text-[11px] tracking-[0.14em] uppercase text-ink/70 transition-colors hover:border-gold hover:text-gold-dark"
             >
               <T k="coll.all" />
-            </Link>
+            </LocaleLink>
           </li>
           {categories.map((c) => {
             const active = c.slug === category.slug;
@@ -54,15 +54,15 @@ export default async function CategoryPage({ params }: { params: { slug: string 
               <li key={c.slug}>
                 {active ? (
                   <span className="block border border-gold bg-gold/10 px-4 py-2 text-[11px] tracking-[0.14em] uppercase text-gold-dark">
-                    {c.label}
+                    <Cat slug={c.slug} />
                   </span>
                 ) : (
-                  <Link
+                  <LocaleLink
                     href={`/collection/${c.slug}`}
                     className="block border border-hairline px-4 py-2 text-[11px] tracking-[0.14em] uppercase text-ink/70 transition-colors hover:border-gold hover:text-gold-dark"
                   >
-                    {c.label}
-                  </Link>
+                    <Cat slug={c.slug} />
+                  </LocaleLink>
                 )}
               </li>
             );
@@ -82,20 +82,20 @@ export default async function CategoryPage({ params }: { params: { slug: string 
           // blank page would read as broken.
           <div className="mx-auto max-w-[46ch] border border-hairline bg-parchment/40 px-6 py-14 text-center">
             <p className="font-display text-[20px] italic text-ink">
-              <T k="coll.emptyTitle" c={category.label} />
+              <T k="coll.emptyTitle" ck={category.slug} />
             </p>
             <div className="mx-auto my-5 h-px w-10 bg-gold" />
             <p className="text-[14px] leading-relaxed text-ink/70">
               <T k="coll.emptyBody" />
             </p>
             <div className="mt-6 flex flex-wrap justify-center gap-4">
-              <Link href="/contact" className="btn-outline">
+              <LocaleLink href="/contact" className="btn-outline">
                 <T k="coll.enquiry" />
                 <span aria-hidden>&rarr;</span>
-              </Link>
-              <Link href="/collection" className="link-view-all self-center">
+              </LocaleLink>
+              <LocaleLink href="/collection" className="link-view-all self-center">
                 <T k="coll.viewAllPieces" /> &rarr;
-              </Link>
+              </LocaleLink>
             </div>
           </div>
         )}

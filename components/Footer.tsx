@@ -1,8 +1,8 @@
 "use client";
 
-import Link from "next/link";
+import LocaleLink from "@/components/LocaleLink";
 import NewsletterForm from "@/components/NewsletterForm";
-import { usePrefs } from "@/components/Prefs";
+import { usePrefs, Cat } from "@/components/Prefs";
 import TrustBadges from "./TrustBadges";
 import { categories } from "@/lib/data";
 
@@ -24,8 +24,7 @@ export default function Footer() {
             BALZAC
           </p>
           <p className="mt-3 max-w-[26ch] text-[13px] leading-relaxed text-ink/70">
-            Curated rare books, fine watches, and remarkable objects, sourced
-            and authenticated in Bangkok for collectors worldwide.
+            {t("footer.brandBlurb")}
           </p>
           <div className="mt-4 flex gap-4">
             {social.map((s) => (
@@ -44,17 +43,17 @@ export default function Footer() {
 
         <div>
           <p className="text-[11px] tracking-[0.18em] uppercase text-gold">
-            Collections
+            {t("footer.collections")}
           </p>
           <ul className="mt-4 space-y-2.5">
             {categories.slice(0, 5).map((c) => (
               <li key={c.slug}>
-                <Link
+                <LocaleLink
                   href={`/collection/${c.slug}`}
                   className="text-[13px] text-ink/80 hover:text-ink"
                 >
-                  {c.label}
-                </Link>
+                  <Cat slug={c.slug} />
+                </LocaleLink>
               </li>
             ))}
           </ul>
@@ -71,9 +70,9 @@ export default function Footer() {
               [t("nav.contact"), "/contact"],
             ].map(([label, href]) => (
               <li key={label}>
-                <Link href={href} className="text-[13px] text-ink/80 hover:text-ink">
+                <LocaleLink href={href} className="text-[13px] text-ink/80 hover:text-ink">
                   {label}
-                </Link>
+                </LocaleLink>
               </li>
             ))}
           </ul>
@@ -81,7 +80,7 @@ export default function Footer() {
 
         <div className="col-span-2 md:col-span-1">
           <p className="text-[11px] tracking-[0.18em] uppercase text-gold">
-            Stay Informed
+            {t("footer.stayInformed")}
           </p>
           <p className="mt-4 text-[13px] leading-relaxed text-ink/70">
             {t("footer.newsBlurb")}
@@ -92,10 +91,10 @@ export default function Footer() {
 
       <div className="border-t border-hairline px-5 py-5 text-center sm:px-8">
         <nav className="flex flex-wrap items-center justify-center gap-x-5 gap-y-2 text-[11px] uppercase tracking-[0.14em]">
-          <Link href="/terms" className="text-ink/55 transition-colors hover:text-gold-dark">{t("legal.terms")}</Link>
-          <Link href="/privacy" className="text-ink/55 transition-colors hover:text-gold-dark">{t("legal.privacy")}</Link>
-          <Link href="/shipping" className="text-ink/55 transition-colors hover:text-gold-dark">{t("legal.shipping")}</Link>
-          <Link href="/returns" className="text-ink/55 transition-colors hover:text-gold-dark">{t("legal.returns")}</Link>
+          <LocaleLink href="/terms" className="text-ink/55 transition-colors hover:text-gold-dark">{t("legal.terms")}</LocaleLink>
+          <LocaleLink href="/privacy" className="text-ink/55 transition-colors hover:text-gold-dark">{t("legal.privacy")}</LocaleLink>
+          <LocaleLink href="/shipping" className="text-ink/55 transition-colors hover:text-gold-dark">{t("legal.shipping")}</LocaleLink>
+          <LocaleLink href="/returns" className="text-ink/55 transition-colors hover:text-gold-dark">{t("legal.returns")}</LocaleLink>
         </nav>
         <p className="mt-3 text-[11px] tracking-[0.06em] text-ink/50">
           &copy; {new Date().getFullYear()} Balzac Antiques. {t("footer.rights")}
