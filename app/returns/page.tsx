@@ -1,8 +1,10 @@
 import type { Metadata } from "next";
+import { alts } from "@/lib/locale-routes";
 import LegalPage, { type LegalSection } from "@/components/LegalPage";
 
 export const metadata: Metadata = {
   title: "Returns · Balzac Antiques",
+  alternates: alts("/returns"),
 };
 
 // [RETURN WINDOW] placeholder: 14 days drafted; confirm with the client.

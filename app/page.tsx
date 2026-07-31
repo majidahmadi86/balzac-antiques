@@ -1,3 +1,4 @@
+import type { Metadata } from "next";
 import Link from "next/link";
 import Image from "next/image";
 import Header from "@/components/Header";
@@ -7,6 +8,11 @@ import { categories, auction } from "@/lib/data";
 import { getHeroProducts, getCategoryCovers } from "@/lib/catalogue";
 import HeroSlideshow from "@/components/HeroSlideshow";
 import { T } from "@/components/Prefs";
+import { alts } from "@/lib/locale-routes";
+
+export const metadata: Metadata = {
+  alternates: alts("/"),
+};
 
 export default async function HomePage() {
   // Admin-chosen hero pieces (max 5). Empty -> the original brand hero below.

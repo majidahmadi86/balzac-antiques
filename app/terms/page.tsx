@@ -1,8 +1,10 @@
 import type { Metadata } from "next";
+import { alts } from "@/lib/locale-routes";
 import LegalPage, { type LegalSection } from "@/components/LegalPage";
 
 export const metadata: Metadata = {
   title: "Terms of Sale · Balzac Antiques",
+  alternates: alts("/terms"),
 };
 
 // PLACEHOLDERS pending the client's business details: [LEGAL ENTITY NAME],

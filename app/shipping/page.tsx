@@ -1,8 +1,10 @@
 import type { Metadata } from "next";
+import { alts } from "@/lib/locale-routes";
 import LegalPage, { type LegalSection } from "@/components/LegalPage";
 
 export const metadata: Metadata = {
   title: "Shipping · Balzac Antiques",
+  alternates: alts("/shipping"),
 };
 
 const sections: LegalSection[] = [

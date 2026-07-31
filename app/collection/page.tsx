@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import { alts } from "@/lib/locale-routes";
 import Link from "next/link";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
@@ -12,6 +13,7 @@ export const metadata: Metadata = {
   title: "The Collection · Balzac Antiques",
   description:
     "Rare books, fine watches, artworks, vinyl records, iconic design and remarkable objects, curated by Balzac Antiques.",
+  alternates: alts("/collection"),
 };
 
 export default async function CollectionPage() {

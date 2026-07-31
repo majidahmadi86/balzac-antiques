@@ -36,25 +36,41 @@ const Ctx = createContext<Prefs>({
   t: (k) => dict.en[k] ?? k,
 });
 
-export function PrefsProvider({ children }: { children: React.ReactNode }) {
-  const [locale, setLocaleState] = useState<Locale>("en");
+export function PrefsProvider({
+  children,
+  forceLocale,
+}: {
+  children: React.ReactNode;
+  // When set (by the /fr layout), the URL owns the language: the stored
+  // preference is ignored for this subtree and the toggle navigates instead.
+  forceLocale?: Locale;
+}) {
+  const [locale, setLocaleState] = useState<Locale>(forceLocale ?? "en");
   const [currency, setCurrencyState] = useState<Currency>("EUR");
 
   useEffect(() => {
-    const l = window.localStorage.getItem("balzac-locale");
-    if (l === "fr" || l === "en") setLocaleState(l);
+    if (!forceLocale) {
+      const l = window.localStorage.getItem("balzac-locale");
+      if (l === "fr" || l === "en") setLocaleState(l);
+    }
     const c = window.localStorage.getItem("balzac-currency");
     if (c === "USD" || c === "CHF" || c === "EUR") setCurrencyState(c);
-  }, []);
+  }, [forceLocale]);
 
   useEffect(() => {
     document.documentElement.lang = locale;
   }, [locale]);
 
-  const setLocale = useCallback((l: Locale) => {
-    setLocaleState(l);
-    window.localStorage.setItem("balzac-locale", l);
-  }, []);
+  // The preference is always remembered, so pages with no French twin (cart,
+  // checkout, account) still follow the visitor's choice. On a /fr page the
+  // displayed language stays pinned to the URL.
+  const setLocale = useCallback(
+    (l: Locale) => {
+      if (!forceLocale) setLocaleState(l);
+      window.localStorage.setItem("balzac-locale", l);
+    },
+    [forceLocale]
+  );
 
   const setCurrency = useCallback((c: Currency) => {
     setCurrencyState(c);

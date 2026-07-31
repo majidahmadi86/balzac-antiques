@@ -2,10 +2,12 @@
 
 import Link from "next/link";
 import { useEffect, useRef, useState } from "react";
-import { usePathname } from "next/navigation";
+import { usePathname, useRouter } from "next/navigation";
 import { categories } from "@/lib/data";
 import { usePrefs, CURRENCIES, type Currency } from "@/components/Prefs";
 import { useCart } from "@/components/Cart";
+import { toEn, toFr } from "@/lib/locale-routes";
+import type { Locale } from "@/lib/i18n";
 
 // DESIGN PASS
 // Desktop dropdown: boutique "panel" — gold top rule, generous padding,
@@ -34,6 +36,21 @@ export default function Header() {
   const pathname = usePathname();
   const { t, locale, setLocale, currency, setCurrency } = usePrefs();
   const { count, openDrawer } = useCart();
+  const router = useRouter();
+
+  // Switching language moves to the twin URL when the page has one, so the
+  // address bar and the content never disagree. Pages with no French twin
+  // just change language in place.
+  const switchLocale = (l: Locale) => {
+    setLocale(l);
+    const enPath = toEn(pathname) ?? pathname;
+    if (l === "fr") {
+      const frPath = toFr(enPath);
+      if (frPath && !pathname.startsWith("/fr")) router.push(frPath);
+    } else if (pathname.startsWith("/fr")) {
+      router.push(enPath);
+    }
+  };
 
   const openPanel = () => {
     if (closeTimer.current) clearTimeout(closeTimer.current);
@@ -218,7 +235,7 @@ export default function Header() {
                 {i > 0 ? <span className="h-3 w-px bg-hairline" aria-hidden /> : null}
                 <button
                   type="button"
-                  onClick={() => setLocale(l)}
+                  onClick={() => switchLocale(l)}
                   aria-pressed={locale === l}
                   className={`relative py-1 text-[11px] tracking-[0.22em] uppercase transition-colors ${
                     locale === l ? "text-ink" : "text-ink/45 hover:text-gold-dark"
@@ -400,7 +417,7 @@ export default function Header() {
                   <button
                     key={l}
                     type="button"
-                    onClick={() => setLocale(l)}
+                    onClick={() => switchLocale(l)}
                     aria-pressed={locale === l}
                     className={`text-[12px] tracking-[0.2em] uppercase ${locale === l ? "border-b border-gold text-ink" : "text-ink/45"}`}
                   >

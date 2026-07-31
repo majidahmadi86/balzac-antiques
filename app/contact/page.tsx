@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import { alts } from "@/lib/locale-routes";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 import PageHeader from "@/components/PageHeader";
@@ -9,6 +10,7 @@ export const metadata: Metadata = {
   title: "Contact · Balzac Antiques",
   description:
     "Enquiries regarding our collection, sourcing requests, or private acquisitions.",
+  alternates: alts("/contact"),
 };
 
 // Contact channels — single source of truth for this page. When the admin

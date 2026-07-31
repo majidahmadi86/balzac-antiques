@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import { alts } from "@/lib/locale-routes";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 import PageHeader from "@/components/PageHeader";
@@ -9,6 +10,7 @@ export const metadata: Metadata = {
   title: "Acquisitions · Balzac Antiques",
   description:
     "Balzac Antiques is actively seeking rare books, works of art, vintage watches, vinyl records, iconic design, decorative arts, and quality collectibles.",
+  alternates: alts("/sell"),
 };
 
 const seeking = ["sell.i1","sell.i2","sell.i3","sell.i4","sell.i5","sell.i6","sell.i7"];
