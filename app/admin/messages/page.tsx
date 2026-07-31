@@ -96,16 +96,28 @@ export default async function AdminMessagesPage() {
                   </p>
                 ) : null}
 
-                <form action={setMessageHandled} className="mt-4">
-                  <input type="hidden" name="id" value={m.id} />
-                  <input type="hidden" name="handled" value={m.handled ? "false" : "true"} />
-                  <button
-                    type="submit"
-                    className="border border-[#D8CFBB] bg-white px-4 py-2 text-[9px] uppercase tracking-[0.2em] text-[#1F1B16] transition-colors hover:border-[#B99A5B]"
+                <div className="mt-4 flex flex-wrap items-center gap-3">
+                  <a
+                    href={`mailto:${m.email}?subject=${encodeURIComponent(
+                      m.kind === "sell"
+                        ? "Re: the piece you offered to Balzac Antiques"
+                        : "Re: your enquiry to Balzac Antiques"
+                    )}&body=${encodeURIComponent(`Dear ${m.name ?? ""},\n\n`)}`}
+                    className="bg-[#1F1B16] px-4 py-2 text-[9px] uppercase tracking-[0.2em] text-[#F7F3EA] transition-colors hover:bg-[#3A322A]"
                   >
-                    {m.handled ? "Reopen" : "Mark as done"}
-                  </button>
-                </form>
+                    Reply by email
+                  </a>
+                  <form action={setMessageHandled}>
+                    <input type="hidden" name="id" value={m.id} />
+                    <input type="hidden" name="handled" value={m.handled ? "false" : "true"} />
+                    <button
+                      type="submit"
+                      className="border border-[#D8CFBB] bg-white px-4 py-2 text-[9px] uppercase tracking-[0.2em] text-[#1F1B16] transition-colors hover:border-[#B99A5B]"
+                    >
+                      {m.handled ? "Reopen" : "Mark as done"}
+                    </button>
+                  </form>
+                </div>
               </li>
             ))}
           </ul>
