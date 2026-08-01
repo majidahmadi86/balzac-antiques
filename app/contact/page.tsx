@@ -5,6 +5,7 @@ import Footer from "@/components/Footer";
 import PageHeader from "@/components/PageHeader";
 import { T } from "@/components/Prefs";
 import { submitContact } from "@/lib/message-actions";
+import { CONTACT_EMAIL, CONTACT_MAILTO } from "@/lib/contact";
 
 export const metadata: Metadata = {
   title: "Contact · Balzac Antiques",
@@ -18,8 +19,8 @@ export const metadata: Metadata = {
 const channels = [
   {
     key: "contact.email",
-    value: "info@balzacantiques.ch",
-    href: "mailto:info@balzacantiques.ch",
+    value: CONTACT_EMAIL,
+    href: CONTACT_MAILTO,
     icon: (
       <svg width="20" height="20" viewBox="0 0 24 24" fill="none">
         <rect x="3" y="5.5" width="18" height="13" rx="1.5" stroke="currentColor" strokeWidth="1.3" />

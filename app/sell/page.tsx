@@ -5,6 +5,7 @@ import Footer from "@/components/Footer";
 import PageHeader from "@/components/PageHeader";
 import { T } from "@/components/Prefs";
 import { submitSell } from "@/lib/message-actions";
+import { CONTACT_EMAIL, CONTACT_MAILTO } from "@/lib/contact";
 
 export const metadata: Metadata = {
   title: "Acquisitions · Balzac Antiques",
@@ -115,10 +116,10 @@ export default async function SellPage({
         <p className="mt-6 text-center text-[13px] text-ink/60">
           <T k="sell.orWrite" />{" "}
           <a
-            href="mailto:info@balzacantiques.ch"
+            href={CONTACT_MAILTO}
             className="text-gold hover:text-gold-dark"
           >
-            info@balzacantiques.ch
+            {CONTACT_EMAIL}
           </a>
         </p>
       </section>

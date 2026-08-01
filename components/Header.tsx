@@ -6,6 +6,7 @@ import { usePathname, useRouter } from "next/navigation";
 import { categories } from "@/lib/data";
 import { usePrefs, CURRENCIES, Cat, type Currency } from "@/components/Prefs";
 import { useCart } from "@/components/Cart";
+import { CONTACT_EMAIL, CONTACT_MAILTO } from "@/lib/contact";
 import { toEn, toFr } from "@/lib/locale-routes";
 import type { Locale } from "@/lib/i18n";
 
@@ -444,10 +445,10 @@ export default function Header() {
               {t("drawer.tagline")}
             </p>
             <a
-              href="mailto:info@balzacantiques.ch"
+              href={CONTACT_MAILTO}
               className="mt-2 block text-[12px] tracking-[0.08em] text-gold"
             >
-              info@balzacantiques.ch
+              {CONTACT_EMAIL}
             </a>
           </div>
         </nav>
