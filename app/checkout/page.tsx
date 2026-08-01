@@ -5,6 +5,7 @@ import Footer from "@/components/Footer";
 import CheckoutForm, { type SavedAddress } from "@/components/CheckoutForm";
 import { db } from "@/lib/db";
 import { CUSTOMER_COOKIE, verifyCustomerSessionToken } from "@/lib/customer-session";
+import { stripeEnabled, stripeTestMode } from "@/lib/stripe";
 
 export const metadata: Metadata = {
   title: "Checkout · Balzac Antiques",
@@ -47,7 +48,14 @@ export default async function CheckoutPage({
     <main>
       <Header />
       <div className="mx-auto max-w-content px-5 py-10 sm:px-8">
-        <CheckoutForm customer={customer} addresses={addresses} err={sp?.err} errPiece={sp?.piece} />
+        <CheckoutForm
+          customer={customer}
+          addresses={addresses}
+          err={sp?.err}
+          errPiece={sp?.piece}
+          payByCard={stripeEnabled()}
+          testMode={stripeTestMode()}
+        />
       </div>
       <Footer />
     </main>

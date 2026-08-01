@@ -26,11 +26,17 @@ export default function CheckoutForm({
   addresses,
   err,
   errPiece,
+  payByCard = false,
+  testMode = false,
 }: {
   customer: { name: string; email: string } | null;
   addresses: SavedAddress[];
   err?: string;
   errPiece?: string;
+  // Set by the server when Stripe is configured: the button then leads to the
+  // secure payment page instead of ending at reserve-and-invoice.
+  payByCard?: boolean;
+  testMode?: boolean;
 }) {
   const { items, count, ready, remove } = useCart();
   const { t } = usePrefs();
@@ -196,9 +202,16 @@ export default function CheckoutForm({
             <span className="text-[12px] uppercase tracking-[0.18em] text-ink/70">{t("cart.subtotal")}</span>
             <span className="font-display text-[20px] text-ink"><Price eur={subtotal} /></span>
           </div>
-          <p className="mt-3 text-[12px] leading-relaxed text-ink/60">{t("checkout.reserveNote")}</p>
+          <p className="mt-3 text-[12px] leading-relaxed text-ink/60">
+            {t(payByCard ? "checkout.payNote" : "checkout.reserveNote")}
+          </p>
+          {testMode ? (
+            <p className="mt-3 border border-gold/40 bg-gold/10 px-3 py-2 text-[11px] leading-relaxed text-ink/75">
+              {t("pay.testMode")}
+            </p>
+          ) : null}
           <button type="submit" className="mt-5 flex w-full items-center justify-center gap-2 bg-gold py-3.5 text-[12px] uppercase tracking-[0.2em] text-cream transition-colors hover:bg-gold-dark">
-            {t("checkout.placeOrder")} <span aria-hidden>&rarr;</span>
+            {t(payByCard ? "checkout.continuePayment" : "checkout.placeOrder")} <span aria-hidden>&rarr;</span>
           </button>
         </aside>
       </form>

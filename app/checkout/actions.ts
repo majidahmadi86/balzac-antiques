@@ -12,6 +12,8 @@ import {
   verifyCustomerSessionToken,
 } from "@/lib/customer-session";
 import { COUNTRIES } from "@/lib/countries";
+import { stripeEnabled } from "@/lib/stripe";
+import { createPaymentSession } from "@/lib/stripe-checkout";
 
 const COUNTRY_SET = new Set(COUNTRIES.map((c) => c.name));
 const EMAIL_RE = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
@@ -205,6 +207,22 @@ export async function placeOrder(formData: FormData): Promise<void> {
       });
     }
   }
+  // --- payment gate -------------------------------------------------------
+  // The order is written and the pieces are reserved by this point, so this
+  // step can only ever upgrade the experience. If Stripe is not configured, or
+  // the session cannot be created, the buyer lands on the confirmation page and
+  // the gallery invoices them exactly as before. redirect() throws by design,
+  // so it stays OUTSIDE the try.
+  let payUrl: string | null = null;
+  if (stripeEnabled()) {
+    try {
+      payUrl = await createPaymentSession(orderId);
+    } catch {
+      payUrl = null;
+    }
+  }
+  if (payUrl) redirect(payUrl);
+
   redirect(`/checkout/confirmation/${orderId}`);
 }
 
