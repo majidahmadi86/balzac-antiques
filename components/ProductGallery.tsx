@@ -108,7 +108,7 @@ export default function ProductGallery({ images, title }: { images: string[]; ti
             >
               <Image
                 src={src}
-                alt={`${title} — view ${i + 2}`}
+                alt={`${title} \u00b7 view ${i + 2}`}
                 fill
                 loading="lazy"
                 sizes="(max-width: 640px) 33vw, 16vw"
@@ -182,7 +182,7 @@ export default function ProductGallery({ images, title }: { images: string[]; ti
             {/* eslint-disable-next-line @next/next/no-img-element */}
             <img
               src={images[active]}
-              alt={`${title} — photo ${active + 1}`}
+              alt={`${title} \u00b7 photo ${active + 1}`}
               draggable={false}
               className="absolute inset-3 h-[calc(100%-24px)] w-[calc(100%-24px)] select-none object-contain transition-transform duration-300 sm:inset-5 sm:h-[calc(100%-40px)] sm:w-[calc(100%-40px)]"
               style={{
