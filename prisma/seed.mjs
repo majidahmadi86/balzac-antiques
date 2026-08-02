@@ -11,8 +11,8 @@ const categories = [
   { slug: "watches", labelEn: "Watches", image: "/images/category-watches.svg", featured: true, sortOrder: 3 },
   { slug: "music", labelEn: "Music", image: "/images/category-music.svg", featured: true, sortOrder: 4 },
   { slug: "furniture", labelEn: "Furniture", image: "/images/category-furniture.svg", sortOrder: 5 },
-  { slug: "design", labelEn: "Design", image: "/images/category-design.svg", sortOrder: 6 },
-  { slug: "objects", labelEn: "Objects", image: "/images/category-objects.svg", sortOrder: 7 },
+  { slug: "fashion", labelEn: "Fashion", labelFr: "Mode", image: "/images/category-fashion.svg", sortOrder: 6 },
+  { slug: "properties", labelEn: "Properties", labelFr: "Propriétés", image: "/images/category-properties.svg", sortOrder: 7 },
   { slug: "curiosities", labelEn: "Curiosities", image: "/images/category-curiosities.svg", sortOrder: 8 },
 ];
 

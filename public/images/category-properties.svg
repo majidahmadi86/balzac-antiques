@@ -7,6 +7,6 @@
   </defs>
   <rect width="800" height="800" fill="url(#g)"/>
   <rect x="40" y="40" width="720" height="720" fill="none" stroke="#8B6C4A" stroke-width="1" opacity="0.55"/>
-  <text x="400" y="388" font-family="Georgia, 'Libre Baskerville', serif" font-style="italic" font-size="34" fill="#8B6C4A" text-anchor="middle">Objects</text>
+  <text x="400" y="388" font-family="Georgia, 'Libre Baskerville', serif" font-style="italic" font-size="34" fill="#8B6C4A" text-anchor="middle">Properties</text>
   <text x="400" y="424" font-family="Helvetica, Arial, sans-serif" font-size="11" letter-spacing="3" fill="#8B6C4A" opacity="0.75" text-anchor="middle">PHOTOGRAPHY PENDING</text>
 </svg>

@@ -22,8 +22,8 @@ export const categories: Category[] = [
   { slug: "watches", label: "Watches", image: "/images/category-watches.svg", featured: true },
   { slug: "music", label: "Music", image: "/images/category-music.svg", featured: true },
   { slug: "furniture", label: "Furniture", image: "/images/category-furniture.svg" },
-  { slug: "design", label: "Design", image: "/images/category-design.svg" },
-  { slug: "objects", label: "Objects", image: "/images/category-objects.svg" },
+  { slug: "fashion", label: "Fashion", image: "/images/category-fashion.svg" },
+  { slug: "properties", label: "Properties", image: "/images/category-properties.svg" },
   { slug: "curiosities", label: "Curiosities", image: "/images/category-curiosities.svg" },
 ];
 

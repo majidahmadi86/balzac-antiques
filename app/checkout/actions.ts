@@ -23,8 +23,8 @@ const EMAIL_RE = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 // flipped to "reserved", the customer record is resolved (guest checkout
 // creates one), and the order is written with a frozen shipping snapshot.
 // If ANY piece is no longer available the whole transaction rolls back and
-// nothing is reserved. Payment is arranged afterwards (the payment gateway
-// drops into this seam once the client's PayPal Business account is ready).
+// nothing is reserved. Payment is taken next by Stripe Hosted Checkout when
+// the secret key is configured; otherwise the buyer lands on confirmation.
 
 class CheckoutError extends Error {
   constructor(public code: string, public piece: string = "") {

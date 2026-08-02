@@ -11,8 +11,8 @@ const LABEL_FR: Record<string, string> = {
   watches: "Montres",
   music: "Musique",
   furniture: "Mobilier",
-  design: "Design",
-  objects: "Objets",
+  fashion: "Mode",
+  properties: "Propriétés",
   curiosities: "Curiosités",
 };
 
