@@ -35,32 +35,32 @@ const sections: LegalSection[] = [
     hEn: "3. Prices and currency",
     hFr: "3. Prix et devise",
     pEn: [
-      "Prices are set in euros (EUR). Amounts shown in other currencies are indicative conversions for convenience; the invoiced amount is the EUR price. Prices do not include shipping, which is quoted separately before payment, nor any customs duties or import taxes of the destination country, which are the buyer's responsibility.",
+      "Prices are set in euros (EUR). Amounts shown in other currencies are indicative conversions for convenience; the amount charged is the EUR price. Prices do not include shipping, which the gallery quotes separately once the destination is known, nor any customs duties or import taxes of the destination country, which are the buyer's responsibility.",
     ],
     pFr: [
-      "Les prix sont fixés en euros (EUR). Les montants affichés dans d'autres devises sont des conversions indicatives; le montant facturé est le prix en EUR. Les prix n'incluent ni la livraison, chiffrée séparément avant paiement, ni les éventuels droits de douane ou taxes d'importation du pays de destination, qui restent à la charge de l'acheteur.",
+      "Les prix sont fixés en euros (EUR). Les montants affichés dans d'autres devises sont des conversions indicatives; le montant débité est le prix en EUR. Les prix n'incluent ni la livraison, que la galerie chiffre séparément une fois la destination connue, ni les éventuels droits de douane ou taxes d'importation du pays de destination, qui restent à la charge de l'acheteur.",
     ],
   },
   {
-    hEn: "4. Ordering and reservation",
-    hFr: "4. Commande et réservation",
+    hEn: "4. Ordering",
+    hFr: "4. Commande",
     pEn: [
-      "Placing an order through the website reserves the piece for you and is a request to purchase, not yet a concluded sale. The gallery will contact you, normally within two working days, to confirm availability, quote shipping and arrange payment. The sale is concluded when the gallery confirms the order and full payment is received.",
-      "If a reservation cannot be honoured, for example because a piece was sold in the showroom at the same moment, the gallery will inform you promptly and any amount already paid will be refunded in full.",
+      "Placing an order through the website reserves the piece for you. Payment for the piece is taken at that point by card, and the sale is concluded once the payment is received. The gallery will then contact you, normally within two working days, to confirm the piece is on its way and to quote shipping to your address.",
+      "If an order cannot be fulfilled, for example because a piece was sold in the showroom at the same moment, the gallery will inform you promptly and refund the amount paid in full.",
     ],
     pFr: [
-      "Passer commande sur le site réserve la pièce pour vous et constitue une demande d'achat, non encore une vente conclue. La galerie vous contactera, normalement sous deux jours ouvrés, pour confirmer la disponibilité, chiffrer la livraison et organiser le paiement. La vente est conclue lorsque la galerie confirme la commande et que le paiement intégral est reçu.",
-      "Si une réservation ne peut être honorée, par exemple parce qu'une pièce a été vendue en boutique au même moment, la galerie vous en informera rapidement et tout montant déjà versé sera intégralement remboursé.",
+      "Passer commande sur le site réserve la pièce pour vous. Le paiement de la pièce est alors effectué par carte, et la vente est conclue dès réception de ce paiement. La galerie vous contactera ensuite, normalement sous deux jours ouvrés, pour confirmer l'expédition et chiffrer la livraison jusqu'à votre adresse.",
+      "Si une commande ne peut être honorée, par exemple parce qu'une pièce a été vendue en boutique au même moment, la galerie vous en informera rapidement et vous remboursera intégralement le montant versé.",
     ],
   },
   {
     hEn: "5. Payment",
     hFr: "5. Paiement",
     pEn: [
-      "Payment is made against the gallery's invoice using the methods offered at the time, such as PayPal or bank transfer. Ownership of a piece passes to the buyer once full payment has been received. The gallery does not store card details; payments are processed by the payment provider.",
+      "Payment is made by card at checkout and is processed by Stripe, our payment provider. The gallery never sees or stores your card details. Ownership of a piece passes to the buyer once payment has been received. For a purchase arranged outside the website, the gallery may instead invoice for payment by bank transfer.",
     ],
     pFr: [
-      "Le paiement s'effectue sur facture de la galerie, par les moyens proposés au moment de la vente, tels que PayPal ou virement bancaire. La propriété d'une pièce est transférée à l'acheteur à réception du paiement intégral. La galerie ne conserve aucune donnée de carte; les paiements sont traités par le prestataire de paiement.",
+      "Le paiement s'effectue par carte au moment de la commande et est traité par Stripe, notre prestataire de paiement. La galerie ne voit ni ne conserve aucune donnée de carte. La propriété d'une pièce est transférée à l'acheteur dès réception du paiement. Pour un achat convenu en dehors du site, la galerie peut établir une facture réglée par virement bancaire.",
     ],
   },
   {

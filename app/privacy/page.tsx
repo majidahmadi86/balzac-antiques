@@ -23,11 +23,11 @@ const sections: LegalSection[] = [
     hFr: "2. Données collectées",
     pEn: [
       "Account: your name, email address and a password, which is stored only in encrypted (hashed) form. Orders: the pieces ordered, your delivery address and an optional phone number. Preferences such as language and display currency are stored on your own device, not on our servers.",
-      "We do not collect or store payment card details. Payments are handled by the payment provider under its own privacy policy.",
+      "We do not collect or store payment card details. Card payments are handled by Stripe under its own privacy policy.",
     ],
     pFr: [
       "Compte : votre nom, votre adresse e-mail et un mot de passe, conservé uniquement sous forme chiffrée (hachée). Commandes : les pièces commandées, votre adresse de livraison et un numéro de téléphone facultatif. Les préférences comme la langue et la devise d'affichage sont stockées sur votre propre appareil, pas sur nos serveurs.",
-      "Nous ne collectons ni ne conservons de données de carte bancaire. Les paiements sont traités par le prestataire de paiement selon sa propre politique de confidentialité.",
+      "Nous ne collectons ni ne conservons de données de carte bancaire. Les paiements par carte sont traités par Stripe selon sa propre politique de confidentialité.",
     ],
   },
   {
@@ -54,10 +54,10 @@ const sections: LegalSection[] = [
     hEn: "5. Sharing",
     hFr: "5. Partage",
     pEn: [
-      "Your data is shared only where needed to fulfil an order: with the shipping carrier (name, delivery address, phone) and with the payment provider when you pay. It is not shared with anyone else except where the law requires it.",
+      "Your data is shared only where needed to fulfil an order: with the shipping carrier (name, delivery address, phone) and with Stripe, our payment provider, when you pay. It is not shared with anyone else except where the law requires it.",
     ],
     pFr: [
-      "Vos données ne sont partagées que lorsque c'est nécessaire à l'exécution d'une commande : avec le transporteur (nom, adresse de livraison, téléphone) et avec le prestataire de paiement lors du règlement. Elles ne sont transmises à personne d'autre, sauf obligation légale.",
+      "Vos données ne sont partagées que lorsque c'est nécessaire à l'exécution d'une commande : avec le transporteur (nom, adresse de livraison, téléphone) et avec Stripe, notre prestataire de paiement, lors du règlement. Elles ne sont transmises à personne d'autre, sauf obligation légale.",
     ],
   },
   {
