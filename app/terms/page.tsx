@@ -7,17 +7,18 @@ export const metadata: Metadata = {
   alternates: alts("/terms"),
 };
 
-// PLACEHOLDERS pending the client's business details: [LEGAL ENTITY NAME],
-// [REGISTERED ADDRESS], [JURISDICTION]. Fill before final launch sign-off.
+// Operator name and the no-returns position confirmed by the client on
+// 1 August 2026. The client also removed the governing-law sentence from
+// clause 8, so that heading is Contact rather than Governing law and contact.
 const sections: LegalSection[] = [
   {
     hEn: "1. Who we are",
     hFr: "1. Qui nous sommes",
     pEn: [
-      "balzacantiques.ch is operated by Balzac Antiques ([LEGAL ENTITY NAME], [REGISTERED ADDRESS]), referred to below as \"the gallery\". These terms govern every order placed through this website. By placing an order you accept them.",
+      "balzacantiques.ch is operated by Balzac Antiques Co Ltd, referred to below as \"the gallery\". These terms govern every order placed through this website. By placing an order you accept them.",
     ],
     pFr: [
-      "balzacantiques.ch est exploité par Balzac Antiques ([LEGAL ENTITY NAME], [REGISTERED ADDRESS]), ci-après \"la galerie\". Les présentes conditions régissent toute commande passée sur ce site. En passant commande, vous les acceptez.",
+      "balzacantiques.ch est exploité par Balzac Antiques Co Ltd, ci-après \"la galerie\". Les présentes conditions régissent toute commande passée sur ce site. En passant commande, vous les acceptez.",
     ],
   },
   {
@@ -76,20 +77,20 @@ const sections: LegalSection[] = [
     hEn: "7. Returns",
     hFr: "7. Retours",
     pEn: [
-      "Returns and damage in transit are governed by the Returns policy, which forms part of these terms.",
+      "All sales are final. The gallery does not accept returns, exchanges or refunds. Damage in transit is handled under the Returns policy, which forms part of these terms.",
     ],
     pFr: [
-      "Les retours et les dommages de transport sont régis par la politique de Retours, qui fait partie des présentes conditions.",
+      "Toutes les ventes sont fermes. La galerie n'accepte ni retour, ni échange, ni remboursement. Les dommages survenus pendant le transport sont traités selon la politique de Retours, qui fait partie des présentes conditions.",
     ],
   },
   {
-    hEn: "8. Governing law and contact",
-    hFr: "8. Droit applicable et contact",
+    hEn: "8. Contact",
+    hFr: "8. Contact",
     pEn: [
-      "These terms are governed by the law of [JURISDICTION]. Questions about an order or these terms: use the Contact page and the gallery will respond by email.",
+      "Questions about an order or these terms: use the Contact page and the gallery will respond by email.",
     ],
     pFr: [
-      "Les présentes conditions sont régies par le droit de [JURISDICTION]. Pour toute question concernant une commande ou les présentes conditions, utilisez la page Contact; la galerie vous répondra par e-mail.",
+      "Pour toute question concernant une commande ou les présentes conditions, utilisez la page Contact; la galerie vous répondra par e-mail.",
     ],
   },
 ];

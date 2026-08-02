@@ -12,10 +12,10 @@ const sections: LegalSection[] = [
     hEn: "1. Scope",
     hFr: "1. Champ d'application",
     pEn: [
-      "This policy explains what personal data balzacantiques.ch collects, why, and what your rights are. It applies to browsing the site, creating an account and placing orders. The site is operated by Balzac Antiques ([LEGAL ENTITY NAME], [REGISTERED ADDRESS]).",
+      "This policy explains what personal data balzacantiques.ch collects, why, and what your rights are. It applies to browsing the site, creating an account and placing orders. The site is operated by Balzac Antiques Co Ltd.",
     ],
     pFr: [
-      "Cette politique explique quelles données personnelles balzacantiques.ch collecte, pourquoi, et quels sont vos droits. Elle s'applique à la navigation sur le site, à la création d'un compte et aux commandes. Le site est exploité par Balzac Antiques ([LEGAL ENTITY NAME], [REGISTERED ADDRESS]).",
+      "Cette politique explique quelles données personnelles balzacantiques.ch collecte, pourquoi, et quels sont vos droits. Elle s'applique à la navigation sur le site, à la création d'un compte et aux commandes. Le site est exploité par Balzac Antiques Co Ltd.",
     ],
   },
   {

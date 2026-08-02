@@ -7,48 +7,41 @@ export const metadata: Metadata = {
   alternates: alts("/returns"),
 };
 
-// [RETURN WINDOW] placeholder: 14 days drafted; confirm with the client.
+// The client confirmed on 1 August 2026 that all sales are final. The page is
+// kept rather than removed: it is linked from the footer in both languages and
+// listed in locale-routes and the sitemap, and a shop with no returns page at
+// all reads as evasive to a buyer looking for one before they commit.
 const sections: LegalSection[] = [
   {
-    hEn: "On arrival",
-    hFr: "À la réception",
+    hEn: "All sales are final",
+    hFr: "Toutes les ventes sont fermes",
     pEn: [
-      "Please inspect your piece as soon as it arrives. If it has been damaged in transit, keep all packaging and report it to the gallery within 48 hours with photographs, so the insurance claim can be made. The gallery will then work with you towards repair, replacement where possible, or a refund.",
+      "Every piece is a unique antique or collectable, sold in the condition described on its page. The gallery does not accept returns, exchanges or refunds.",
+      "Please read the description and the condition notes carefully before you buy, and ask anything you are unsure about. The gallery will gladly send further photographs or details of any piece on request.",
     ],
     pFr: [
-      "Veuillez examiner votre pièce dès sa réception. En cas de dommage pendant le transport, conservez l'intégralité de l'emballage et signalez-le à la galerie sous 48 heures, photos à l'appui, afin que la déclaration d'assurance puisse être faite. La galerie recherchera alors avec vous une réparation, un remplacement lorsque c'est possible, ou un remboursement.",
+      "Chaque pièce est une antiquité ou un objet de collection unique, vendu dans l'état décrit sur sa page. La galerie n'accepte ni retour, ni échange, ni remboursement.",
+      "Merci de lire attentivement la description et les notes d'état avant d'acheter, et de poser toute question utile. La galerie vous enverra volontiers des photographies ou des précisions supplémentaires sur simple demande.",
     ],
   },
   {
-    hEn: "Returns",
-    hFr: "Retours",
+    hEn: "The wear of age",
+    hFr: "L'usure du temps",
     pEn: [
-      "If a piece is not as described, or you change your mind, you may return it within [RETURN WINDOW] days of delivery. Contact the gallery first via the Contact page to arrange the return; the piece must come back in the condition in which it was delivered, packed with equivalent care.",
-      "Where the return is due to an error in the description, the gallery bears the return shipping. Where you change your mind, return shipping and insurance are at your cost.",
+      "Antiques carry the marks of their years. Patina, earlier restoration and the condition notes stated on a piece's page are part of what is being sold and are not faults.",
     ],
     pFr: [
-      "Si une pièce n'est pas conforme à sa description, ou si vous changez d'avis, vous pouvez la retourner dans un délai de [RETURN WINDOW] jours après la livraison. Contactez d'abord la galerie via la page Contact pour organiser le retour; la pièce doit revenir dans l'état où elle a été livrée, emballée avec un soin équivalent.",
-      "Lorsque le retour est dû à une erreur de description, la galerie prend en charge les frais de retour. En cas de simple changement d'avis, les frais de retour et d'assurance sont à votre charge.",
+      "Les antiquités portent les marques du temps. La patine, les restaurations anciennes et les notes d'état indiquées sur la page d'une pièce font partie de ce qui est vendu et ne constituent pas des défauts.",
     ],
   },
   {
-    hEn: "Refunds",
-    hFr: "Remboursements",
+    hEn: "Damaged in transit",
+    hFr: "Dommage pendant le transport",
     pEn: [
-      "Once the returned piece has arrived and been checked, the refund is issued by the same method as the original payment, normally within ten working days.",
+      "If a piece arrives damaged, keep all of the packaging and tell the gallery within 48 hours, with photographs, so that a claim can be made against the carrier's insurance. The gallery will pursue the claim with the carrier on your behalf.",
     ],
     pFr: [
-      "Dès réception et vérification de la pièce retournée, le remboursement est effectué par le même moyen que le paiement d'origine, normalement sous dix jours ouvrés.",
-    ],
-  },
-  {
-    hEn: "What a return cannot cover",
-    hFr: "Ce qu'un retour ne peut pas couvrir",
-    pEn: [
-      "Antiques are sold as described, with the wear of their age. Characteristics stated on the piece's page, such as condition notes, patina or restoration, are part of the description and are not grounds for return.",
-    ],
-    pFr: [
-      "Les antiquités sont vendues telles que décrites, avec l'usure de leur âge. Les caractéristiques indiquées sur la page de la pièce, comme les notes d'état, la patine ou les restaurations, font partie de la description et ne constituent pas un motif de retour.",
+      "Si une pièce arrive endommagée, conservez l'intégralité de l'emballage et prévenez la galerie sous 48 heures, photos à l'appui, afin qu'une déclaration puisse être faite auprès de l'assurance du transporteur. La galerie suivra le dossier avec le transporteur pour vous.",
     ],
   },
 ];
